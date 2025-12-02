@@ -48,8 +48,9 @@ const activityData = [
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
-
-  const StatCard = ({ title, value, icon: Icon, trend, trendUp }) => (
+  
+  // The ": any" at the end disables strict checking for this component
+  const StatCard = ({ title, value, icon: Icon, trend, trendUp }: any) => (
     <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
       <div className="flex justify-between items-start">
         <div>
