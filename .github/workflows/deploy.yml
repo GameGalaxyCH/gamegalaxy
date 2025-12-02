@@ -31,3 +31,5 @@ jobs:
           # Caching speeds up subsequent builds significantly
           cache-from: type=registry,ref=gamegalaxy/gamegalaxy:buildcache
           cache-to: type=registry,ref=gamegalaxy/gamegalaxy:buildcache,mode=max
+      - name: Trigger Portainer Webhook
+        run: curl -X POST "${{ secrets.PORTAINER_WEBHOOK }}"
