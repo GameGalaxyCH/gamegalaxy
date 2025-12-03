@@ -90,7 +90,7 @@ export default function Dashboard() {
           <div className="p-6 border-b border-slate-800">
             <h1 className="text-xl font-bold flex items-center gap-2">
               <Activity className="text-blue-500" />
-              GameGalaxy TEST3
+              GameGalaxy TEST4
             </h1>
           </div>
 
