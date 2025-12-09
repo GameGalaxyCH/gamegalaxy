@@ -47,11 +47,10 @@ RUN chown nextjs:nodejs .next
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# 2. COPY THE GENERATED CLIENT (For the app to run)
+# 2. Copy necessary files for Prisma
 COPY --from=builder --chown=nextjs:nodejs /app/generated ./generated
-
-# 3. COPY PRISMA FOLDER (For migrations to run)
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
+COPY --from=builder --chown=nextjs:nodejs /app/prisma.config.ts ./prisma.config.ts
 
 USER nextjs
 EXPOSE 3000
