@@ -7,3 +7,30 @@ services:
       - "127.0.0.1:3000:3000"
     environment:
       - NODE_ENV=production
+      - DATABASE_URL=${DATABASE_URL}
+    depends_on:
+      - db
+    networks:
+      - internal_network # To talk to Nginx/Internet
+      - default # To talk to the Database
+
+  db:
+    image: postgres:16-alpine
+    container_name: gamegalaxy-db
+    restart: always
+    environment:
+      # These pull the specific values from Portainer
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - default # Only accessible by other services in this compose file
+
+volumes:
+  db_data:
+
+networks:
+  internal_network:
+    external: true

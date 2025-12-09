@@ -36,12 +36,20 @@ COPY --from=builder /app/public ./public
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
+# 1. Copy the standalone build
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# 2. COPY THE GENERATED CLIENT (For the app to run)
+COPY --from=builder --chown=nextjs:nodejs /app/generated ./generated
+
+# 3. COPY PRISMA FOLDER (For migrations to run)
+COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 
 USER nextjs
 EXPOSE 3000
 ENV PORT=3000
-
 ENV HOSTNAME="0.0.0.0"
-CMD ["node", "server.js"]
+
+# 4. UPDATE COMMAND: Run migrations automatically before starting server
+CMD ["sh", "-c", "npx prisma migrate deploy && node server.js"]
