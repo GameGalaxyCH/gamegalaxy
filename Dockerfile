@@ -52,6 +52,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/generated ./generated
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 COPY --from=builder --chown=nextjs:nodejs /app/prisma.config.ts ./prisma.config.ts
 
+RUN npm install -g prisma@7.1.0
+
 USER nextjs
 EXPOSE 3000
 ENV PORT=3000
