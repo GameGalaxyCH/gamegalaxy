@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { prisma } from '../lib/prisma'; // Note: ../lib/db because we are in app/
 import DashboardClient from './DashboardClient'; 
 
