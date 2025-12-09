@@ -108,7 +108,7 @@ export default function DashboardClient({ totalUsers, recentUsers }: DashboardPr
               />
               {/* ------------------------- */}
 
-              <StatCard title="Bounce Rate" value="42.3%" icon={Activity} trend="-2.1%" trendUp={true} />
+              <StatCard title="Bounce Rates" value="42.3%" icon={Activity} trend="-2.1%" trendUp={true} />
             </div>
 
             {/* Charts Row */}
