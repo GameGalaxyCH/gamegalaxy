@@ -7,18 +7,49 @@ datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  posts Post[]
+model Order {
+  id                String   @id // Shopify GID
+  orderNumber       Int
+  name              String   // e.g. "#1001"
+  email             String?
+  phone             String?
+  
+  // Financials
+  currencyCode      String
+  totalPrice        Float
+  subtotalPrice     Float
+  totalTax          Float
+  
+  // Statuses
+  financialStatus   String?  // PAID, PENDING, etc.
+  fulfillmentStatus String?  // FULFILLED, UNFULFILLED
+
+  // Timestamps
+  createdAt         DateTime
+  updatedAt         DateTime @updatedAt
+  processedAt       DateTime?
+
+  // Relations
+  lineItems         LineItem[]
+  
+  // You can expand this later with Customer, Address, etc.
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User    @relation(fields: [authorId], references: [id])
-  authorId  Int
+model LineItem {
+  id          String  @id // Shopify GID
+  orderId     String
+  title       String
+  sku         String?
+  quantity    Int
+  price       Float
+  
+  order       Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model SyncLog {
+  id        String   @id @default(uuid())
+  type      String   // e.g. "ORDERS", "PRODUCTS"
+  status    String   // "SUCCESS", "FAILED"
+  count     Int      // How many items were processed
+  createdAt DateTime @default(now())
 }
