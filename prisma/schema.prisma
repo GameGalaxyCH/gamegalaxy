@@ -46,10 +46,148 @@ model LineItem {
   order       Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }
 
+model Product {
+  id             String   @id // Shopify GID
+  title          String
+  handle         String
+  vendor         String?
+  productType    String?
+  status         String   
+  totalInventory Int      @default(0)
+  createdAt      DateTime
+  updatedAt      DateTime
+  
+  // Images stored as JSON: [{id: "...", src: "...", alt: "..."}]
+  images         Json?    
+  
+  // --- PRODUCT LEVEL METAFIELDS ---
+  // Some fields might exist at Product level (like "Briefeinheit" or "Main Category")
+  // We store them here if found.
+  briefeinheit       String?
+  mainCategory       String?
+  mainType           String?
+  supplierSku        String? // Lieferanten SKU
+  releasedAt         String?
+  englishCardName    String?
+  frenchCardName     String?
+  germanCardName     String?
+  
+  // Relations
+  variants       ProductVariant[]
+  lastSync       DateTime @default(now())
+
+  @@index([updatedAt])
+  @@index([productType])
+}
+
+model ProductVariant {
+  id                String  @id // Shopify GID
+  productId         String
+  product           Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  title             String
+  sku               String?
+  barcode           String? 
+  price             Decimal
+  compareAtPrice    Decimal?
+  inventoryQuantity Int     @default(0)
+  cost              Decimal? // From InventoryItem
+
+  // --- CORE MAGIC DATA (Parsed or Metafield) ---
+  condition         String? // Parsed from SKU (NM, PL)
+  finish            String? // Parsed from SKU (Foil, Non-Foil)
+
+  // --- METAFIELDS (Your List) ---
+  // Prices
+  eurPrice          Decimal?
+  usdPrice          Decimal?
+  eurFoilPrice      Decimal?
+  usdFoilPrice      Decimal?
+  usdEtchedPrice    Decimal?
+
+  // Bulk Discounts (Mengenrabatt)
+  discountQty2      String?
+  discountQty3      String?
+  discountQty4      String?
+  discountQty5      String?
+  discountQty6      String?
+  discountQty7      String?
+  discountQty8      String?
+  discountQty9      String?
+  discountQty10     String?
+
+  // Physical Specs
+  innerMaterial     String?
+  outerMaterial     String?
+  binderClosure     String? // Binder Verschluss
+  sleeveCount       Int?    // Sleeveanzahl
+  sleeveFinish      String? // Sleeveoberfläche
+  sleeveSize        String? 
+  productColor      String? // Produkt Farbe
+  productSize       String? 
+  productSizeDimensions String? // B x T x H
+  compartmentsPerPage Int? // Fächer pro Seite
+  
+  // Capacity
+  capacityDoubleSleeved Int?
+  capacitySingleSleeved Int?
+
+  // Magic Specifics
+  scryfallId        String?
+  scryfallOracleId  String?
+  mkmid             String?
+  tcgid             String?
+  cardmarketId      String? // Is this different from MKM ID? Added just in case.
+  
+  set               String? // Edition
+  setCode           String? // Edition Set Code
+  cardNumber        String? 
+  
+  rarity            String?
+  artist            String?
+  language          String?
+  
+  cardColor         String?
+  colorIdentity     String?
+  producedMana      String?
+  
+  keywords          String?
+  toughness         String?
+  power             String?
+  convertedManaCost String? // or Decimal if you prefer
+  
+  mainTypeVariant   String? // Maintype (if variant level)
+  subType           String? // Creature, etc.
+  
+  cardFrame         String?
+  
+  // Relations/JSON
+  relatedProducts   Json? // Zugehörige Produkte
+  complementaryProducts Json? // Ergänzende Produkte
+  
+  updatedAt         DateTime?
+  
+  @@index([sku])
+  @@index([scryfallId])
+  @@index([mkmid])
+}
+
 model SyncLog {
   id        String   @id @default(uuid())
   type      String   // e.g. "ORDERS", "PRODUCTS"
   status    String   // "SUCCESS", "FAILED"
   count     Int      // How many items were processed
   createdAt DateTime @default(now())
+}
+
+model BulkOperation {
+  id             String   @id // The Shopify GID
+  type           String   // "QUERY" or "MUTATION"
+  status         String   // "CREATED", "RUNNING", "COMPLETED", "FAILED", "CANCELLED"
+  errorCode      String?
+  objectCount    Int      @default(0)
+  fileSize       String?
+  url            String?
+  createdAt      DateTime @default(now())
+  completedAt    DateTime?
 }

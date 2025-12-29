@@ -19,10 +19,10 @@ export default async function Dashboard() {
   });
 
   return (
-    <div className="flex min-h-screen bg-gray-950 text-gray-100">
+    <div className="min-h-screen bg-gray-950 text-gray-100">
       <Sidebar />
       
-      <main className="ml-64 flex-1 p-8">
+      <main className="p-8">
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-white">Order Overview</h1>

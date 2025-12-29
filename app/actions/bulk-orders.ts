@@ -51,6 +51,7 @@ async function getAccessToken() {
 export async function startBulkOrderSync(mode: SyncMode) {
     const token = await getAccessToken();
     const shop = process.env.SHOPIFY_STORE_DOMAIN;
+    const API_VERSION = "2024-01";
 
     let queryFilter = "";
 
@@ -63,7 +64,12 @@ export async function startBulkOrderSync(mode: SyncMode) {
         const d = new Date();
         d.setHours(d.getHours() - 48);
         queryFilter = `(query: "updated_at:>=${d.toISOString()}")`;
-    } 
+    } else if (mode === 'ALL_TIME') {
+        // CHANGED: Hardcoded start date: January 1st, 2020
+        // We use a specific ISO string to be precise.
+        const hardcodedDate = "2020-01-01T00:00:00Z";
+        queryFilter = `(query: "created_at:>=${hardcodedDate}")`;
+    }
     // 'ALL_TIME' leaves queryFilter empty, triggering a full historical fetch.
 
     console.log(`[BulkSync] Starting. Mode: ${mode}, Filter: ${queryFilter || "NONE (Full History)"}`);
@@ -115,13 +121,19 @@ export async function startBulkOrderSync(mode: SyncMode) {
     }
     `;
 
-    const response = await fetch(`https://${shop}/admin/api/2025-10/graphql.json`, {
+    // DEBUG: Log the request
+    console.log(`[BulkSync] Sending Mutation to https://${shop}/admin/api/${API_VERSION}/graphql.json`);
+
+    const response = await fetch(`https://${shop}/admin/api/${API_VERSION}/graphql.json`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-Shopify-Access-Token': token },
         body: JSON.stringify({ query: bulkQuery })
     });
 
     const result = await response.json();
+
+    // DEBUG: Log the FULL response
+    console.log("[BulkSync] START Response:", JSON.stringify(result, null, 2));
     
     if (result.data?.bulkOperationRunQuery?.userErrors?.length > 0) {
         return { 
@@ -130,15 +142,28 @@ export async function startBulkOrderSync(mode: SyncMode) {
         };
     }
 
+    const op = result.data.bulkOperationRunQuery.bulkOperation;
+    if (!op || !op.id) {
+         return { success: false, message: "Shopify returned success but no Operation ID was found." };
+    }
+
+    // Persist the ID immediately so the Debugger can see it
+    await prisma.bulkOperation.create({
+        data: {
+            id: op.id,
+            type: "QUERY",
+            status: op.status,
+        }
+    });
+
     return { 
         success: true, 
-        operationId: result.data.bulkOperationRunQuery.bulkOperation.id 
+        operationId: op.id 
     };
 }
 
 /**
  * Step 2: Polls the status of a running Bulk Operation.
- * SAFE VERSION: Handles null nodes and GraphQL errors to prevent crashes.
  */
 export async function checkBulkStatus(operationId: string) {
     const token = await getAccessToken();
@@ -153,37 +178,55 @@ export async function checkBulkStatus(operationId: string) {
             url
             errorCode
             objectCount
+            partialDataUrl
           }
         }
       }
     `;
 
-    const response = await fetch(`https://${shop}/admin/api/2025-10/graphql.json`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Shopify-Access-Token': token },
-        body: JSON.stringify({ query })
-    });
+    // Polling Strategy: 60 seconds patience for "blinks"
+    const MAX_RETRIES = 30;
 
-    const result = await response.json();
+    for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+        try {
+            const response = await fetch(`https://${shop}/admin/api/2025-10/graphql.json`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-Shopify-Access-Token': token },
+                body: JSON.stringify({ query }),
+                cache: 'no-store'
+            });
 
-    // ERROR HANDLING: Check if Shopify returned an error
-    if (result.errors) {
-        console.error("❌ [BulkPoll] GraphQL Error:", JSON.stringify(result.errors, null, 2));
-        return { status: "FAILED", errorCode: "GRAPHQL_ERROR", message: "Shopify API Error" };
+            const result = await response.json();
+
+            // DEBUG: Log ONLY if null to see why
+            if (!result.data || !result.data.node) {
+                console.warn(`[BulkPoll] Attempt ${attempt} Raw Response:`, JSON.stringify(result));
+            }
+
+            // 1. Valid Node Found
+            if (result.data && result.data.node) {
+                return result.data.node; 
+                // Returns { status: "FAILED", errorCode: "TIMEOUT", ... } if failed
+            }
+
+            if (result.errors) {
+                console.warn(`[BulkPoll] GraphQL Error:`, result.errors[0].message);
+            }
+
+        } catch (e) {
+            console.warn(`[BulkPoll] Attempt ${attempt} Network Error:`, e);
+        }
+
+        // Wait 2 seconds
+        if (attempt < MAX_RETRIES) await new Promise(r => setTimeout(r, 2000));
     }
 
-    // NULL CHECK: Ensure the node actually exists
-    if (!result.data || !result.data.node) {
-        console.error("❌ [BulkPoll] Node is NULL. Operation ID used:", operationId);
-        return { status: "FAILED", errorCode: "NULL_NODE", message: "Operation ID not found" };
-    }
-
-    const node = result.data.node;
-
-    // LOG PROGRESS: Helps debugging
-    console.log(`[BulkPoll] Status: ${node.status} | Items: ${node.objectCount}`);
-    
-    return node; 
+    // 3. Timeout / Ghost Job
+    return { 
+        status: "FAILED", 
+        errorCode: "APP_TIMEOUT", 
+        message: "Shopify API stopped returning the ID after 60 seconds." 
+    };
 }
 
 /**
@@ -271,6 +314,24 @@ export async function processBulkFile(url: string) {
                     count: ordersMap.size
                 }
             });
+
+            // Mark the active DB operation as COMPLETED
+            const activeOp = await tx.bulkOperation.findFirst({
+                where: { type: "QUERY", status: { in: ["CREATED", "RUNNING"] } },
+                orderBy: { createdAt: 'desc' }
+            });
+            
+            if (activeOp) {
+                await tx.bulkOperation.update({
+                    where: { id: activeOp.id },
+                    data: { 
+                        status: "COMPLETED", 
+                        completedAt: new Date(), 
+                        objectCount: ordersMap.size 
+                    }
+                });
+            }
+            // ----------------------------------
         });
 
         revalidatePath('/');

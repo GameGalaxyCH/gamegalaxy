@@ -4,9 +4,10 @@ services:
     image: postgres:16-alpine
     container_name: gamegalaxy-local-db
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: gamegalaxy_local
+      - TZ=Europe/Zurich
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=gamegalaxy_local
     ports:
       - "5432:5432"
     volumes:
@@ -15,8 +16,9 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: root
+      - TZ=Europe/Zurich
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=root
     ports:
       - "5050:80"
 

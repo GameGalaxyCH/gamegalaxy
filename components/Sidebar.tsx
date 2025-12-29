@@ -1,4 +1,5 @@
-import { LayoutDashboard, ShoppingBag, Settings, Users } from "lucide-react";
+// components/Sidebar.tsx
+import { LayoutDashboard, ShoppingBag, Settings, Users, Package } from "lucide-react"; // Added Package icon
 import Link from "next/link";
 
 export default function Sidebar() {
@@ -10,19 +11,20 @@ export default function Sidebar() {
       </div>
       
       <nav className="flex-1 px-4 space-y-1">
-        <Link href="/" className="flex items-center gap-3 px-4 py-3 bg-gray-800 text-blue-400 rounded-lg group transition-all">
-          <ShoppingBag size={20} className="group-hover:text-white transition-colors" />
-          <span className="font-medium group-hover:text-white transition-colors">Orders</span>
+        <Link href="/" className="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg group transition-all">
+          <ShoppingBag size={20} />
+          <span className="font-medium">Orders</span>
+        </Link>
+
+        {/* NEW PRODUCTS LINK */}
+        <Link href="/products" className="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg group transition-all">
+          <Package size={20} />
+          <span className="font-medium">Products</span>
         </Link>
         
-        {/* Placeholder Links for Future Modules */}
         <div className="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-800 hover:text-white rounded-lg cursor-pointer transition-all">
           <LayoutDashboard size={20} />
           <span>Analytics</span>
-        </div>
-        <div className="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-800 hover:text-white rounded-lg cursor-pointer transition-all">
-          <Users size={20} />
-          <span>Customers</span>
         </div>
       </nav>
 

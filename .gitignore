@@ -40,5 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Prisma Generated Client
-/generated
+# Ignore generated Prisma Client
+/src/generated/client
