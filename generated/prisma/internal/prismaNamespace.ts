@@ -387,9 +387,9 @@ export const ModelName = {
   Order: 'Order',
   LineItem: 'LineItem',
   Product: 'Product',
-  ProductVariant: 'ProductVariant',
   SyncLog: 'SyncLog',
-  BulkOperation: 'BulkOperation'
+  BulkOperation: 'BulkOperation',
+  FilterPreset: 'FilterPreset'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -405,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "order" | "lineItem" | "product" | "productVariant" | "syncLog" | "bulkOperation"
+    modelProps: "order" | "lineItem" | "product" | "syncLog" | "bulkOperation" | "filterPreset"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -631,80 +631,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    ProductVariant: {
-      payload: Prisma.$ProductVariantPayload<ExtArgs>
-      fields: Prisma.ProductVariantFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ProductVariantFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductVariantPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ProductVariantFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductVariantPayload>
-        }
-        findFirst: {
-          args: Prisma.ProductVariantFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductVariantPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ProductVariantFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductVariantPayload>
-        }
-        findMany: {
-          args: Prisma.ProductVariantFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductVariantPayload>[]
-        }
-        create: {
-          args: Prisma.ProductVariantCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductVariantPayload>
-        }
-        createMany: {
-          args: Prisma.ProductVariantCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.ProductVariantCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductVariantPayload>[]
-        }
-        delete: {
-          args: Prisma.ProductVariantDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductVariantPayload>
-        }
-        update: {
-          args: Prisma.ProductVariantUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductVariantPayload>
-        }
-        deleteMany: {
-          args: Prisma.ProductVariantDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ProductVariantUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.ProductVariantUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductVariantPayload>[]
-        }
-        upsert: {
-          args: Prisma.ProductVariantUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductVariantPayload>
-        }
-        aggregate: {
-          args: Prisma.ProductVariantAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateProductVariant>
-        }
-        groupBy: {
-          args: Prisma.ProductVariantGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ProductVariantGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ProductVariantCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ProductVariantCountAggregateOutputType> | number
-        }
-      }
-    }
     SyncLog: {
       payload: Prisma.$SyncLogPayload<ExtArgs>
       fields: Prisma.SyncLogFieldRefs
@@ -853,6 +779,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    FilterPreset: {
+      payload: Prisma.$FilterPresetPayload<ExtArgs>
+      fields: Prisma.FilterPresetFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FilterPresetFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FilterPresetPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FilterPresetFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FilterPresetPayload>
+        }
+        findFirst: {
+          args: Prisma.FilterPresetFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FilterPresetPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FilterPresetFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FilterPresetPayload>
+        }
+        findMany: {
+          args: Prisma.FilterPresetFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FilterPresetPayload>[]
+        }
+        create: {
+          args: Prisma.FilterPresetCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FilterPresetPayload>
+        }
+        createMany: {
+          args: Prisma.FilterPresetCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FilterPresetCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FilterPresetPayload>[]
+        }
+        delete: {
+          args: Prisma.FilterPresetDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FilterPresetPayload>
+        }
+        update: {
+          args: Prisma.FilterPresetUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FilterPresetPayload>
+        }
+        deleteMany: {
+          args: Prisma.FilterPresetDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FilterPresetUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FilterPresetUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FilterPresetPayload>[]
+        }
+        upsert: {
+          args: Prisma.FilterPresetUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FilterPresetPayload>
+        }
+        aggregate: {
+          args: Prisma.FilterPresetAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFilterPreset>
+        }
+        groupBy: {
+          args: Prisma.FilterPresetGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FilterPresetGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FilterPresetCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FilterPresetCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -926,14 +926,22 @@ export type LineItemScalarFieldEnum = (typeof LineItemScalarFieldEnum)[keyof typ
 
 export const ProductScalarFieldEnum = {
   id: 'id',
+  productId: 'productId',
   title: 'title',
+  variantTitle: 'variantTitle',
   handle: 'handle',
   vendor: 'vendor',
   productType: 'productType',
   status: 'status',
-  totalInventory: 'totalInventory',
+  sku: 'sku',
+  barcode: 'barcode',
+  price: 'price',
+  compareAtPrice: 'compareAtPrice',
+  inventoryQuantity: 'inventoryQuantity',
+  cost: 'cost',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  lastSync: 'lastSync',
   images: 'images',
   briefeinheit: 'briefeinheit',
   mainCategory: 'mainCategory',
@@ -943,24 +951,6 @@ export const ProductScalarFieldEnum = {
   englishCardName: 'englishCardName',
   frenchCardName: 'frenchCardName',
   germanCardName: 'germanCardName',
-  lastSync: 'lastSync'
-} as const
-
-export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
-
-
-export const ProductVariantScalarFieldEnum = {
-  id: 'id',
-  productId: 'productId',
-  title: 'title',
-  sku: 'sku',
-  barcode: 'barcode',
-  price: 'price',
-  compareAtPrice: 'compareAtPrice',
-  inventoryQuantity: 'inventoryQuantity',
-  cost: 'cost',
-  condition: 'condition',
-  finish: 'finish',
   eurPrice: 'eurPrice',
   usdPrice: 'usdPrice',
   eurFoilPrice: 'eurFoilPrice',
@@ -995,6 +985,8 @@ export const ProductVariantScalarFieldEnum = {
   set: 'set',
   setCode: 'setCode',
   cardNumber: 'cardNumber',
+  condition: 'condition',
+  finish: 'finish',
   rarity: 'rarity',
   artist: 'artist',
   language: 'language',
@@ -1005,15 +997,13 @@ export const ProductVariantScalarFieldEnum = {
   toughness: 'toughness',
   power: 'power',
   convertedManaCost: 'convertedManaCost',
-  mainTypeVariant: 'mainTypeVariant',
-  subType: 'subType',
+  subtype: 'subtype',
   cardFrame: 'cardFrame',
   relatedProducts: 'relatedProducts',
-  complementaryProducts: 'complementaryProducts',
-  updatedAt: 'updatedAt'
+  complementaryProducts: 'complementaryProducts'
 } as const
 
-export type ProductVariantScalarFieldEnum = (typeof ProductVariantScalarFieldEnum)[keyof typeof ProductVariantScalarFieldEnum]
+export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
 
 
 export const SyncLogScalarFieldEnum = {
@@ -1033,6 +1023,7 @@ export const BulkOperationScalarFieldEnum = {
   status: 'status',
   errorCode: 'errorCode',
   objectCount: 'objectCount',
+  rootObjectCount: 'rootObjectCount',
   fileSize: 'fileSize',
   url: 'url',
   createdAt: 'createdAt',
@@ -1040,6 +1031,17 @@ export const BulkOperationScalarFieldEnum = {
 } as const
 
 export type BulkOperationScalarFieldEnum = (typeof BulkOperationScalarFieldEnum)[keyof typeof BulkOperationScalarFieldEnum]
+
+
+export const FilterPresetScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  context: 'context',
+  settings: 'settings',
+  createdAt: 'createdAt'
+} as const
+
+export type FilterPresetScalarFieldEnum = (typeof FilterPresetScalarFieldEnum)[keyof typeof FilterPresetScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1056,6 +1058,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -1146,20 +1155,6 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
- * Reference to a field of type 'Json'
- */
-export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-/**
- * Reference to a field of type 'QueryMode'
- */
-export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
-    
-
-
-/**
  * Reference to a field of type 'Decimal'
  */
 export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
@@ -1170,6 +1165,20 @@ export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
  * Reference to a field of type 'Decimal[]'
  */
 export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 /**
@@ -1270,9 +1279,9 @@ export type GlobalOmitConfig = {
   order?: Prisma.OrderOmit
   lineItem?: Prisma.LineItemOmit
   product?: Prisma.ProductOmit
-  productVariant?: Prisma.ProductVariantOmit
   syncLog?: Prisma.SyncLogOmit
   bulkOperation?: Prisma.BulkOperationOmit
+  filterPreset?: Prisma.FilterPresetOmit
 }
 
 /* Types for Logging */

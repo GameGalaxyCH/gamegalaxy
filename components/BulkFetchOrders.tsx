@@ -1,8 +1,9 @@
 'use client'
-
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Database, Loader2, CheckCircle, AlertCircle } from "lucide-react";
-import { startBulkOrderSync, checkBulkStatus, processBulkFile, SyncMode } from "@/app/actions/bulk-orders";
+import { triggerManualOrderSync } from "@/app/actions/shopify-bulk-actions";
+import { SyncMode } from "@/lib/shopify-bulk-orders";
+import { getGlobalSystemStatus } from "@/app/actions/shopify-bulk-actions";
 
 interface Props {
     mode: SyncMode;
@@ -10,77 +11,77 @@ interface Props {
 }
 
 export default function BulkFetchOrders({ mode, label }: Props) {
-  const [status, setStatus] = useState<"idle" | "starting" | "polling" | "processing" | "done" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [msg, setMsg] = useState("");
+  const [activeOpId, setActiveOpId] = useState<string | null>(null);
+  const pollInterval = useRef<NodeJS.Timeout | null>(null);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+        if (pollInterval.current) clearInterval(pollInterval.current);
+    };
+  }, []);
+
+  // Poll logic: Only runs when we have an active Op ID
+  useEffect(() => {
+    if (!activeOpId) return;
+
+    // Poll every 2 seconds to see if our specific job is finished
+    pollInterval.current = setInterval(async () => {
+        // We use the existing system status check which is efficient
+        const res = await getGlobalSystemStatus(Date.now());
+        
+        // Check if our ID is still in the "activeQuery" slot
+        const isActive = res.activeQuery?.id === activeOpId;
+        
+        // OR check if it appears in history as COMPLETED/FAILED
+        const isFinished = res.history.queries.find((q: any) => q.id === activeOpId);
+
+        if (!isActive && isFinished) {
+            // It's done!
+            setStatus("success");
+            setMsg("Sync complete!");
+            setActiveOpId(null); // Stop polling
+            if (pollInterval.current) clearInterval(pollInterval.current);
+            
+            // Reset to idle after 3s
+            setTimeout(() => {
+                setStatus("idle");
+                setMsg("");
+            }, 3000);
+        }
+    }, 2000);
+
+    return () => {
+        if (pollInterval.current) clearInterval(pollInterval.current);
+    };
+  }, [activeOpId]);
 
   const handleStart = async () => {
+    setStatus("loading");
+    setMsg("Initializing...");
+
     try {
-      // --- PHASE 1: INITIATION ---
-      setStatus("starting");
-      setMsg("Phase 1: Requesting Bulk Operation ID...");
+      // 1. Start the job
+      // We need manualTriggerSync to return the operationId so we can track it!
+      // *Requires update to manualTriggerSync return type*
+      const res = await triggerManualOrderSync(mode);
       
-      const startRes = await startBulkOrderSync(mode);
-      if (!startRes.success) throw new Error(startRes.message);
-      
-      const opId = startRes.operationId;
-      setStatus("polling");
-      setMsg("Phase 2: Waiting for Shopify to prepare file...");
-
-      // --- PHASE 2: POLLING (with Timeout) ---
-      let attempts = 0;
-      const maxAttempts = 150; // 150 * 2s = 300s (5 minutes) timeout safety
-
-      const pollInterval = setInterval(async () => {
-        attempts++;
+      if (res.success && res.operationId) {
+        setMsg("Sync in progress...");
+        setActiveOpId(res.operationId); // <--- This triggers the polling effect
         
-        // Safety Break: Stop if taking too long
-        if (attempts > maxAttempts) {
-            clearInterval(pollInterval);
-            setStatus("error");
-            setMsg("Error: Timeout. Shopify took >5 minutes.");
-            return;
-        }
-
-        const pollRes = await checkBulkStatus(opId);
-        
-        // Handle "RUNNING" state to show progress
-        if (pollRes.status === "RUNNING") {
-             setMsg(`Phase 2: Shopify Processing... (${pollRes.objectCount} items)`);
-        }
-        
-        if (pollRes.status === "COMPLETED") {
-          clearInterval(pollInterval);
-          
-          if (!pollRes.url) {
-            setStatus("error");
-            setMsg("Error: Shopify completed but returned no URL.");
-            return;
-          }
-
-          // --- PHASE 3: PROCESSING ---
-          setStatus("processing");
-          setMsg("Phase 3: Downloading and saving to database...");
-          
-          const processRes = await processBulkFile(pollRes.url);
-          
-          if (processRes.success) {
-            setStatus("done");
-            setMsg(`Success! Synced ${processRes.count} orders.`);
-          } else {
-            throw new Error(processRes.message);
-          }
-
-        } else if (pollRes.status === "FAILED") {
-          clearInterval(pollInterval);
-          throw new Error(`Bulk Operation Failed: ${pollRes.errorCode}`);
-        }
-        // If status is CREATED or RUNNING, the loop continues...
-      }, 2000); 
-
+        // Wake up the system panel immediately
+        window.dispatchEvent(new Event("system-status-refresh"));
+      } else {
+        throw new Error(res.message || "Failed to start");
+      }
     } catch (e: any) {
       console.error(e);
       setStatus("error");
-      setMsg(e.message || "An unexpected error occurred.");
+      setMsg(e.message);
+      setActiveOpId(null);
     }
   };
 
@@ -88,25 +89,24 @@ export default function BulkFetchOrders({ mode, label }: Props) {
     <div className="flex flex-col gap-2">
       <button
         onClick={handleStart}
-        disabled={status !== "idle" && status !== "done" && status !== "error"}
-        className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed w-full shadow-sm ${
+        disabled={status === "loading"}
+        className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium text-sm transition-all disabled:opacity-50 w-full shadow-sm ${
             mode === 'ALL_TIME' 
             ? "bg-red-900/20 hover:bg-red-900/40 text-red-200 border border-red-900/50" 
-            : "bg-blue-600 hover:bg-blue-500 text-white border border-transparent shadow-blue-900/20"
+            : "bg-blue-600 hover:bg-blue-500 text-white shadow-blue-900/20"
         }`}
       >
-        {status === "idle" || status === "done" || status === "error" ? <Database size={16} /> : <Loader2 className="animate-spin" size={16} />}
-        {label}
+        {status === "loading" ? <Loader2 className="animate-spin" size={16} /> : <Database size={16} />}
+        {status === "loading" ? "Syncing..." : label}
       </button>
       
       {status !== "idle" && (
         <div className={`text-xs flex items-center gap-2 mt-1 px-1 ${
-            status === "done" ? "text-green-400" : 
-            status === "error" ? "text-red-400" : 
-            "text-gray-400"
+             status === "success" ? "text-green-400" : status === "error" ? "text-red-400" : "text-blue-400"
         }`}>
-            {status === "done" && <CheckCircle size={12} />}
+            {status === "success" && <CheckCircle size={12} />}
             {status === "error" && <AlertCircle size={12} />}
+            {status === "loading" && <Loader2 size={12} className="animate-spin" />}
             {msg}
         </div>
       )}

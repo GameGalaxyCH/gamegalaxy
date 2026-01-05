@@ -27,23 +27,55 @@ export type AggregateProduct = {
 }
 
 export type ProductAvgAggregateOutputType = {
-  totalInventory: number | null
+  price: runtime.Decimal | null
+  compareAtPrice: runtime.Decimal | null
+  inventoryQuantity: number | null
+  cost: runtime.Decimal | null
+  eurPrice: runtime.Decimal | null
+  usdPrice: runtime.Decimal | null
+  eurFoilPrice: runtime.Decimal | null
+  usdFoilPrice: runtime.Decimal | null
+  usdEtchedPrice: runtime.Decimal | null
+  sleeveCount: number | null
+  compartmentsPerPage: number | null
+  capacityDoubleSleeved: number | null
+  capacitySingleSleeved: number | null
 }
 
 export type ProductSumAggregateOutputType = {
-  totalInventory: number | null
+  price: runtime.Decimal | null
+  compareAtPrice: runtime.Decimal | null
+  inventoryQuantity: number | null
+  cost: runtime.Decimal | null
+  eurPrice: runtime.Decimal | null
+  usdPrice: runtime.Decimal | null
+  eurFoilPrice: runtime.Decimal | null
+  usdFoilPrice: runtime.Decimal | null
+  usdEtchedPrice: runtime.Decimal | null
+  sleeveCount: number | null
+  compartmentsPerPage: number | null
+  capacityDoubleSleeved: number | null
+  capacitySingleSleeved: number | null
 }
 
 export type ProductMinAggregateOutputType = {
   id: string | null
+  productId: string | null
   title: string | null
+  variantTitle: string | null
   handle: string | null
   vendor: string | null
   productType: string | null
   status: string | null
-  totalInventory: number | null
+  sku: string | null
+  barcode: string | null
+  price: runtime.Decimal | null
+  compareAtPrice: runtime.Decimal | null
+  inventoryQuantity: number | null
+  cost: runtime.Decimal | null
   createdAt: Date | null
   updatedAt: Date | null
+  lastSync: Date | null
   briefeinheit: string | null
   mainCategory: string | null
   mainType: string | null
@@ -52,19 +84,74 @@ export type ProductMinAggregateOutputType = {
   englishCardName: string | null
   frenchCardName: string | null
   germanCardName: string | null
-  lastSync: Date | null
+  eurPrice: runtime.Decimal | null
+  usdPrice: runtime.Decimal | null
+  eurFoilPrice: runtime.Decimal | null
+  usdFoilPrice: runtime.Decimal | null
+  usdEtchedPrice: runtime.Decimal | null
+  discountQty2: string | null
+  discountQty3: string | null
+  discountQty4: string | null
+  discountQty5: string | null
+  discountQty6: string | null
+  discountQty7: string | null
+  discountQty8: string | null
+  discountQty9: string | null
+  discountQty10: string | null
+  innerMaterial: string | null
+  outerMaterial: string | null
+  binderClosure: string | null
+  sleeveCount: number | null
+  sleeveFinish: string | null
+  sleeveSize: string | null
+  productColor: string | null
+  productSize: string | null
+  productSizeDimensions: string | null
+  compartmentsPerPage: number | null
+  capacityDoubleSleeved: number | null
+  capacitySingleSleeved: number | null
+  scryfallId: string | null
+  scryfallOracleId: string | null
+  mkmid: string | null
+  tcgid: string | null
+  cardmarketId: string | null
+  set: string | null
+  setCode: string | null
+  cardNumber: string | null
+  condition: string | null
+  finish: string | null
+  rarity: string | null
+  artist: string | null
+  language: string | null
+  cardColor: string | null
+  colorIdentity: string | null
+  producedMana: string | null
+  keywords: string | null
+  toughness: string | null
+  power: string | null
+  convertedManaCost: string | null
+  subtype: string | null
+  cardFrame: string | null
 }
 
 export type ProductMaxAggregateOutputType = {
   id: string | null
+  productId: string | null
   title: string | null
+  variantTitle: string | null
   handle: string | null
   vendor: string | null
   productType: string | null
   status: string | null
-  totalInventory: number | null
+  sku: string | null
+  barcode: string | null
+  price: runtime.Decimal | null
+  compareAtPrice: runtime.Decimal | null
+  inventoryQuantity: number | null
+  cost: runtime.Decimal | null
   createdAt: Date | null
   updatedAt: Date | null
+  lastSync: Date | null
   briefeinheit: string | null
   mainCategory: string | null
   mainType: string | null
@@ -73,19 +160,74 @@ export type ProductMaxAggregateOutputType = {
   englishCardName: string | null
   frenchCardName: string | null
   germanCardName: string | null
-  lastSync: Date | null
+  eurPrice: runtime.Decimal | null
+  usdPrice: runtime.Decimal | null
+  eurFoilPrice: runtime.Decimal | null
+  usdFoilPrice: runtime.Decimal | null
+  usdEtchedPrice: runtime.Decimal | null
+  discountQty2: string | null
+  discountQty3: string | null
+  discountQty4: string | null
+  discountQty5: string | null
+  discountQty6: string | null
+  discountQty7: string | null
+  discountQty8: string | null
+  discountQty9: string | null
+  discountQty10: string | null
+  innerMaterial: string | null
+  outerMaterial: string | null
+  binderClosure: string | null
+  sleeveCount: number | null
+  sleeveFinish: string | null
+  sleeveSize: string | null
+  productColor: string | null
+  productSize: string | null
+  productSizeDimensions: string | null
+  compartmentsPerPage: number | null
+  capacityDoubleSleeved: number | null
+  capacitySingleSleeved: number | null
+  scryfallId: string | null
+  scryfallOracleId: string | null
+  mkmid: string | null
+  tcgid: string | null
+  cardmarketId: string | null
+  set: string | null
+  setCode: string | null
+  cardNumber: string | null
+  condition: string | null
+  finish: string | null
+  rarity: string | null
+  artist: string | null
+  language: string | null
+  cardColor: string | null
+  colorIdentity: string | null
+  producedMana: string | null
+  keywords: string | null
+  toughness: string | null
+  power: string | null
+  convertedManaCost: string | null
+  subtype: string | null
+  cardFrame: string | null
 }
 
 export type ProductCountAggregateOutputType = {
   id: number
+  productId: number
   title: number
+  variantTitle: number
   handle: number
   vendor: number
   productType: number
   status: number
-  totalInventory: number
+  sku: number
+  barcode: number
+  price: number
+  compareAtPrice: number
+  inventoryQuantity: number
+  cost: number
   createdAt: number
   updatedAt: number
+  lastSync: number
   images: number
   briefeinheit: number
   mainCategory: number
@@ -95,29 +237,110 @@ export type ProductCountAggregateOutputType = {
   englishCardName: number
   frenchCardName: number
   germanCardName: number
-  lastSync: number
+  eurPrice: number
+  usdPrice: number
+  eurFoilPrice: number
+  usdFoilPrice: number
+  usdEtchedPrice: number
+  discountQty2: number
+  discountQty3: number
+  discountQty4: number
+  discountQty5: number
+  discountQty6: number
+  discountQty7: number
+  discountQty8: number
+  discountQty9: number
+  discountQty10: number
+  innerMaterial: number
+  outerMaterial: number
+  binderClosure: number
+  sleeveCount: number
+  sleeveFinish: number
+  sleeveSize: number
+  productColor: number
+  productSize: number
+  productSizeDimensions: number
+  compartmentsPerPage: number
+  capacityDoubleSleeved: number
+  capacitySingleSleeved: number
+  scryfallId: number
+  scryfallOracleId: number
+  mkmid: number
+  tcgid: number
+  cardmarketId: number
+  set: number
+  setCode: number
+  cardNumber: number
+  condition: number
+  finish: number
+  rarity: number
+  artist: number
+  language: number
+  cardColor: number
+  colorIdentity: number
+  producedMana: number
+  keywords: number
+  toughness: number
+  power: number
+  convertedManaCost: number
+  subtype: number
+  cardFrame: number
+  relatedProducts: number
+  complementaryProducts: number
   _all: number
 }
 
 
 export type ProductAvgAggregateInputType = {
-  totalInventory?: true
+  price?: true
+  compareAtPrice?: true
+  inventoryQuantity?: true
+  cost?: true
+  eurPrice?: true
+  usdPrice?: true
+  eurFoilPrice?: true
+  usdFoilPrice?: true
+  usdEtchedPrice?: true
+  sleeveCount?: true
+  compartmentsPerPage?: true
+  capacityDoubleSleeved?: true
+  capacitySingleSleeved?: true
 }
 
 export type ProductSumAggregateInputType = {
-  totalInventory?: true
+  price?: true
+  compareAtPrice?: true
+  inventoryQuantity?: true
+  cost?: true
+  eurPrice?: true
+  usdPrice?: true
+  eurFoilPrice?: true
+  usdFoilPrice?: true
+  usdEtchedPrice?: true
+  sleeveCount?: true
+  compartmentsPerPage?: true
+  capacityDoubleSleeved?: true
+  capacitySingleSleeved?: true
 }
 
 export type ProductMinAggregateInputType = {
   id?: true
+  productId?: true
   title?: true
+  variantTitle?: true
   handle?: true
   vendor?: true
   productType?: true
   status?: true
-  totalInventory?: true
+  sku?: true
+  barcode?: true
+  price?: true
+  compareAtPrice?: true
+  inventoryQuantity?: true
+  cost?: true
   createdAt?: true
   updatedAt?: true
+  lastSync?: true
   briefeinheit?: true
   mainCategory?: true
   mainType?: true
@@ -126,19 +349,74 @@ export type ProductMinAggregateInputType = {
   englishCardName?: true
   frenchCardName?: true
   germanCardName?: true
-  lastSync?: true
+  eurPrice?: true
+  usdPrice?: true
+  eurFoilPrice?: true
+  usdFoilPrice?: true
+  usdEtchedPrice?: true
+  discountQty2?: true
+  discountQty3?: true
+  discountQty4?: true
+  discountQty5?: true
+  discountQty6?: true
+  discountQty7?: true
+  discountQty8?: true
+  discountQty9?: true
+  discountQty10?: true
+  innerMaterial?: true
+  outerMaterial?: true
+  binderClosure?: true
+  sleeveCount?: true
+  sleeveFinish?: true
+  sleeveSize?: true
+  productColor?: true
+  productSize?: true
+  productSizeDimensions?: true
+  compartmentsPerPage?: true
+  capacityDoubleSleeved?: true
+  capacitySingleSleeved?: true
+  scryfallId?: true
+  scryfallOracleId?: true
+  mkmid?: true
+  tcgid?: true
+  cardmarketId?: true
+  set?: true
+  setCode?: true
+  cardNumber?: true
+  condition?: true
+  finish?: true
+  rarity?: true
+  artist?: true
+  language?: true
+  cardColor?: true
+  colorIdentity?: true
+  producedMana?: true
+  keywords?: true
+  toughness?: true
+  power?: true
+  convertedManaCost?: true
+  subtype?: true
+  cardFrame?: true
 }
 
 export type ProductMaxAggregateInputType = {
   id?: true
+  productId?: true
   title?: true
+  variantTitle?: true
   handle?: true
   vendor?: true
   productType?: true
   status?: true
-  totalInventory?: true
+  sku?: true
+  barcode?: true
+  price?: true
+  compareAtPrice?: true
+  inventoryQuantity?: true
+  cost?: true
   createdAt?: true
   updatedAt?: true
+  lastSync?: true
   briefeinheit?: true
   mainCategory?: true
   mainType?: true
@@ -147,19 +425,74 @@ export type ProductMaxAggregateInputType = {
   englishCardName?: true
   frenchCardName?: true
   germanCardName?: true
-  lastSync?: true
+  eurPrice?: true
+  usdPrice?: true
+  eurFoilPrice?: true
+  usdFoilPrice?: true
+  usdEtchedPrice?: true
+  discountQty2?: true
+  discountQty3?: true
+  discountQty4?: true
+  discountQty5?: true
+  discountQty6?: true
+  discountQty7?: true
+  discountQty8?: true
+  discountQty9?: true
+  discountQty10?: true
+  innerMaterial?: true
+  outerMaterial?: true
+  binderClosure?: true
+  sleeveCount?: true
+  sleeveFinish?: true
+  sleeveSize?: true
+  productColor?: true
+  productSize?: true
+  productSizeDimensions?: true
+  compartmentsPerPage?: true
+  capacityDoubleSleeved?: true
+  capacitySingleSleeved?: true
+  scryfallId?: true
+  scryfallOracleId?: true
+  mkmid?: true
+  tcgid?: true
+  cardmarketId?: true
+  set?: true
+  setCode?: true
+  cardNumber?: true
+  condition?: true
+  finish?: true
+  rarity?: true
+  artist?: true
+  language?: true
+  cardColor?: true
+  colorIdentity?: true
+  producedMana?: true
+  keywords?: true
+  toughness?: true
+  power?: true
+  convertedManaCost?: true
+  subtype?: true
+  cardFrame?: true
 }
 
 export type ProductCountAggregateInputType = {
   id?: true
+  productId?: true
   title?: true
+  variantTitle?: true
   handle?: true
   vendor?: true
   productType?: true
   status?: true
-  totalInventory?: true
+  sku?: true
+  barcode?: true
+  price?: true
+  compareAtPrice?: true
+  inventoryQuantity?: true
+  cost?: true
   createdAt?: true
   updatedAt?: true
+  lastSync?: true
   images?: true
   briefeinheit?: true
   mainCategory?: true
@@ -169,7 +502,56 @@ export type ProductCountAggregateInputType = {
   englishCardName?: true
   frenchCardName?: true
   germanCardName?: true
-  lastSync?: true
+  eurPrice?: true
+  usdPrice?: true
+  eurFoilPrice?: true
+  usdFoilPrice?: true
+  usdEtchedPrice?: true
+  discountQty2?: true
+  discountQty3?: true
+  discountQty4?: true
+  discountQty5?: true
+  discountQty6?: true
+  discountQty7?: true
+  discountQty8?: true
+  discountQty9?: true
+  discountQty10?: true
+  innerMaterial?: true
+  outerMaterial?: true
+  binderClosure?: true
+  sleeveCount?: true
+  sleeveFinish?: true
+  sleeveSize?: true
+  productColor?: true
+  productSize?: true
+  productSizeDimensions?: true
+  compartmentsPerPage?: true
+  capacityDoubleSleeved?: true
+  capacitySingleSleeved?: true
+  scryfallId?: true
+  scryfallOracleId?: true
+  mkmid?: true
+  tcgid?: true
+  cardmarketId?: true
+  set?: true
+  setCode?: true
+  cardNumber?: true
+  condition?: true
+  finish?: true
+  rarity?: true
+  artist?: true
+  language?: true
+  cardColor?: true
+  colorIdentity?: true
+  producedMana?: true
+  keywords?: true
+  toughness?: true
+  power?: true
+  convertedManaCost?: true
+  subtype?: true
+  cardFrame?: true
+  relatedProducts?: true
+  complementaryProducts?: true
   _all?: true
 }
 
@@ -261,14 +643,22 @@ export type ProductGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 
 export type ProductGroupByOutputType = {
   id: string
+  productId: string
   title: string
+  variantTitle: string | null
   handle: string
   vendor: string | null
   productType: string | null
   status: string
-  totalInventory: number
+  sku: string | null
+  barcode: string | null
+  price: runtime.Decimal
+  compareAtPrice: runtime.Decimal | null
+  inventoryQuantity: number
+  cost: runtime.Decimal | null
   createdAt: Date
   updatedAt: Date
+  lastSync: Date
   images: runtime.JsonValue | null
   briefeinheit: string | null
   mainCategory: string | null
@@ -278,7 +668,56 @@ export type ProductGroupByOutputType = {
   englishCardName: string | null
   frenchCardName: string | null
   germanCardName: string | null
-  lastSync: Date
+  eurPrice: runtime.Decimal | null
+  usdPrice: runtime.Decimal | null
+  eurFoilPrice: runtime.Decimal | null
+  usdFoilPrice: runtime.Decimal | null
+  usdEtchedPrice: runtime.Decimal | null
+  discountQty2: string | null
+  discountQty3: string | null
+  discountQty4: string | null
+  discountQty5: string | null
+  discountQty6: string | null
+  discountQty7: string | null
+  discountQty8: string | null
+  discountQty9: string | null
+  discountQty10: string | null
+  innerMaterial: string | null
+  outerMaterial: string | null
+  binderClosure: string | null
+  sleeveCount: number | null
+  sleeveFinish: string | null
+  sleeveSize: string | null
+  productColor: string | null
+  productSize: string | null
+  productSizeDimensions: string | null
+  compartmentsPerPage: number | null
+  capacityDoubleSleeved: number | null
+  capacitySingleSleeved: number | null
+  scryfallId: string | null
+  scryfallOracleId: string | null
+  mkmid: string | null
+  tcgid: string | null
+  cardmarketId: string | null
+  set: string | null
+  setCode: string | null
+  cardNumber: string | null
+  condition: string | null
+  finish: string | null
+  rarity: string | null
+  artist: string | null
+  language: string | null
+  cardColor: string | null
+  colorIdentity: string | null
+  producedMana: string | null
+  keywords: string | null
+  toughness: string | null
+  power: string | null
+  convertedManaCost: string | null
+  subtype: string | null
+  cardFrame: string | null
+  relatedProducts: runtime.JsonValue | null
+  complementaryProducts: runtime.JsonValue | null
   _count: ProductCountAggregateOutputType | null
   _avg: ProductAvgAggregateOutputType | null
   _sum: ProductSumAggregateOutputType | null
@@ -306,14 +745,22 @@ export type ProductWhereInput = {
   OR?: Prisma.ProductWhereInput[]
   NOT?: Prisma.ProductWhereInput | Prisma.ProductWhereInput[]
   id?: Prisma.StringFilter<"Product"> | string
+  productId?: Prisma.StringFilter<"Product"> | string
   title?: Prisma.StringFilter<"Product"> | string
+  variantTitle?: Prisma.StringNullableFilter<"Product"> | string | null
   handle?: Prisma.StringFilter<"Product"> | string
   vendor?: Prisma.StringNullableFilter<"Product"> | string | null
   productType?: Prisma.StringNullableFilter<"Product"> | string | null
   status?: Prisma.StringFilter<"Product"> | string
-  totalInventory?: Prisma.IntFilter<"Product"> | number
+  sku?: Prisma.StringNullableFilter<"Product"> | string | null
+  barcode?: Prisma.StringNullableFilter<"Product"> | string | null
+  price?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  compareAtPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  inventoryQuantity?: Prisma.IntFilter<"Product"> | number
+  cost?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
+  lastSync?: Prisma.DateTimeFilter<"Product"> | Date | string
   images?: Prisma.JsonNullableFilter<"Product">
   briefeinheit?: Prisma.StringNullableFilter<"Product"> | string | null
   mainCategory?: Prisma.StringNullableFilter<"Product"> | string | null
@@ -323,20 +770,76 @@ export type ProductWhereInput = {
   englishCardName?: Prisma.StringNullableFilter<"Product"> | string | null
   frenchCardName?: Prisma.StringNullableFilter<"Product"> | string | null
   germanCardName?: Prisma.StringNullableFilter<"Product"> | string | null
-  lastSync?: Prisma.DateTimeFilter<"Product"> | Date | string
-  variants?: Prisma.ProductVariantListRelationFilter
+  eurPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  eurFoilPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdFoilPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdEtchedPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountQty2?: Prisma.StringNullableFilter<"Product"> | string | null
+  discountQty3?: Prisma.StringNullableFilter<"Product"> | string | null
+  discountQty4?: Prisma.StringNullableFilter<"Product"> | string | null
+  discountQty5?: Prisma.StringNullableFilter<"Product"> | string | null
+  discountQty6?: Prisma.StringNullableFilter<"Product"> | string | null
+  discountQty7?: Prisma.StringNullableFilter<"Product"> | string | null
+  discountQty8?: Prisma.StringNullableFilter<"Product"> | string | null
+  discountQty9?: Prisma.StringNullableFilter<"Product"> | string | null
+  discountQty10?: Prisma.StringNullableFilter<"Product"> | string | null
+  innerMaterial?: Prisma.StringNullableFilter<"Product"> | string | null
+  outerMaterial?: Prisma.StringNullableFilter<"Product"> | string | null
+  binderClosure?: Prisma.StringNullableFilter<"Product"> | string | null
+  sleeveCount?: Prisma.IntNullableFilter<"Product"> | number | null
+  sleeveFinish?: Prisma.StringNullableFilter<"Product"> | string | null
+  sleeveSize?: Prisma.StringNullableFilter<"Product"> | string | null
+  productColor?: Prisma.StringNullableFilter<"Product"> | string | null
+  productSize?: Prisma.StringNullableFilter<"Product"> | string | null
+  productSizeDimensions?: Prisma.StringNullableFilter<"Product"> | string | null
+  compartmentsPerPage?: Prisma.IntNullableFilter<"Product"> | number | null
+  capacityDoubleSleeved?: Prisma.IntNullableFilter<"Product"> | number | null
+  capacitySingleSleeved?: Prisma.IntNullableFilter<"Product"> | number | null
+  scryfallId?: Prisma.StringNullableFilter<"Product"> | string | null
+  scryfallOracleId?: Prisma.StringNullableFilter<"Product"> | string | null
+  mkmid?: Prisma.StringNullableFilter<"Product"> | string | null
+  tcgid?: Prisma.StringNullableFilter<"Product"> | string | null
+  cardmarketId?: Prisma.StringNullableFilter<"Product"> | string | null
+  set?: Prisma.StringNullableFilter<"Product"> | string | null
+  setCode?: Prisma.StringNullableFilter<"Product"> | string | null
+  cardNumber?: Prisma.StringNullableFilter<"Product"> | string | null
+  condition?: Prisma.StringNullableFilter<"Product"> | string | null
+  finish?: Prisma.StringNullableFilter<"Product"> | string | null
+  rarity?: Prisma.StringNullableFilter<"Product"> | string | null
+  artist?: Prisma.StringNullableFilter<"Product"> | string | null
+  language?: Prisma.StringNullableFilter<"Product"> | string | null
+  cardColor?: Prisma.StringNullableFilter<"Product"> | string | null
+  colorIdentity?: Prisma.StringNullableFilter<"Product"> | string | null
+  producedMana?: Prisma.StringNullableFilter<"Product"> | string | null
+  keywords?: Prisma.StringNullableFilter<"Product"> | string | null
+  toughness?: Prisma.StringNullableFilter<"Product"> | string | null
+  power?: Prisma.StringNullableFilter<"Product"> | string | null
+  convertedManaCost?: Prisma.StringNullableFilter<"Product"> | string | null
+  subtype?: Prisma.StringNullableFilter<"Product"> | string | null
+  cardFrame?: Prisma.StringNullableFilter<"Product"> | string | null
+  relatedProducts?: Prisma.JsonNullableFilter<"Product">
+  complementaryProducts?: Prisma.JsonNullableFilter<"Product">
 }
 
 export type ProductOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  productId?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  variantTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   handle?: Prisma.SortOrder
   vendor?: Prisma.SortOrderInput | Prisma.SortOrder
   productType?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  totalInventory?: Prisma.SortOrder
+  sku?: Prisma.SortOrderInput | Prisma.SortOrder
+  barcode?: Prisma.SortOrderInput | Prisma.SortOrder
+  price?: Prisma.SortOrder
+  compareAtPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  inventoryQuantity?: Prisma.SortOrder
+  cost?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  lastSync?: Prisma.SortOrder
   images?: Prisma.SortOrderInput | Prisma.SortOrder
   briefeinheit?: Prisma.SortOrderInput | Prisma.SortOrder
   mainCategory?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -346,8 +849,56 @@ export type ProductOrderByWithRelationInput = {
   englishCardName?: Prisma.SortOrderInput | Prisma.SortOrder
   frenchCardName?: Prisma.SortOrderInput | Prisma.SortOrder
   germanCardName?: Prisma.SortOrderInput | Prisma.SortOrder
-  lastSync?: Prisma.SortOrder
-  variants?: Prisma.ProductVariantOrderByRelationAggregateInput
+  eurPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  usdPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  eurFoilPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  usdFoilPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  usdEtchedPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountQty2?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountQty3?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountQty4?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountQty5?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountQty6?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountQty7?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountQty8?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountQty9?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountQty10?: Prisma.SortOrderInput | Prisma.SortOrder
+  innerMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
+  outerMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
+  binderClosure?: Prisma.SortOrderInput | Prisma.SortOrder
+  sleeveCount?: Prisma.SortOrderInput | Prisma.SortOrder
+  sleeveFinish?: Prisma.SortOrderInput | Prisma.SortOrder
+  sleeveSize?: Prisma.SortOrderInput | Prisma.SortOrder
+  productColor?: Prisma.SortOrderInput | Prisma.SortOrder
+  productSize?: Prisma.SortOrderInput | Prisma.SortOrder
+  productSizeDimensions?: Prisma.SortOrderInput | Prisma.SortOrder
+  compartmentsPerPage?: Prisma.SortOrderInput | Prisma.SortOrder
+  capacityDoubleSleeved?: Prisma.SortOrderInput | Prisma.SortOrder
+  capacitySingleSleeved?: Prisma.SortOrderInput | Prisma.SortOrder
+  scryfallId?: Prisma.SortOrderInput | Prisma.SortOrder
+  scryfallOracleId?: Prisma.SortOrderInput | Prisma.SortOrder
+  mkmid?: Prisma.SortOrderInput | Prisma.SortOrder
+  tcgid?: Prisma.SortOrderInput | Prisma.SortOrder
+  cardmarketId?: Prisma.SortOrderInput | Prisma.SortOrder
+  set?: Prisma.SortOrderInput | Prisma.SortOrder
+  setCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  cardNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  condition?: Prisma.SortOrderInput | Prisma.SortOrder
+  finish?: Prisma.SortOrderInput | Prisma.SortOrder
+  rarity?: Prisma.SortOrderInput | Prisma.SortOrder
+  artist?: Prisma.SortOrderInput | Prisma.SortOrder
+  language?: Prisma.SortOrderInput | Prisma.SortOrder
+  cardColor?: Prisma.SortOrderInput | Prisma.SortOrder
+  colorIdentity?: Prisma.SortOrderInput | Prisma.SortOrder
+  producedMana?: Prisma.SortOrderInput | Prisma.SortOrder
+  keywords?: Prisma.SortOrderInput | Prisma.SortOrder
+  toughness?: Prisma.SortOrderInput | Prisma.SortOrder
+  power?: Prisma.SortOrderInput | Prisma.SortOrder
+  convertedManaCost?: Prisma.SortOrderInput | Prisma.SortOrder
+  subtype?: Prisma.SortOrderInput | Prisma.SortOrder
+  cardFrame?: Prisma.SortOrderInput | Prisma.SortOrder
+  relatedProducts?: Prisma.SortOrderInput | Prisma.SortOrder
+  complementaryProducts?: Prisma.SortOrderInput | Prisma.SortOrder
 }
 
 export type ProductWhereUniqueInput = Prisma.AtLeast<{
@@ -355,14 +906,22 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ProductWhereInput | Prisma.ProductWhereInput[]
   OR?: Prisma.ProductWhereInput[]
   NOT?: Prisma.ProductWhereInput | Prisma.ProductWhereInput[]
+  productId?: Prisma.StringFilter<"Product"> | string
   title?: Prisma.StringFilter<"Product"> | string
+  variantTitle?: Prisma.StringNullableFilter<"Product"> | string | null
   handle?: Prisma.StringFilter<"Product"> | string
   vendor?: Prisma.StringNullableFilter<"Product"> | string | null
   productType?: Prisma.StringNullableFilter<"Product"> | string | null
   status?: Prisma.StringFilter<"Product"> | string
-  totalInventory?: Prisma.IntFilter<"Product"> | number
+  sku?: Prisma.StringNullableFilter<"Product"> | string | null
+  barcode?: Prisma.StringNullableFilter<"Product"> | string | null
+  price?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  compareAtPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  inventoryQuantity?: Prisma.IntFilter<"Product"> | number
+  cost?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
+  lastSync?: Prisma.DateTimeFilter<"Product"> | Date | string
   images?: Prisma.JsonNullableFilter<"Product">
   briefeinheit?: Prisma.StringNullableFilter<"Product"> | string | null
   mainCategory?: Prisma.StringNullableFilter<"Product"> | string | null
@@ -372,20 +931,76 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   englishCardName?: Prisma.StringNullableFilter<"Product"> | string | null
   frenchCardName?: Prisma.StringNullableFilter<"Product"> | string | null
   germanCardName?: Prisma.StringNullableFilter<"Product"> | string | null
-  lastSync?: Prisma.DateTimeFilter<"Product"> | Date | string
-  variants?: Prisma.ProductVariantListRelationFilter
+  eurPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  eurFoilPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdFoilPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdEtchedPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountQty2?: Prisma.StringNullableFilter<"Product"> | string | null
+  discountQty3?: Prisma.StringNullableFilter<"Product"> | string | null
+  discountQty4?: Prisma.StringNullableFilter<"Product"> | string | null
+  discountQty5?: Prisma.StringNullableFilter<"Product"> | string | null
+  discountQty6?: Prisma.StringNullableFilter<"Product"> | string | null
+  discountQty7?: Prisma.StringNullableFilter<"Product"> | string | null
+  discountQty8?: Prisma.StringNullableFilter<"Product"> | string | null
+  discountQty9?: Prisma.StringNullableFilter<"Product"> | string | null
+  discountQty10?: Prisma.StringNullableFilter<"Product"> | string | null
+  innerMaterial?: Prisma.StringNullableFilter<"Product"> | string | null
+  outerMaterial?: Prisma.StringNullableFilter<"Product"> | string | null
+  binderClosure?: Prisma.StringNullableFilter<"Product"> | string | null
+  sleeveCount?: Prisma.IntNullableFilter<"Product"> | number | null
+  sleeveFinish?: Prisma.StringNullableFilter<"Product"> | string | null
+  sleeveSize?: Prisma.StringNullableFilter<"Product"> | string | null
+  productColor?: Prisma.StringNullableFilter<"Product"> | string | null
+  productSize?: Prisma.StringNullableFilter<"Product"> | string | null
+  productSizeDimensions?: Prisma.StringNullableFilter<"Product"> | string | null
+  compartmentsPerPage?: Prisma.IntNullableFilter<"Product"> | number | null
+  capacityDoubleSleeved?: Prisma.IntNullableFilter<"Product"> | number | null
+  capacitySingleSleeved?: Prisma.IntNullableFilter<"Product"> | number | null
+  scryfallId?: Prisma.StringNullableFilter<"Product"> | string | null
+  scryfallOracleId?: Prisma.StringNullableFilter<"Product"> | string | null
+  mkmid?: Prisma.StringNullableFilter<"Product"> | string | null
+  tcgid?: Prisma.StringNullableFilter<"Product"> | string | null
+  cardmarketId?: Prisma.StringNullableFilter<"Product"> | string | null
+  set?: Prisma.StringNullableFilter<"Product"> | string | null
+  setCode?: Prisma.StringNullableFilter<"Product"> | string | null
+  cardNumber?: Prisma.StringNullableFilter<"Product"> | string | null
+  condition?: Prisma.StringNullableFilter<"Product"> | string | null
+  finish?: Prisma.StringNullableFilter<"Product"> | string | null
+  rarity?: Prisma.StringNullableFilter<"Product"> | string | null
+  artist?: Prisma.StringNullableFilter<"Product"> | string | null
+  language?: Prisma.StringNullableFilter<"Product"> | string | null
+  cardColor?: Prisma.StringNullableFilter<"Product"> | string | null
+  colorIdentity?: Prisma.StringNullableFilter<"Product"> | string | null
+  producedMana?: Prisma.StringNullableFilter<"Product"> | string | null
+  keywords?: Prisma.StringNullableFilter<"Product"> | string | null
+  toughness?: Prisma.StringNullableFilter<"Product"> | string | null
+  power?: Prisma.StringNullableFilter<"Product"> | string | null
+  convertedManaCost?: Prisma.StringNullableFilter<"Product"> | string | null
+  subtype?: Prisma.StringNullableFilter<"Product"> | string | null
+  cardFrame?: Prisma.StringNullableFilter<"Product"> | string | null
+  relatedProducts?: Prisma.JsonNullableFilter<"Product">
+  complementaryProducts?: Prisma.JsonNullableFilter<"Product">
 }, "id">
 
 export type ProductOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  productId?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  variantTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   handle?: Prisma.SortOrder
   vendor?: Prisma.SortOrderInput | Prisma.SortOrder
   productType?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  totalInventory?: Prisma.SortOrder
+  sku?: Prisma.SortOrderInput | Prisma.SortOrder
+  barcode?: Prisma.SortOrderInput | Prisma.SortOrder
+  price?: Prisma.SortOrder
+  compareAtPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  inventoryQuantity?: Prisma.SortOrder
+  cost?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  lastSync?: Prisma.SortOrder
   images?: Prisma.SortOrderInput | Prisma.SortOrder
   briefeinheit?: Prisma.SortOrderInput | Prisma.SortOrder
   mainCategory?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -395,7 +1010,56 @@ export type ProductOrderByWithAggregationInput = {
   englishCardName?: Prisma.SortOrderInput | Prisma.SortOrder
   frenchCardName?: Prisma.SortOrderInput | Prisma.SortOrder
   germanCardName?: Prisma.SortOrderInput | Prisma.SortOrder
-  lastSync?: Prisma.SortOrder
+  eurPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  usdPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  eurFoilPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  usdFoilPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  usdEtchedPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountQty2?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountQty3?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountQty4?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountQty5?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountQty6?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountQty7?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountQty8?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountQty9?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountQty10?: Prisma.SortOrderInput | Prisma.SortOrder
+  innerMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
+  outerMaterial?: Prisma.SortOrderInput | Prisma.SortOrder
+  binderClosure?: Prisma.SortOrderInput | Prisma.SortOrder
+  sleeveCount?: Prisma.SortOrderInput | Prisma.SortOrder
+  sleeveFinish?: Prisma.SortOrderInput | Prisma.SortOrder
+  sleeveSize?: Prisma.SortOrderInput | Prisma.SortOrder
+  productColor?: Prisma.SortOrderInput | Prisma.SortOrder
+  productSize?: Prisma.SortOrderInput | Prisma.SortOrder
+  productSizeDimensions?: Prisma.SortOrderInput | Prisma.SortOrder
+  compartmentsPerPage?: Prisma.SortOrderInput | Prisma.SortOrder
+  capacityDoubleSleeved?: Prisma.SortOrderInput | Prisma.SortOrder
+  capacitySingleSleeved?: Prisma.SortOrderInput | Prisma.SortOrder
+  scryfallId?: Prisma.SortOrderInput | Prisma.SortOrder
+  scryfallOracleId?: Prisma.SortOrderInput | Prisma.SortOrder
+  mkmid?: Prisma.SortOrderInput | Prisma.SortOrder
+  tcgid?: Prisma.SortOrderInput | Prisma.SortOrder
+  cardmarketId?: Prisma.SortOrderInput | Prisma.SortOrder
+  set?: Prisma.SortOrderInput | Prisma.SortOrder
+  setCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  cardNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  condition?: Prisma.SortOrderInput | Prisma.SortOrder
+  finish?: Prisma.SortOrderInput | Prisma.SortOrder
+  rarity?: Prisma.SortOrderInput | Prisma.SortOrder
+  artist?: Prisma.SortOrderInput | Prisma.SortOrder
+  language?: Prisma.SortOrderInput | Prisma.SortOrder
+  cardColor?: Prisma.SortOrderInput | Prisma.SortOrder
+  colorIdentity?: Prisma.SortOrderInput | Prisma.SortOrder
+  producedMana?: Prisma.SortOrderInput | Prisma.SortOrder
+  keywords?: Prisma.SortOrderInput | Prisma.SortOrder
+  toughness?: Prisma.SortOrderInput | Prisma.SortOrder
+  power?: Prisma.SortOrderInput | Prisma.SortOrder
+  convertedManaCost?: Prisma.SortOrderInput | Prisma.SortOrder
+  subtype?: Prisma.SortOrderInput | Prisma.SortOrder
+  cardFrame?: Prisma.SortOrderInput | Prisma.SortOrder
+  relatedProducts?: Prisma.SortOrderInput | Prisma.SortOrder
+  complementaryProducts?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ProductCountOrderByAggregateInput
   _avg?: Prisma.ProductAvgOrderByAggregateInput
   _max?: Prisma.ProductMaxOrderByAggregateInput
@@ -408,14 +1072,22 @@ export type ProductScalarWhereWithAggregatesInput = {
   OR?: Prisma.ProductScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ProductScalarWhereWithAggregatesInput | Prisma.ProductScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Product"> | string
+  productId?: Prisma.StringWithAggregatesFilter<"Product"> | string
   title?: Prisma.StringWithAggregatesFilter<"Product"> | string
+  variantTitle?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   handle?: Prisma.StringWithAggregatesFilter<"Product"> | string
   vendor?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   productType?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   status?: Prisma.StringWithAggregatesFilter<"Product"> | string
-  totalInventory?: Prisma.IntWithAggregatesFilter<"Product"> | number
+  sku?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  barcode?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  price?: Prisma.DecimalWithAggregatesFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  compareAtPrice?: Prisma.DecimalNullableWithAggregatesFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  inventoryQuantity?: Prisma.IntWithAggregatesFilter<"Product"> | number
+  cost?: Prisma.DecimalNullableWithAggregatesFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
+  lastSync?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
   images?: Prisma.JsonNullableWithAggregatesFilter<"Product">
   briefeinheit?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   mainCategory?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
@@ -425,19 +1097,76 @@ export type ProductScalarWhereWithAggregatesInput = {
   englishCardName?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   frenchCardName?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   germanCardName?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
-  lastSync?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
+  eurPrice?: Prisma.DecimalNullableWithAggregatesFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdPrice?: Prisma.DecimalNullableWithAggregatesFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  eurFoilPrice?: Prisma.DecimalNullableWithAggregatesFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdFoilPrice?: Prisma.DecimalNullableWithAggregatesFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdEtchedPrice?: Prisma.DecimalNullableWithAggregatesFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountQty2?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  discountQty3?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  discountQty4?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  discountQty5?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  discountQty6?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  discountQty7?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  discountQty8?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  discountQty9?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  discountQty10?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  innerMaterial?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  outerMaterial?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  binderClosure?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  sleeveCount?: Prisma.IntNullableWithAggregatesFilter<"Product"> | number | null
+  sleeveFinish?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  sleeveSize?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  productColor?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  productSize?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  productSizeDimensions?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  compartmentsPerPage?: Prisma.IntNullableWithAggregatesFilter<"Product"> | number | null
+  capacityDoubleSleeved?: Prisma.IntNullableWithAggregatesFilter<"Product"> | number | null
+  capacitySingleSleeved?: Prisma.IntNullableWithAggregatesFilter<"Product"> | number | null
+  scryfallId?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  scryfallOracleId?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  mkmid?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  tcgid?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  cardmarketId?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  set?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  setCode?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  cardNumber?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  condition?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  finish?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  rarity?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  artist?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  language?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  cardColor?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  colorIdentity?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  producedMana?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  keywords?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  toughness?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  power?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  convertedManaCost?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  subtype?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  cardFrame?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  relatedProducts?: Prisma.JsonNullableWithAggregatesFilter<"Product">
+  complementaryProducts?: Prisma.JsonNullableWithAggregatesFilter<"Product">
 }
 
 export type ProductCreateInput = {
   id: string
+  productId: string
   title: string
+  variantTitle?: string | null
   handle: string
   vendor?: string | null
   productType?: string | null
   status: string
-  totalInventory?: number
+  sku?: string | null
+  barcode?: string | null
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  inventoryQuantity?: number
+  cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt: Date | string
   updatedAt: Date | string
+  lastSync?: Date | string
   images?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   briefeinheit?: string | null
   mainCategory?: string | null
@@ -447,20 +1176,76 @@ export type ProductCreateInput = {
   englishCardName?: string | null
   frenchCardName?: string | null
   germanCardName?: string | null
-  lastSync?: Date | string
-  variants?: Prisma.ProductVariantCreateNestedManyWithoutProductInput
+  eurPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  eurFoilPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdFoilPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdEtchedPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountQty2?: string | null
+  discountQty3?: string | null
+  discountQty4?: string | null
+  discountQty5?: string | null
+  discountQty6?: string | null
+  discountQty7?: string | null
+  discountQty8?: string | null
+  discountQty9?: string | null
+  discountQty10?: string | null
+  innerMaterial?: string | null
+  outerMaterial?: string | null
+  binderClosure?: string | null
+  sleeveCount?: number | null
+  sleeveFinish?: string | null
+  sleeveSize?: string | null
+  productColor?: string | null
+  productSize?: string | null
+  productSizeDimensions?: string | null
+  compartmentsPerPage?: number | null
+  capacityDoubleSleeved?: number | null
+  capacitySingleSleeved?: number | null
+  scryfallId?: string | null
+  scryfallOracleId?: string | null
+  mkmid?: string | null
+  tcgid?: string | null
+  cardmarketId?: string | null
+  set?: string | null
+  setCode?: string | null
+  cardNumber?: string | null
+  condition?: string | null
+  finish?: string | null
+  rarity?: string | null
+  artist?: string | null
+  language?: string | null
+  cardColor?: string | null
+  colorIdentity?: string | null
+  producedMana?: string | null
+  keywords?: string | null
+  toughness?: string | null
+  power?: string | null
+  convertedManaCost?: string | null
+  subtype?: string | null
+  cardFrame?: string | null
+  relatedProducts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  complementaryProducts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ProductUncheckedCreateInput = {
   id: string
+  productId: string
   title: string
+  variantTitle?: string | null
   handle: string
   vendor?: string | null
   productType?: string | null
   status: string
-  totalInventory?: number
+  sku?: string | null
+  barcode?: string | null
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  inventoryQuantity?: number
+  cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt: Date | string
   updatedAt: Date | string
+  lastSync?: Date | string
   images?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   briefeinheit?: string | null
   mainCategory?: string | null
@@ -470,20 +1255,76 @@ export type ProductUncheckedCreateInput = {
   englishCardName?: string | null
   frenchCardName?: string | null
   germanCardName?: string | null
-  lastSync?: Date | string
-  variants?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutProductInput
+  eurPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  eurFoilPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdFoilPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdEtchedPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountQty2?: string | null
+  discountQty3?: string | null
+  discountQty4?: string | null
+  discountQty5?: string | null
+  discountQty6?: string | null
+  discountQty7?: string | null
+  discountQty8?: string | null
+  discountQty9?: string | null
+  discountQty10?: string | null
+  innerMaterial?: string | null
+  outerMaterial?: string | null
+  binderClosure?: string | null
+  sleeveCount?: number | null
+  sleeveFinish?: string | null
+  sleeveSize?: string | null
+  productColor?: string | null
+  productSize?: string | null
+  productSizeDimensions?: string | null
+  compartmentsPerPage?: number | null
+  capacityDoubleSleeved?: number | null
+  capacitySingleSleeved?: number | null
+  scryfallId?: string | null
+  scryfallOracleId?: string | null
+  mkmid?: string | null
+  tcgid?: string | null
+  cardmarketId?: string | null
+  set?: string | null
+  setCode?: string | null
+  cardNumber?: string | null
+  condition?: string | null
+  finish?: string | null
+  rarity?: string | null
+  artist?: string | null
+  language?: string | null
+  cardColor?: string | null
+  colorIdentity?: string | null
+  producedMana?: string | null
+  keywords?: string | null
+  toughness?: string | null
+  power?: string | null
+  convertedManaCost?: string | null
+  subtype?: string | null
+  cardFrame?: string | null
+  relatedProducts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  complementaryProducts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ProductUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  variantTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   handle?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  totalInventory?: Prisma.IntFieldUpdateOperationsInput | number
+  sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  inventoryQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSync?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   briefeinheit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mainCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -493,20 +1334,76 @@ export type ProductUpdateInput = {
   englishCardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   frenchCardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   germanCardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lastSync?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  variants?: Prisma.ProductVariantUpdateManyWithoutProductNestedInput
+  eurPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  eurFoilPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdFoilPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdEtchedPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountQty2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty6?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty7?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty8?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty9?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty10?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  innerMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  outerMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  binderClosure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sleeveCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sleeveFinish?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sleeveSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  productColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  productSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  productSizeDimensions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  compartmentsPerPage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  capacityDoubleSleeved?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  capacitySingleSleeved?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  scryfallId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  scryfallOracleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mkmid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcgid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cardmarketId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  set?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  setCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cardNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  condition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  finish?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rarity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  artist?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cardColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorIdentity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  producedMana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  keywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toughness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  power?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedManaCost?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cardFrame?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  relatedProducts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  complementaryProducts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ProductUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  variantTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   handle?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  totalInventory?: Prisma.IntFieldUpdateOperationsInput | number
+  sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  inventoryQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSync?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   briefeinheit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mainCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -516,20 +1413,76 @@ export type ProductUncheckedUpdateInput = {
   englishCardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   frenchCardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   germanCardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lastSync?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  variants?: Prisma.ProductVariantUncheckedUpdateManyWithoutProductNestedInput
+  eurPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  eurFoilPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdFoilPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdEtchedPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountQty2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty6?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty7?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty8?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty9?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty10?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  innerMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  outerMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  binderClosure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sleeveCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sleeveFinish?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sleeveSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  productColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  productSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  productSizeDimensions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  compartmentsPerPage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  capacityDoubleSleeved?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  capacitySingleSleeved?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  scryfallId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  scryfallOracleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mkmid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcgid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cardmarketId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  set?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  setCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cardNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  condition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  finish?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rarity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  artist?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cardColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorIdentity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  producedMana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  keywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toughness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  power?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedManaCost?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cardFrame?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  relatedProducts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  complementaryProducts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ProductCreateManyInput = {
   id: string
+  productId: string
   title: string
+  variantTitle?: string | null
   handle: string
   vendor?: string | null
   productType?: string | null
   status: string
-  totalInventory?: number
+  sku?: string | null
+  barcode?: string | null
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  inventoryQuantity?: number
+  cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt: Date | string
   updatedAt: Date | string
+  lastSync?: Date | string
   images?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   briefeinheit?: string | null
   mainCategory?: string | null
@@ -539,19 +1492,76 @@ export type ProductCreateManyInput = {
   englishCardName?: string | null
   frenchCardName?: string | null
   germanCardName?: string | null
-  lastSync?: Date | string
+  eurPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  eurFoilPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdFoilPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdEtchedPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountQty2?: string | null
+  discountQty3?: string | null
+  discountQty4?: string | null
+  discountQty5?: string | null
+  discountQty6?: string | null
+  discountQty7?: string | null
+  discountQty8?: string | null
+  discountQty9?: string | null
+  discountQty10?: string | null
+  innerMaterial?: string | null
+  outerMaterial?: string | null
+  binderClosure?: string | null
+  sleeveCount?: number | null
+  sleeveFinish?: string | null
+  sleeveSize?: string | null
+  productColor?: string | null
+  productSize?: string | null
+  productSizeDimensions?: string | null
+  compartmentsPerPage?: number | null
+  capacityDoubleSleeved?: number | null
+  capacitySingleSleeved?: number | null
+  scryfallId?: string | null
+  scryfallOracleId?: string | null
+  mkmid?: string | null
+  tcgid?: string | null
+  cardmarketId?: string | null
+  set?: string | null
+  setCode?: string | null
+  cardNumber?: string | null
+  condition?: string | null
+  finish?: string | null
+  rarity?: string | null
+  artist?: string | null
+  language?: string | null
+  cardColor?: string | null
+  colorIdentity?: string | null
+  producedMana?: string | null
+  keywords?: string | null
+  toughness?: string | null
+  power?: string | null
+  convertedManaCost?: string | null
+  subtype?: string | null
+  cardFrame?: string | null
+  relatedProducts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  complementaryProducts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ProductUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  variantTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   handle?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  totalInventory?: Prisma.IntFieldUpdateOperationsInput | number
+  sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  inventoryQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSync?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   briefeinheit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mainCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -561,19 +1571,76 @@ export type ProductUpdateManyMutationInput = {
   englishCardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   frenchCardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   germanCardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lastSync?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  eurPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  eurFoilPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdFoilPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdEtchedPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountQty2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty6?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty7?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty8?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty9?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty10?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  innerMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  outerMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  binderClosure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sleeveCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sleeveFinish?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sleeveSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  productColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  productSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  productSizeDimensions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  compartmentsPerPage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  capacityDoubleSleeved?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  capacitySingleSleeved?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  scryfallId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  scryfallOracleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mkmid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcgid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cardmarketId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  set?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  setCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cardNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  condition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  finish?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rarity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  artist?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cardColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorIdentity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  producedMana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  keywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toughness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  power?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedManaCost?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cardFrame?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  relatedProducts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  complementaryProducts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ProductUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  variantTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   handle?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  totalInventory?: Prisma.IntFieldUpdateOperationsInput | number
+  sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  inventoryQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSync?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   briefeinheit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mainCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -583,19 +1650,76 @@ export type ProductUncheckedUpdateManyInput = {
   englishCardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   frenchCardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   germanCardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lastSync?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  eurPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  eurFoilPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdFoilPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  usdEtchedPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountQty2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty6?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty7?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty8?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty9?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discountQty10?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  innerMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  outerMaterial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  binderClosure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sleeveCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sleeveFinish?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sleeveSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  productColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  productSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  productSizeDimensions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  compartmentsPerPage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  capacityDoubleSleeved?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  capacitySingleSleeved?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  scryfallId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  scryfallOracleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mkmid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcgid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cardmarketId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  set?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  setCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cardNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  condition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  finish?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rarity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  artist?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cardColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  colorIdentity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  producedMana?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  keywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toughness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  power?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedManaCost?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cardFrame?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  relatedProducts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  complementaryProducts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ProductCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  productId?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  variantTitle?: Prisma.SortOrder
   handle?: Prisma.SortOrder
   vendor?: Prisma.SortOrder
   productType?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  totalInventory?: Prisma.SortOrder
+  sku?: Prisma.SortOrder
+  barcode?: Prisma.SortOrder
+  price?: Prisma.SortOrder
+  compareAtPrice?: Prisma.SortOrder
+  inventoryQuantity?: Prisma.SortOrder
+  cost?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  lastSync?: Prisma.SortOrder
   images?: Prisma.SortOrder
   briefeinheit?: Prisma.SortOrder
   mainCategory?: Prisma.SortOrder
@@ -605,23 +1729,92 @@ export type ProductCountOrderByAggregateInput = {
   englishCardName?: Prisma.SortOrder
   frenchCardName?: Prisma.SortOrder
   germanCardName?: Prisma.SortOrder
-  lastSync?: Prisma.SortOrder
+  eurPrice?: Prisma.SortOrder
+  usdPrice?: Prisma.SortOrder
+  eurFoilPrice?: Prisma.SortOrder
+  usdFoilPrice?: Prisma.SortOrder
+  usdEtchedPrice?: Prisma.SortOrder
+  discountQty2?: Prisma.SortOrder
+  discountQty3?: Prisma.SortOrder
+  discountQty4?: Prisma.SortOrder
+  discountQty5?: Prisma.SortOrder
+  discountQty6?: Prisma.SortOrder
+  discountQty7?: Prisma.SortOrder
+  discountQty8?: Prisma.SortOrder
+  discountQty9?: Prisma.SortOrder
+  discountQty10?: Prisma.SortOrder
+  innerMaterial?: Prisma.SortOrder
+  outerMaterial?: Prisma.SortOrder
+  binderClosure?: Prisma.SortOrder
+  sleeveCount?: Prisma.SortOrder
+  sleeveFinish?: Prisma.SortOrder
+  sleeveSize?: Prisma.SortOrder
+  productColor?: Prisma.SortOrder
+  productSize?: Prisma.SortOrder
+  productSizeDimensions?: Prisma.SortOrder
+  compartmentsPerPage?: Prisma.SortOrder
+  capacityDoubleSleeved?: Prisma.SortOrder
+  capacitySingleSleeved?: Prisma.SortOrder
+  scryfallId?: Prisma.SortOrder
+  scryfallOracleId?: Prisma.SortOrder
+  mkmid?: Prisma.SortOrder
+  tcgid?: Prisma.SortOrder
+  cardmarketId?: Prisma.SortOrder
+  set?: Prisma.SortOrder
+  setCode?: Prisma.SortOrder
+  cardNumber?: Prisma.SortOrder
+  condition?: Prisma.SortOrder
+  finish?: Prisma.SortOrder
+  rarity?: Prisma.SortOrder
+  artist?: Prisma.SortOrder
+  language?: Prisma.SortOrder
+  cardColor?: Prisma.SortOrder
+  colorIdentity?: Prisma.SortOrder
+  producedMana?: Prisma.SortOrder
+  keywords?: Prisma.SortOrder
+  toughness?: Prisma.SortOrder
+  power?: Prisma.SortOrder
+  convertedManaCost?: Prisma.SortOrder
+  subtype?: Prisma.SortOrder
+  cardFrame?: Prisma.SortOrder
+  relatedProducts?: Prisma.SortOrder
+  complementaryProducts?: Prisma.SortOrder
 }
 
 export type ProductAvgOrderByAggregateInput = {
-  totalInventory?: Prisma.SortOrder
+  price?: Prisma.SortOrder
+  compareAtPrice?: Prisma.SortOrder
+  inventoryQuantity?: Prisma.SortOrder
+  cost?: Prisma.SortOrder
+  eurPrice?: Prisma.SortOrder
+  usdPrice?: Prisma.SortOrder
+  eurFoilPrice?: Prisma.SortOrder
+  usdFoilPrice?: Prisma.SortOrder
+  usdEtchedPrice?: Prisma.SortOrder
+  sleeveCount?: Prisma.SortOrder
+  compartmentsPerPage?: Prisma.SortOrder
+  capacityDoubleSleeved?: Prisma.SortOrder
+  capacitySingleSleeved?: Prisma.SortOrder
 }
 
 export type ProductMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  productId?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  variantTitle?: Prisma.SortOrder
   handle?: Prisma.SortOrder
   vendor?: Prisma.SortOrder
   productType?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  totalInventory?: Prisma.SortOrder
+  sku?: Prisma.SortOrder
+  barcode?: Prisma.SortOrder
+  price?: Prisma.SortOrder
+  compareAtPrice?: Prisma.SortOrder
+  inventoryQuantity?: Prisma.SortOrder
+  cost?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  lastSync?: Prisma.SortOrder
   briefeinheit?: Prisma.SortOrder
   mainCategory?: Prisma.SortOrder
   mainType?: Prisma.SortOrder
@@ -630,19 +1823,74 @@ export type ProductMaxOrderByAggregateInput = {
   englishCardName?: Prisma.SortOrder
   frenchCardName?: Prisma.SortOrder
   germanCardName?: Prisma.SortOrder
-  lastSync?: Prisma.SortOrder
+  eurPrice?: Prisma.SortOrder
+  usdPrice?: Prisma.SortOrder
+  eurFoilPrice?: Prisma.SortOrder
+  usdFoilPrice?: Prisma.SortOrder
+  usdEtchedPrice?: Prisma.SortOrder
+  discountQty2?: Prisma.SortOrder
+  discountQty3?: Prisma.SortOrder
+  discountQty4?: Prisma.SortOrder
+  discountQty5?: Prisma.SortOrder
+  discountQty6?: Prisma.SortOrder
+  discountQty7?: Prisma.SortOrder
+  discountQty8?: Prisma.SortOrder
+  discountQty9?: Prisma.SortOrder
+  discountQty10?: Prisma.SortOrder
+  innerMaterial?: Prisma.SortOrder
+  outerMaterial?: Prisma.SortOrder
+  binderClosure?: Prisma.SortOrder
+  sleeveCount?: Prisma.SortOrder
+  sleeveFinish?: Prisma.SortOrder
+  sleeveSize?: Prisma.SortOrder
+  productColor?: Prisma.SortOrder
+  productSize?: Prisma.SortOrder
+  productSizeDimensions?: Prisma.SortOrder
+  compartmentsPerPage?: Prisma.SortOrder
+  capacityDoubleSleeved?: Prisma.SortOrder
+  capacitySingleSleeved?: Prisma.SortOrder
+  scryfallId?: Prisma.SortOrder
+  scryfallOracleId?: Prisma.SortOrder
+  mkmid?: Prisma.SortOrder
+  tcgid?: Prisma.SortOrder
+  cardmarketId?: Prisma.SortOrder
+  set?: Prisma.SortOrder
+  setCode?: Prisma.SortOrder
+  cardNumber?: Prisma.SortOrder
+  condition?: Prisma.SortOrder
+  finish?: Prisma.SortOrder
+  rarity?: Prisma.SortOrder
+  artist?: Prisma.SortOrder
+  language?: Prisma.SortOrder
+  cardColor?: Prisma.SortOrder
+  colorIdentity?: Prisma.SortOrder
+  producedMana?: Prisma.SortOrder
+  keywords?: Prisma.SortOrder
+  toughness?: Prisma.SortOrder
+  power?: Prisma.SortOrder
+  convertedManaCost?: Prisma.SortOrder
+  subtype?: Prisma.SortOrder
+  cardFrame?: Prisma.SortOrder
 }
 
 export type ProductMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  productId?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  variantTitle?: Prisma.SortOrder
   handle?: Prisma.SortOrder
   vendor?: Prisma.SortOrder
   productType?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  totalInventory?: Prisma.SortOrder
+  sku?: Prisma.SortOrder
+  barcode?: Prisma.SortOrder
+  price?: Prisma.SortOrder
+  compareAtPrice?: Prisma.SortOrder
+  inventoryQuantity?: Prisma.SortOrder
+  cost?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  lastSync?: Prisma.SortOrder
   briefeinheit?: Prisma.SortOrder
   mainCategory?: Prisma.SortOrder
   mainType?: Prisma.SortOrder
@@ -651,177 +1899,116 @@ export type ProductMinOrderByAggregateInput = {
   englishCardName?: Prisma.SortOrder
   frenchCardName?: Prisma.SortOrder
   germanCardName?: Prisma.SortOrder
-  lastSync?: Prisma.SortOrder
+  eurPrice?: Prisma.SortOrder
+  usdPrice?: Prisma.SortOrder
+  eurFoilPrice?: Prisma.SortOrder
+  usdFoilPrice?: Prisma.SortOrder
+  usdEtchedPrice?: Prisma.SortOrder
+  discountQty2?: Prisma.SortOrder
+  discountQty3?: Prisma.SortOrder
+  discountQty4?: Prisma.SortOrder
+  discountQty5?: Prisma.SortOrder
+  discountQty6?: Prisma.SortOrder
+  discountQty7?: Prisma.SortOrder
+  discountQty8?: Prisma.SortOrder
+  discountQty9?: Prisma.SortOrder
+  discountQty10?: Prisma.SortOrder
+  innerMaterial?: Prisma.SortOrder
+  outerMaterial?: Prisma.SortOrder
+  binderClosure?: Prisma.SortOrder
+  sleeveCount?: Prisma.SortOrder
+  sleeveFinish?: Prisma.SortOrder
+  sleeveSize?: Prisma.SortOrder
+  productColor?: Prisma.SortOrder
+  productSize?: Prisma.SortOrder
+  productSizeDimensions?: Prisma.SortOrder
+  compartmentsPerPage?: Prisma.SortOrder
+  capacityDoubleSleeved?: Prisma.SortOrder
+  capacitySingleSleeved?: Prisma.SortOrder
+  scryfallId?: Prisma.SortOrder
+  scryfallOracleId?: Prisma.SortOrder
+  mkmid?: Prisma.SortOrder
+  tcgid?: Prisma.SortOrder
+  cardmarketId?: Prisma.SortOrder
+  set?: Prisma.SortOrder
+  setCode?: Prisma.SortOrder
+  cardNumber?: Prisma.SortOrder
+  condition?: Prisma.SortOrder
+  finish?: Prisma.SortOrder
+  rarity?: Prisma.SortOrder
+  artist?: Prisma.SortOrder
+  language?: Prisma.SortOrder
+  cardColor?: Prisma.SortOrder
+  colorIdentity?: Prisma.SortOrder
+  producedMana?: Prisma.SortOrder
+  keywords?: Prisma.SortOrder
+  toughness?: Prisma.SortOrder
+  power?: Prisma.SortOrder
+  convertedManaCost?: Prisma.SortOrder
+  subtype?: Prisma.SortOrder
+  cardFrame?: Prisma.SortOrder
 }
 
 export type ProductSumOrderByAggregateInput = {
-  totalInventory?: Prisma.SortOrder
+  price?: Prisma.SortOrder
+  compareAtPrice?: Prisma.SortOrder
+  inventoryQuantity?: Prisma.SortOrder
+  cost?: Prisma.SortOrder
+  eurPrice?: Prisma.SortOrder
+  usdPrice?: Prisma.SortOrder
+  eurFoilPrice?: Prisma.SortOrder
+  usdFoilPrice?: Prisma.SortOrder
+  usdEtchedPrice?: Prisma.SortOrder
+  sleeveCount?: Prisma.SortOrder
+  compartmentsPerPage?: Prisma.SortOrder
+  capacityDoubleSleeved?: Prisma.SortOrder
+  capacitySingleSleeved?: Prisma.SortOrder
 }
 
-export type ProductScalarRelationFilter = {
-  is?: Prisma.ProductWhereInput
-  isNot?: Prisma.ProductWhereInput
+export type DecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
-export type ProductCreateNestedOneWithoutVariantsInput = {
-  create?: Prisma.XOR<Prisma.ProductCreateWithoutVariantsInput, Prisma.ProductUncheckedCreateWithoutVariantsInput>
-  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutVariantsInput
-  connect?: Prisma.ProductWhereUniqueInput
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
-export type ProductUpdateOneRequiredWithoutVariantsNestedInput = {
-  create?: Prisma.XOR<Prisma.ProductCreateWithoutVariantsInput, Prisma.ProductUncheckedCreateWithoutVariantsInput>
-  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutVariantsInput
-  upsert?: Prisma.ProductUpsertWithoutVariantsInput
-  connect?: Prisma.ProductWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutVariantsInput, Prisma.ProductUpdateWithoutVariantsInput>, Prisma.ProductUncheckedUpdateWithoutVariantsInput>
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
-export type ProductCreateWithoutVariantsInput = {
-  id: string
-  title: string
-  handle: string
-  vendor?: string | null
-  productType?: string | null
-  status: string
-  totalInventory?: number
-  createdAt: Date | string
-  updatedAt: Date | string
-  images?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  briefeinheit?: string | null
-  mainCategory?: string | null
-  mainType?: string | null
-  supplierSku?: string | null
-  releasedAt?: string | null
-  englishCardName?: string | null
-  frenchCardName?: string | null
-  germanCardName?: string | null
-  lastSync?: Date | string
-}
-
-export type ProductUncheckedCreateWithoutVariantsInput = {
-  id: string
-  title: string
-  handle: string
-  vendor?: string | null
-  productType?: string | null
-  status: string
-  totalInventory?: number
-  createdAt: Date | string
-  updatedAt: Date | string
-  images?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  briefeinheit?: string | null
-  mainCategory?: string | null
-  mainType?: string | null
-  supplierSku?: string | null
-  releasedAt?: string | null
-  englishCardName?: string | null
-  frenchCardName?: string | null
-  germanCardName?: string | null
-  lastSync?: Date | string
-}
-
-export type ProductCreateOrConnectWithoutVariantsInput = {
-  where: Prisma.ProductWhereUniqueInput
-  create: Prisma.XOR<Prisma.ProductCreateWithoutVariantsInput, Prisma.ProductUncheckedCreateWithoutVariantsInput>
-}
-
-export type ProductUpsertWithoutVariantsInput = {
-  update: Prisma.XOR<Prisma.ProductUpdateWithoutVariantsInput, Prisma.ProductUncheckedUpdateWithoutVariantsInput>
-  create: Prisma.XOR<Prisma.ProductCreateWithoutVariantsInput, Prisma.ProductUncheckedCreateWithoutVariantsInput>
-  where?: Prisma.ProductWhereInput
-}
-
-export type ProductUpdateToOneWithWhereWithoutVariantsInput = {
-  where?: Prisma.ProductWhereInput
-  data: Prisma.XOR<Prisma.ProductUpdateWithoutVariantsInput, Prisma.ProductUncheckedUpdateWithoutVariantsInput>
-}
-
-export type ProductUpdateWithoutVariantsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  handle?: Prisma.StringFieldUpdateOperationsInput | string
-  vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  productType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  totalInventory?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  images?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  briefeinheit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  mainCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  mainType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  supplierSku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  releasedAt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  englishCardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  frenchCardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  germanCardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lastSync?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type ProductUncheckedUpdateWithoutVariantsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  handle?: Prisma.StringFieldUpdateOperationsInput | string
-  vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  productType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  totalInventory?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  images?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  briefeinheit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  mainCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  mainType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  supplierSku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  releasedAt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  englishCardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  frenchCardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  germanCardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lastSync?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-
-/**
- * Count Type ProductCountOutputType
- */
-
-export type ProductCountOutputType = {
-  variants: number
-}
-
-export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  variants?: boolean | ProductCountOutputTypeCountVariantsArgs
-}
-
-/**
- * ProductCountOutputType without action
- */
-export type ProductCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ProductCountOutputType
-   */
-  select?: Prisma.ProductCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * ProductCountOutputType without action
- */
-export type ProductCountOutputTypeCountVariantsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ProductVariantWhereInput
-}
 
 
 export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  productId?: boolean
   title?: boolean
+  variantTitle?: boolean
   handle?: boolean
   vendor?: boolean
   productType?: boolean
   status?: boolean
-  totalInventory?: boolean
+  sku?: boolean
+  barcode?: boolean
+  price?: boolean
+  compareAtPrice?: boolean
+  inventoryQuantity?: boolean
+  cost?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  lastSync?: boolean
   images?: boolean
   briefeinheit?: boolean
   mainCategory?: boolean
@@ -831,21 +2018,76 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   englishCardName?: boolean
   frenchCardName?: boolean
   germanCardName?: boolean
-  lastSync?: boolean
-  variants?: boolean | Prisma.Product$variantsArgs<ExtArgs>
-  _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
+  eurPrice?: boolean
+  usdPrice?: boolean
+  eurFoilPrice?: boolean
+  usdFoilPrice?: boolean
+  usdEtchedPrice?: boolean
+  discountQty2?: boolean
+  discountQty3?: boolean
+  discountQty4?: boolean
+  discountQty5?: boolean
+  discountQty6?: boolean
+  discountQty7?: boolean
+  discountQty8?: boolean
+  discountQty9?: boolean
+  discountQty10?: boolean
+  innerMaterial?: boolean
+  outerMaterial?: boolean
+  binderClosure?: boolean
+  sleeveCount?: boolean
+  sleeveFinish?: boolean
+  sleeveSize?: boolean
+  productColor?: boolean
+  productSize?: boolean
+  productSizeDimensions?: boolean
+  compartmentsPerPage?: boolean
+  capacityDoubleSleeved?: boolean
+  capacitySingleSleeved?: boolean
+  scryfallId?: boolean
+  scryfallOracleId?: boolean
+  mkmid?: boolean
+  tcgid?: boolean
+  cardmarketId?: boolean
+  set?: boolean
+  setCode?: boolean
+  cardNumber?: boolean
+  condition?: boolean
+  finish?: boolean
+  rarity?: boolean
+  artist?: boolean
+  language?: boolean
+  cardColor?: boolean
+  colorIdentity?: boolean
+  producedMana?: boolean
+  keywords?: boolean
+  toughness?: boolean
+  power?: boolean
+  convertedManaCost?: boolean
+  subtype?: boolean
+  cardFrame?: boolean
+  relatedProducts?: boolean
+  complementaryProducts?: boolean
 }, ExtArgs["result"]["product"]>
 
 export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  productId?: boolean
   title?: boolean
+  variantTitle?: boolean
   handle?: boolean
   vendor?: boolean
   productType?: boolean
   status?: boolean
-  totalInventory?: boolean
+  sku?: boolean
+  barcode?: boolean
+  price?: boolean
+  compareAtPrice?: boolean
+  inventoryQuantity?: boolean
+  cost?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  lastSync?: boolean
   images?: boolean
   briefeinheit?: boolean
   mainCategory?: boolean
@@ -855,19 +2097,76 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   englishCardName?: boolean
   frenchCardName?: boolean
   germanCardName?: boolean
-  lastSync?: boolean
+  eurPrice?: boolean
+  usdPrice?: boolean
+  eurFoilPrice?: boolean
+  usdFoilPrice?: boolean
+  usdEtchedPrice?: boolean
+  discountQty2?: boolean
+  discountQty3?: boolean
+  discountQty4?: boolean
+  discountQty5?: boolean
+  discountQty6?: boolean
+  discountQty7?: boolean
+  discountQty8?: boolean
+  discountQty9?: boolean
+  discountQty10?: boolean
+  innerMaterial?: boolean
+  outerMaterial?: boolean
+  binderClosure?: boolean
+  sleeveCount?: boolean
+  sleeveFinish?: boolean
+  sleeveSize?: boolean
+  productColor?: boolean
+  productSize?: boolean
+  productSizeDimensions?: boolean
+  compartmentsPerPage?: boolean
+  capacityDoubleSleeved?: boolean
+  capacitySingleSleeved?: boolean
+  scryfallId?: boolean
+  scryfallOracleId?: boolean
+  mkmid?: boolean
+  tcgid?: boolean
+  cardmarketId?: boolean
+  set?: boolean
+  setCode?: boolean
+  cardNumber?: boolean
+  condition?: boolean
+  finish?: boolean
+  rarity?: boolean
+  artist?: boolean
+  language?: boolean
+  cardColor?: boolean
+  colorIdentity?: boolean
+  producedMana?: boolean
+  keywords?: boolean
+  toughness?: boolean
+  power?: boolean
+  convertedManaCost?: boolean
+  subtype?: boolean
+  cardFrame?: boolean
+  relatedProducts?: boolean
+  complementaryProducts?: boolean
 }, ExtArgs["result"]["product"]>
 
 export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  productId?: boolean
   title?: boolean
+  variantTitle?: boolean
   handle?: boolean
   vendor?: boolean
   productType?: boolean
   status?: boolean
-  totalInventory?: boolean
+  sku?: boolean
+  barcode?: boolean
+  price?: boolean
+  compareAtPrice?: boolean
+  inventoryQuantity?: boolean
+  cost?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  lastSync?: boolean
   images?: boolean
   briefeinheit?: boolean
   mainCategory?: boolean
@@ -877,19 +2176,76 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   englishCardName?: boolean
   frenchCardName?: boolean
   germanCardName?: boolean
-  lastSync?: boolean
+  eurPrice?: boolean
+  usdPrice?: boolean
+  eurFoilPrice?: boolean
+  usdFoilPrice?: boolean
+  usdEtchedPrice?: boolean
+  discountQty2?: boolean
+  discountQty3?: boolean
+  discountQty4?: boolean
+  discountQty5?: boolean
+  discountQty6?: boolean
+  discountQty7?: boolean
+  discountQty8?: boolean
+  discountQty9?: boolean
+  discountQty10?: boolean
+  innerMaterial?: boolean
+  outerMaterial?: boolean
+  binderClosure?: boolean
+  sleeveCount?: boolean
+  sleeveFinish?: boolean
+  sleeveSize?: boolean
+  productColor?: boolean
+  productSize?: boolean
+  productSizeDimensions?: boolean
+  compartmentsPerPage?: boolean
+  capacityDoubleSleeved?: boolean
+  capacitySingleSleeved?: boolean
+  scryfallId?: boolean
+  scryfallOracleId?: boolean
+  mkmid?: boolean
+  tcgid?: boolean
+  cardmarketId?: boolean
+  set?: boolean
+  setCode?: boolean
+  cardNumber?: boolean
+  condition?: boolean
+  finish?: boolean
+  rarity?: boolean
+  artist?: boolean
+  language?: boolean
+  cardColor?: boolean
+  colorIdentity?: boolean
+  producedMana?: boolean
+  keywords?: boolean
+  toughness?: boolean
+  power?: boolean
+  convertedManaCost?: boolean
+  subtype?: boolean
+  cardFrame?: boolean
+  relatedProducts?: boolean
+  complementaryProducts?: boolean
 }, ExtArgs["result"]["product"]>
 
 export type ProductSelectScalar = {
   id?: boolean
+  productId?: boolean
   title?: boolean
+  variantTitle?: boolean
   handle?: boolean
   vendor?: boolean
   productType?: boolean
   status?: boolean
-  totalInventory?: boolean
+  sku?: boolean
+  barcode?: boolean
+  price?: boolean
+  compareAtPrice?: boolean
+  inventoryQuantity?: boolean
+  cost?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  lastSync?: boolean
   images?: boolean
   briefeinheit?: boolean
   mainCategory?: boolean
@@ -899,32 +2255,81 @@ export type ProductSelectScalar = {
   englishCardName?: boolean
   frenchCardName?: boolean
   germanCardName?: boolean
-  lastSync?: boolean
+  eurPrice?: boolean
+  usdPrice?: boolean
+  eurFoilPrice?: boolean
+  usdFoilPrice?: boolean
+  usdEtchedPrice?: boolean
+  discountQty2?: boolean
+  discountQty3?: boolean
+  discountQty4?: boolean
+  discountQty5?: boolean
+  discountQty6?: boolean
+  discountQty7?: boolean
+  discountQty8?: boolean
+  discountQty9?: boolean
+  discountQty10?: boolean
+  innerMaterial?: boolean
+  outerMaterial?: boolean
+  binderClosure?: boolean
+  sleeveCount?: boolean
+  sleeveFinish?: boolean
+  sleeveSize?: boolean
+  productColor?: boolean
+  productSize?: boolean
+  productSizeDimensions?: boolean
+  compartmentsPerPage?: boolean
+  capacityDoubleSleeved?: boolean
+  capacitySingleSleeved?: boolean
+  scryfallId?: boolean
+  scryfallOracleId?: boolean
+  mkmid?: boolean
+  tcgid?: boolean
+  cardmarketId?: boolean
+  set?: boolean
+  setCode?: boolean
+  cardNumber?: boolean
+  condition?: boolean
+  finish?: boolean
+  rarity?: boolean
+  artist?: boolean
+  language?: boolean
+  cardColor?: boolean
+  colorIdentity?: boolean
+  producedMana?: boolean
+  keywords?: boolean
+  toughness?: boolean
+  power?: boolean
+  convertedManaCost?: boolean
+  subtype?: boolean
+  cardFrame?: boolean
+  relatedProducts?: boolean
+  complementaryProducts?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "handle" | "vendor" | "productType" | "status" | "totalInventory" | "createdAt" | "updatedAt" | "images" | "briefeinheit" | "mainCategory" | "mainType" | "supplierSku" | "releasedAt" | "englishCardName" | "frenchCardName" | "germanCardName" | "lastSync", ExtArgs["result"]["product"]>
-export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  variants?: boolean | Prisma.Product$variantsArgs<ExtArgs>
-  _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
-}
-export type ProductIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type ProductIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "productId" | "title" | "variantTitle" | "handle" | "vendor" | "productType" | "status" | "sku" | "barcode" | "price" | "compareAtPrice" | "inventoryQuantity" | "cost" | "createdAt" | "updatedAt" | "lastSync" | "images" | "briefeinheit" | "mainCategory" | "mainType" | "supplierSku" | "releasedAt" | "englishCardName" | "frenchCardName" | "germanCardName" | "eurPrice" | "usdPrice" | "eurFoilPrice" | "usdFoilPrice" | "usdEtchedPrice" | "discountQty2" | "discountQty3" | "discountQty4" | "discountQty5" | "discountQty6" | "discountQty7" | "discountQty8" | "discountQty9" | "discountQty10" | "innerMaterial" | "outerMaterial" | "binderClosure" | "sleeveCount" | "sleeveFinish" | "sleeveSize" | "productColor" | "productSize" | "productSizeDimensions" | "compartmentsPerPage" | "capacityDoubleSleeved" | "capacitySingleSleeved" | "scryfallId" | "scryfallOracleId" | "mkmid" | "tcgid" | "cardmarketId" | "set" | "setCode" | "cardNumber" | "condition" | "finish" | "rarity" | "artist" | "language" | "cardColor" | "colorIdentity" | "producedMana" | "keywords" | "toughness" | "power" | "convertedManaCost" | "subtype" | "cardFrame" | "relatedProducts" | "complementaryProducts", ExtArgs["result"]["product"]>
 
 export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Product"
-  objects: {
-    variants: Prisma.$ProductVariantPayload<ExtArgs>[]
-  }
+  objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    productId: string
     title: string
+    variantTitle: string | null
     handle: string
     vendor: string | null
     productType: string | null
     status: string
-    totalInventory: number
+    sku: string | null
+    barcode: string | null
+    price: runtime.Decimal
+    compareAtPrice: runtime.Decimal | null
+    inventoryQuantity: number
+    cost: runtime.Decimal | null
     createdAt: Date
     updatedAt: Date
+    lastSync: Date
     images: runtime.JsonValue | null
     briefeinheit: string | null
     mainCategory: string | null
@@ -934,7 +2339,56 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     englishCardName: string | null
     frenchCardName: string | null
     germanCardName: string | null
-    lastSync: Date
+    eurPrice: runtime.Decimal | null
+    usdPrice: runtime.Decimal | null
+    eurFoilPrice: runtime.Decimal | null
+    usdFoilPrice: runtime.Decimal | null
+    usdEtchedPrice: runtime.Decimal | null
+    discountQty2: string | null
+    discountQty3: string | null
+    discountQty4: string | null
+    discountQty5: string | null
+    discountQty6: string | null
+    discountQty7: string | null
+    discountQty8: string | null
+    discountQty9: string | null
+    discountQty10: string | null
+    innerMaterial: string | null
+    outerMaterial: string | null
+    binderClosure: string | null
+    sleeveCount: number | null
+    sleeveFinish: string | null
+    sleeveSize: string | null
+    productColor: string | null
+    productSize: string | null
+    productSizeDimensions: string | null
+    compartmentsPerPage: number | null
+    capacityDoubleSleeved: number | null
+    capacitySingleSleeved: number | null
+    scryfallId: string | null
+    scryfallOracleId: string | null
+    mkmid: string | null
+    tcgid: string | null
+    cardmarketId: string | null
+    set: string | null
+    setCode: string | null
+    cardNumber: string | null
+    condition: string | null
+    finish: string | null
+    rarity: string | null
+    artist: string | null
+    language: string | null
+    cardColor: string | null
+    colorIdentity: string | null
+    producedMana: string | null
+    keywords: string | null
+    toughness: string | null
+    power: string | null
+    convertedManaCost: string | null
+    subtype: string | null
+    cardFrame: string | null
+    relatedProducts: runtime.JsonValue | null
+    complementaryProducts: runtime.JsonValue | null
   }, ExtArgs["result"]["product"]>
   composites: {}
 }
@@ -1329,7 +2783,6 @@ readonly fields: ProductFieldRefs;
  */
 export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  variants<T extends Prisma.Product$variantsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$variantsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductVariantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1360,14 +2813,22 @@ export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.
  */
 export interface ProductFieldRefs {
   readonly id: Prisma.FieldRef<"Product", 'String'>
+  readonly productId: Prisma.FieldRef<"Product", 'String'>
   readonly title: Prisma.FieldRef<"Product", 'String'>
+  readonly variantTitle: Prisma.FieldRef<"Product", 'String'>
   readonly handle: Prisma.FieldRef<"Product", 'String'>
   readonly vendor: Prisma.FieldRef<"Product", 'String'>
   readonly productType: Prisma.FieldRef<"Product", 'String'>
   readonly status: Prisma.FieldRef<"Product", 'String'>
-  readonly totalInventory: Prisma.FieldRef<"Product", 'Int'>
+  readonly sku: Prisma.FieldRef<"Product", 'String'>
+  readonly barcode: Prisma.FieldRef<"Product", 'String'>
+  readonly price: Prisma.FieldRef<"Product", 'Decimal'>
+  readonly compareAtPrice: Prisma.FieldRef<"Product", 'Decimal'>
+  readonly inventoryQuantity: Prisma.FieldRef<"Product", 'Int'>
+  readonly cost: Prisma.FieldRef<"Product", 'Decimal'>
   readonly createdAt: Prisma.FieldRef<"Product", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Product", 'DateTime'>
+  readonly lastSync: Prisma.FieldRef<"Product", 'DateTime'>
   readonly images: Prisma.FieldRef<"Product", 'Json'>
   readonly briefeinheit: Prisma.FieldRef<"Product", 'String'>
   readonly mainCategory: Prisma.FieldRef<"Product", 'String'>
@@ -1377,7 +2838,56 @@ export interface ProductFieldRefs {
   readonly englishCardName: Prisma.FieldRef<"Product", 'String'>
   readonly frenchCardName: Prisma.FieldRef<"Product", 'String'>
   readonly germanCardName: Prisma.FieldRef<"Product", 'String'>
-  readonly lastSync: Prisma.FieldRef<"Product", 'DateTime'>
+  readonly eurPrice: Prisma.FieldRef<"Product", 'Decimal'>
+  readonly usdPrice: Prisma.FieldRef<"Product", 'Decimal'>
+  readonly eurFoilPrice: Prisma.FieldRef<"Product", 'Decimal'>
+  readonly usdFoilPrice: Prisma.FieldRef<"Product", 'Decimal'>
+  readonly usdEtchedPrice: Prisma.FieldRef<"Product", 'Decimal'>
+  readonly discountQty2: Prisma.FieldRef<"Product", 'String'>
+  readonly discountQty3: Prisma.FieldRef<"Product", 'String'>
+  readonly discountQty4: Prisma.FieldRef<"Product", 'String'>
+  readonly discountQty5: Prisma.FieldRef<"Product", 'String'>
+  readonly discountQty6: Prisma.FieldRef<"Product", 'String'>
+  readonly discountQty7: Prisma.FieldRef<"Product", 'String'>
+  readonly discountQty8: Prisma.FieldRef<"Product", 'String'>
+  readonly discountQty9: Prisma.FieldRef<"Product", 'String'>
+  readonly discountQty10: Prisma.FieldRef<"Product", 'String'>
+  readonly innerMaterial: Prisma.FieldRef<"Product", 'String'>
+  readonly outerMaterial: Prisma.FieldRef<"Product", 'String'>
+  readonly binderClosure: Prisma.FieldRef<"Product", 'String'>
+  readonly sleeveCount: Prisma.FieldRef<"Product", 'Int'>
+  readonly sleeveFinish: Prisma.FieldRef<"Product", 'String'>
+  readonly sleeveSize: Prisma.FieldRef<"Product", 'String'>
+  readonly productColor: Prisma.FieldRef<"Product", 'String'>
+  readonly productSize: Prisma.FieldRef<"Product", 'String'>
+  readonly productSizeDimensions: Prisma.FieldRef<"Product", 'String'>
+  readonly compartmentsPerPage: Prisma.FieldRef<"Product", 'Int'>
+  readonly capacityDoubleSleeved: Prisma.FieldRef<"Product", 'Int'>
+  readonly capacitySingleSleeved: Prisma.FieldRef<"Product", 'Int'>
+  readonly scryfallId: Prisma.FieldRef<"Product", 'String'>
+  readonly scryfallOracleId: Prisma.FieldRef<"Product", 'String'>
+  readonly mkmid: Prisma.FieldRef<"Product", 'String'>
+  readonly tcgid: Prisma.FieldRef<"Product", 'String'>
+  readonly cardmarketId: Prisma.FieldRef<"Product", 'String'>
+  readonly set: Prisma.FieldRef<"Product", 'String'>
+  readonly setCode: Prisma.FieldRef<"Product", 'String'>
+  readonly cardNumber: Prisma.FieldRef<"Product", 'String'>
+  readonly condition: Prisma.FieldRef<"Product", 'String'>
+  readonly finish: Prisma.FieldRef<"Product", 'String'>
+  readonly rarity: Prisma.FieldRef<"Product", 'String'>
+  readonly artist: Prisma.FieldRef<"Product", 'String'>
+  readonly language: Prisma.FieldRef<"Product", 'String'>
+  readonly cardColor: Prisma.FieldRef<"Product", 'String'>
+  readonly colorIdentity: Prisma.FieldRef<"Product", 'String'>
+  readonly producedMana: Prisma.FieldRef<"Product", 'String'>
+  readonly keywords: Prisma.FieldRef<"Product", 'String'>
+  readonly toughness: Prisma.FieldRef<"Product", 'String'>
+  readonly power: Prisma.FieldRef<"Product", 'String'>
+  readonly convertedManaCost: Prisma.FieldRef<"Product", 'String'>
+  readonly subtype: Prisma.FieldRef<"Product", 'String'>
+  readonly cardFrame: Prisma.FieldRef<"Product", 'String'>
+  readonly relatedProducts: Prisma.FieldRef<"Product", 'Json'>
+  readonly complementaryProducts: Prisma.FieldRef<"Product", 'Json'>
 }
     
 
@@ -1394,10 +2904,6 @@ export type ProductFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the Product
    */
   omit?: Prisma.ProductOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProductInclude<ExtArgs> | null
   /**
    * Filter, which Product to fetch.
    */
@@ -1417,10 +2923,6 @@ export type ProductFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.ProductOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProductInclude<ExtArgs> | null
-  /**
    * Filter, which Product to fetch.
    */
   where: Prisma.ProductWhereUniqueInput
@@ -1438,10 +2940,6 @@ export type ProductFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the Product
    */
   omit?: Prisma.ProductOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProductInclude<ExtArgs> | null
   /**
    * Filter, which Product to fetch.
    */
@@ -1491,10 +2989,6 @@ export type ProductFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions
    */
   omit?: Prisma.ProductOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProductInclude<ExtArgs> | null
-  /**
    * Filter, which Product to fetch.
    */
   where?: Prisma.ProductWhereInput
@@ -1543,10 +3037,6 @@ export type ProductFindManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.ProductOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProductInclude<ExtArgs> | null
-  /**
    * Filter, which Products to fetch.
    */
   where?: Prisma.ProductWhereInput
@@ -1589,10 +3079,6 @@ export type ProductCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the Product
    */
   omit?: Prisma.ProductOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProductInclude<ExtArgs> | null
   /**
    * The data needed to create a Product.
    */
@@ -1641,10 +3127,6 @@ export type ProductUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the Product
    */
   omit?: Prisma.ProductOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProductInclude<ExtArgs> | null
   /**
    * The data needed to update a Product.
    */
@@ -1712,10 +3194,6 @@ export type ProductUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.ProductOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProductInclude<ExtArgs> | null
-  /**
    * The filter to search for the Product to update in case it exists.
    */
   where: Prisma.ProductWhereUniqueInput
@@ -1742,10 +3220,6 @@ export type ProductDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.ProductOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProductInclude<ExtArgs> | null
-  /**
    * Filter which Product to delete.
    */
   where: Prisma.ProductWhereUniqueInput
@@ -1766,30 +3240,6 @@ export type ProductDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
- * Product.variants
- */
-export type Product$variantsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ProductVariant
-   */
-  select?: Prisma.ProductVariantSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ProductVariant
-   */
-  omit?: Prisma.ProductVariantOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProductVariantInclude<ExtArgs> | null
-  where?: Prisma.ProductVariantWhereInput
-  orderBy?: Prisma.ProductVariantOrderByWithRelationInput | Prisma.ProductVariantOrderByWithRelationInput[]
-  cursor?: Prisma.ProductVariantWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ProductVariantScalarFieldEnum | Prisma.ProductVariantScalarFieldEnum[]
-}
-
-/**
  * Product without action
  */
 export type ProductDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1801,8 +3251,4 @@ export type ProductDefaultArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the Product
    */
   omit?: Prisma.ProductOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProductInclude<ExtArgs> | null
 }

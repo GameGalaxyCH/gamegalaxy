@@ -46,128 +46,126 @@ model LineItem {
   order       Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }
 
+// --- FLATTENED PRODUCT MODEL ---
+// This represents a SINGLE sellable unit (Shopify Variant).
+// It contains all parent data duplicated for easier querying.
 model Product {
-  id             String   @id // Shopify GID
-  title          String
-  handle         String
-  vendor         String?
-  productType    String?
-  status         String   
-  totalInventory Int      @default(0)
-  createdAt      DateTime
-  updatedAt      DateTime
+  // --- IDS ---
+  id               String  @id // The VARIANT GID (Primary Key)
+  productId        String  // The PARENT PRODUCT GID (For grouping/deleting)
   
-  // Images stored as JSON: [{id: "...", src: "...", alt: "..."}]
-  images         Json?    
+  // --- BASIC INFO (Merged Parent + Variant) ---
+  title            String  // Full Title (Parent Title)
+  variantTitle     String? // Variant Name (e.g. "NM", "Foil")
+  handle           String  // Parent Handle
+  vendor           String?
+  productType      String?
+  status           String  // Parent Status
   
-  // --- PRODUCT LEVEL METAFIELDS ---
-  // Some fields might exist at Product level (like "Briefeinheit" or "Main Category")
-  // We store them here if found.
-  briefeinheit       String?
-  mainCategory       String?
-  mainType           String?
-  supplierSku        String? // Lieferanten SKU
-  releasedAt         String?
-  englishCardName    String?
-  frenchCardName     String?
-  germanCardName     String?
-  
-  // Relations
-  variants       ProductVariant[]
-  lastSync       DateTime @default(now())
-
-  @@index([updatedAt])
-  @@index([productType])
-}
-
-model ProductVariant {
-  id                String  @id // Shopify GID
-  productId         String
-  product           Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  
-  title             String
-  sku               String?
-  barcode           String? 
-  price             Decimal
-  compareAtPrice    Decimal?
+  // --- INVENTORY & PRICE ---
+  sku              String?
+  barcode          String? 
+  price            Decimal
+  compareAtPrice   Decimal?
   inventoryQuantity Int     @default(0)
-  cost              Decimal? // From InventoryItem
+  cost             Decimal?
+  
+  // --- DATES ---
+  createdAt        DateTime // Parent CreatedAt
+  updatedAt        DateTime // Variant UpdatedAt (or Parent if newer)
+  lastSync         DateTime @default(now())
 
-  // --- CORE MAGIC DATA (Parsed or Metafield) ---
-  condition         String? // Parsed from SKU (NM, PL)
-  finish            String? // Parsed from SKU (Foil, Non-Foil)
+  // --- IMAGES ---
+  // Stored as JSON: [{id: "...", src: "...", alt: "..."}]
+  // Usually inherited from Parent
+  images           Json?
 
-  // --- METAFIELDS (Your List) ---
-  // Prices
-  eurPrice          Decimal?
-  usdPrice          Decimal?
-  eurFoilPrice      Decimal?
-  usdFoilPrice      Decimal?
-  usdEtchedPrice    Decimal?
+  // --- METAFIELDS (ALL FLATTENED) ---
+  
+  // Basic Info
+  briefeinheit     String?
+  mainCategory     String?
+  mainType         String?
+  supplierSku      String?
+  releasedAt       String?
+  
+  // Names
+  englishCardName  String?
+  frenchCardName   String?
+  germanCardName   String?
+  
+  // Prices (Metafields)
+  eurPrice         Decimal?
+  usdPrice         Decimal?
+  eurFoilPrice     Decimal?
+  usdFoilPrice     Decimal?
+  usdEtchedPrice   Decimal?
 
-  // Bulk Discounts (Mengenrabatt)
-  discountQty2      String?
-  discountQty3      String?
-  discountQty4      String?
-  discountQty5      String?
-  discountQty6      String?
-  discountQty7      String?
-  discountQty8      String?
-  discountQty9      String?
-  discountQty10     String?
+  // Bulk Discounts
+  discountQty2     String?
+  discountQty3     String?
+  discountQty4     String?
+  discountQty5     String?
+  discountQty6     String?
+  discountQty7     String?
+  discountQty8     String?
+  discountQty9     String?
+  discountQty10    String?
 
-  // Physical Specs
-  innerMaterial     String?
-  outerMaterial     String?
-  binderClosure     String? // Binder Verschluss
-  sleeveCount       Int?    // Sleeveanzahl
-  sleeveFinish      String? // Sleeveoberfläche
-  sleeveSize        String? 
-  productColor      String? // Produkt Farbe
-  productSize       String? 
-  productSizeDimensions String? // B x T x H
-  compartmentsPerPage Int? // Fächer pro Seite
+  // Specs
+  innerMaterial    String?
+  outerMaterial    String?
+  binderClosure    String?
+  sleeveCount      Int?
+  sleeveFinish     String?
+  sleeveSize       String?
+  productColor     String?
+  productSize      String?
+  productSizeDimensions String?
+  compartmentsPerPage Int?
   
   // Capacity
   capacityDoubleSleeved Int?
   capacitySingleSleeved Int?
 
   // Magic Specifics
-  scryfallId        String?
-  scryfallOracleId  String?
-  mkmid             String?
-  tcgid             String?
-  cardmarketId      String? // Is this different from MKM ID? Added just in case.
+  scryfallId       String?
+  scryfallOracleId String?
+  mkmid            String?
+  tcgid            String?
+  cardmarketId     String?
+
+  set              String?
+  setCode          String?
+  cardNumber       String?
   
-  set               String? // Edition
-  setCode           String? // Edition Set Code
-  cardNumber        String? 
+  // Condition/Finish (From SKU or Variant)
+  condition        String?
+  finish           String?
   
-  rarity            String?
-  artist            String?
-  language          String?
+  rarity           String?
+  artist           String?
+  language         String?
   
-  cardColor         String?
-  colorIdentity     String?
-  producedMana      String?
+  cardColor        String?
+  colorIdentity    String?
+  producedMana     String?
   
-  keywords          String?
-  toughness         String?
-  power             String?
-  convertedManaCost String? // or Decimal if you prefer
+  keywords         String?
+  toughness        String?
+  power            String?
+  convertedManaCost String?
   
-  mainTypeVariant   String? // Maintype (if variant level)
-  subType           String? // Creature, etc.
-  
-  cardFrame         String?
+  subtype          String?
+  cardFrame        String?
   
   // Relations/JSON
-  relatedProducts   Json? // Zugehörige Produkte
-  complementaryProducts Json? // Ergänzende Produkte
-  
-  updatedAt         DateTime?
-  
+  relatedProducts       Json?
+  complementaryProducts Json?
+
+  @@index([productId]) // Important for deleting old variants of a product
   @@index([sku])
+  @@index([updatedAt])
   @@index([scryfallId])
   @@index([mkmid])
 }
@@ -181,13 +179,22 @@ model SyncLog {
 }
 
 model BulkOperation {
-  id             String   @id // The Shopify GID
-  type           String   // "QUERY" or "MUTATION"
-  status         String   // "CREATED", "RUNNING", "COMPLETED", "FAILED", "CANCELLED"
-  errorCode      String?
-  objectCount    Int      @default(0)
-  fileSize       String?
-  url            String?
-  createdAt      DateTime @default(now())
-  completedAt    DateTime?
+  id              String   @id // The Shopify GID
+  type            String   // "QUERY" or "MUTATION"
+  status          String   // "CREATED", "RUNNING", "COMPLETED", "FAILED", "CANCELLED"
+  errorCode       String?
+  objectCount     Int      @default(0)
+  rootObjectCount Int      @default(0)
+  fileSize        String?
+  url             String?
+  createdAt       DateTime @default(now())
+  completedAt     DateTime?
+}
+
+model FilterPreset {
+  id        String   @id @default(uuid())
+  name      String
+  context   String   // To distinguish pages, e.g. "BOOSTER_STOCK"
+  settings  Json     // Stores { maxBooster: 5, displayCheck: true }
+  createdAt DateTime @default(now())
 }

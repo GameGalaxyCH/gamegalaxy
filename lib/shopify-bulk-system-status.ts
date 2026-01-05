@@ -1,50 +1,22 @@
-'use server'
-
 import { prisma } from "@/lib/prisma";
-import { revalidatePath } from "next/cache";
+import { getAccessToken } from "@/lib/shopify-bulk-utils";
 
-async function getAccessToken() {
-    const shop = process.env.SHOPIFY_STORE_DOMAIN;
-    const clientId = process.env.SHOPIFY_CLIENT_ID;
-    const clientSecret = process.env.SHOPIFY_CLIENT_SECRET;
-    const url = `https://${shop}/admin/oauth/access_token`;
-    const params = new URLSearchParams({ client_id: clientId!, client_secret: clientSecret!, grant_type: "client_credentials" });
-    const response = await fetch(url, { method: 'POST', body: params });
-    const data = await response.json();
-    return data.access_token;
-}
+// --- CONFIGURATION ---
+// Set this to true to see detailed logs about the System Status checks
+const VERBOSE_LOGGING = false;
 
-export async function getTotalOrderCount() {
-    const token = await getAccessToken();
-    const shop = process.env.SHOPIFY_STORE_DOMAIN;
-    const hardcodedDate = "2020-01-01T00:00:00Z";
-
-    const query = `
-      query {
-        ordersCount(query: "created_at:>=${hardcodedDate}") {
-          count
-        }
-      }
-    `;
-
-    try {
-        const response = await fetch(`https://${shop}/admin/api/2025-10/graphql.json`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'X-Shopify-Access-Token': token },
-            body: JSON.stringify({ query }),
-            cache: 'no-store' // Always get fresh data
-        });
-
-        const result = await response.json();
-        return result.data?.ordersCount?.count || 0;
-
-    } catch (e) {
-        console.error("Failed to fetch total order count:", e);
-        return 0;
+function logVerbose(message: string, data?: any) {
+    if (VERBOSE_LOGGING) {
+        // We add a specific emoji ⚡ to distinguish these logs easily
+        console.log(`⚡ [SystemStatus] ${message}`, data ? JSON.stringify(data, null, 2) : '');
     }
 }
+// ---------------------
 
-export async function getGlobalSystemStatus() {
+export async function fetchGlobalSystemStatus() {
+    const now = new Date().toISOString();
+    logVerbose(`Called at ${now}`);
+
     const token = await getAccessToken();
     const shop = process.env.SHOPIFY_STORE_DOMAIN;
 
@@ -62,19 +34,22 @@ export async function getGlobalSystemStatus() {
     });
 
     // 2. Identify IDs to "Live Check"
-    const activeStates = ['CREATED', 'RUNNING', 'CANCELLING'];
+    const activeStates = [
+        'CREATED', 
+        'RUNNING', 
+        'IMPORTING', 
+        'CANCELLING', 
+        'CANCELING'
+    ];
     
-    // Rule 1: Check anything currently running
+    // Check anything currently running
     const activeIds = [...lastQueries, ...lastMutations]
         .filter(op => activeStates.includes(op.status))
         .map(op => op.id);
 
-    // Rule 2: Check anything COMPLETED but missing the download URL (Backfill)
-    const missingUrlIds = [...lastQueries, ...lastMutations]
-        .filter(op => op.status === 'COMPLETED' && !op.url)
-        .map(op => op.id);
+    const allIdsToCheck = Array.from(new Set(activeIds));
 
-    const allIdsToCheck = Array.from(new Set([...activeIds, ...missingUrlIds]));
+    logVerbose(`IDs selected for Live Check:`, allIdsToCheck);
 
     // If nothing to check, return DB data
     if (allIdsToCheck.length === 0) {
@@ -94,9 +69,9 @@ export async function getGlobalSystemStatus() {
           status
           errorCode
           objectCount
+          rootObjectCount
           fileSize
           url
-          partialDataUrl
           createdAt
           completedAt
         }
@@ -105,7 +80,7 @@ export async function getGlobalSystemStatus() {
     `;
 
     try {
-        const response = await fetch(`https://${shop}/admin/api/2025-10/graphql.json`, {
+        const response = await fetch(`https://${shop}/admin/api/2026-01/graphql.json`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'X-Shopify-Access-Token': token },
             body: JSON.stringify({ query }),
@@ -114,7 +89,6 @@ export async function getGlobalSystemStatus() {
 
         const result = await response.json();
         const nodes = result.data?.nodes || [];
-
         const foundNodesMap = new Map();
         nodes.forEach((node: any) => {
             if (node && node.id) foundNodesMap.set(node.id, node);
@@ -125,26 +99,37 @@ export async function getGlobalSystemStatus() {
             const remoteNode = foundNodesMap.get(id);
 
             if (remoteNode) {
-                // UPDATE: Save the URL and status
+                const currentDbRecord = await prisma.bulkOperation.findUnique({ where: { id }});
+                
+                let statusToSave = remoteNode.status;
+
+                // PROTECT "IMPORTING" STATE
+                // If local DB says IMPORTING, and Shopify says COMPLETED, keep it IMPORTING.
+                // It will only switch to COMPLETED when processBulkFile finishes and updates the DB.
+                if (currentDbRecord?.status === 'IMPORTING' && remoteNode.status === 'COMPLETED') {
+                    statusToSave = 'IMPORTING';
+                }
+
+                // Determine CompletedAt
+                // Only take Shopify's completedAt if we are actually saving as COMPLETED
+                const finalCompletedAt = (statusToSave === 'COMPLETED' && remoteNode.completedAt)
+                    ? new Date(remoteNode.completedAt)
+                    : currentDbRecord?.completedAt;
+
+                logVerbose(`[${id}] Update -> Status: ${statusToSave} | RootCount: ${remoteNode.rootObjectCount}`);
+
                 await prisma.bulkOperation.update({
                     where: { id: id },
-                    data: { 
-                        status: remoteNode.status, 
+                    data: {
+                        status: statusToSave, 
                         errorCode: remoteNode.errorCode,
                         objectCount: parseInt(remoteNode.objectCount || "0"),
+                        rootObjectCount: parseInt(remoteNode.rootObjectCount || "0"),
                         fileSize: remoteNode.fileSize,
-                        url: remoteNode.url, // <--- This is what we needed
-                        completedAt: remoteNode.completedAt ? new Date(remoteNode.completedAt) : null
+                        url: remoteNode.url,
+                        completedAt: finalCompletedAt
                     }
                 });
-            } else {
-                // GHOST: If we thought it was running but it's gone
-                if (activeIds.includes(id)) {
-                    await prisma.bulkOperation.update({
-                        where: { id: id },
-                        data: { status: "FAILED", errorCode: "GHOST_JOB", completedAt: new Date() }
-                    });
-                }
             }
         }
 
@@ -161,9 +146,17 @@ export async function getGlobalSystemStatus() {
             take: 5
         });
 
+        const activeQ = freshQueries.find(q => activeStates.includes(q.status));
+        const activeM = freshMutations.find(m => activeStates.includes(m.status));
+
+        logVerbose("Returning fresh data to Client", { 
+            activeQuery: activeQ?.status, 
+            activeMutation: activeM?.status 
+        });
+
         return {
-            activeQuery: freshQueries.find(q => activeStates.includes(q.status)) || null,
-            activeMutation: freshMutations.find(m => activeStates.includes(m.status)) || null,
+            activeQuery: activeQ || null,
+            activeMutation: activeM || null,
             history: { queries: freshQueries, mutations: freshMutations }
         };
 
@@ -178,19 +171,16 @@ export async function getGlobalSystemStatus() {
 }
 
 // KILL SWITCH using bulkOperationCancel
-export async function cancelOperation(id: string) {
+export async function performCancelOperation(id: string) {
     try {
         const token = await getAccessToken();
         const shop = process.env.SHOPIFY_STORE_DOMAIN;
 
         console.log(`[System] Requesting Shopify to cancel: ${id}`);
 
-        // 1. DELETE THE OPTIMISTIC UPDATE
-        // We do NOT update Prisma here. We wait for Shopify's answer.
-
         // 2. Send Mutation
         const query = `
-        mutation CancelOp($id: ID!) {
+        mutation bulkOperationCancel($id: ID!) {
           bulkOperationCancel(id: $id) {
             bulkOperation {
               status
@@ -203,7 +193,7 @@ export async function cancelOperation(id: string) {
         }
         `;
 
-        const response = await fetch(`https://${shop}/admin/api/2025-10/graphql.json`, {
+        const response = await fetch(`https://${shop}/admin/api/2026-01/graphql.json`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'X-Shopify-Access-Token': token },
             body: JSON.stringify({ 
@@ -229,7 +219,6 @@ export async function cancelOperation(id: string) {
         // 5. SUCCESS: Shopify confirmed the cancel signal.
         // Now we can safely update the database with the REAL status returned by Shopify.
         const newStatus = result.data.bulkOperationCancel.bulkOperation.status;
-        
         console.log(`[System] Shopify confirmed cancel. New status: ${newStatus}`);
 
         await prisma.bulkOperation.update({
@@ -237,7 +226,6 @@ export async function cancelOperation(id: string) {
             data: { status: newStatus } // Likely "CANCELLING" or "COMPLETED"
         });
 
-        revalidatePath('/settings/debugger');
         return { success: true };
 
     } catch (e: any) {

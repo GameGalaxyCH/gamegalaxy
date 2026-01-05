@@ -11,7 +11,7 @@
 export type * from './models/Order'
 export type * from './models/LineItem'
 export type * from './models/Product'
-export type * from './models/ProductVariant'
 export type * from './models/SyncLog'
 export type * from './models/BulkOperation'
+export type * from './models/FilterPreset'
 export type * from './commonInputTypes'

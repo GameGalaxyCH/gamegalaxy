@@ -28,10 +28,12 @@ export type AggregateBulkOperation = {
 
 export type BulkOperationAvgAggregateOutputType = {
   objectCount: number | null
+  rootObjectCount: number | null
 }
 
 export type BulkOperationSumAggregateOutputType = {
   objectCount: number | null
+  rootObjectCount: number | null
 }
 
 export type BulkOperationMinAggregateOutputType = {
@@ -40,6 +42,7 @@ export type BulkOperationMinAggregateOutputType = {
   status: string | null
   errorCode: string | null
   objectCount: number | null
+  rootObjectCount: number | null
   fileSize: string | null
   url: string | null
   createdAt: Date | null
@@ -52,6 +55,7 @@ export type BulkOperationMaxAggregateOutputType = {
   status: string | null
   errorCode: string | null
   objectCount: number | null
+  rootObjectCount: number | null
   fileSize: string | null
   url: string | null
   createdAt: Date | null
@@ -64,6 +68,7 @@ export type BulkOperationCountAggregateOutputType = {
   status: number
   errorCode: number
   objectCount: number
+  rootObjectCount: number
   fileSize: number
   url: number
   createdAt: number
@@ -74,10 +79,12 @@ export type BulkOperationCountAggregateOutputType = {
 
 export type BulkOperationAvgAggregateInputType = {
   objectCount?: true
+  rootObjectCount?: true
 }
 
 export type BulkOperationSumAggregateInputType = {
   objectCount?: true
+  rootObjectCount?: true
 }
 
 export type BulkOperationMinAggregateInputType = {
@@ -86,6 +93,7 @@ export type BulkOperationMinAggregateInputType = {
   status?: true
   errorCode?: true
   objectCount?: true
+  rootObjectCount?: true
   fileSize?: true
   url?: true
   createdAt?: true
@@ -98,6 +106,7 @@ export type BulkOperationMaxAggregateInputType = {
   status?: true
   errorCode?: true
   objectCount?: true
+  rootObjectCount?: true
   fileSize?: true
   url?: true
   createdAt?: true
@@ -110,6 +119,7 @@ export type BulkOperationCountAggregateInputType = {
   status?: true
   errorCode?: true
   objectCount?: true
+  rootObjectCount?: true
   fileSize?: true
   url?: true
   createdAt?: true
@@ -209,6 +219,7 @@ export type BulkOperationGroupByOutputType = {
   status: string
   errorCode: string | null
   objectCount: number
+  rootObjectCount: number
   fileSize: string | null
   url: string | null
   createdAt: Date
@@ -244,6 +255,7 @@ export type BulkOperationWhereInput = {
   status?: Prisma.StringFilter<"BulkOperation"> | string
   errorCode?: Prisma.StringNullableFilter<"BulkOperation"> | string | null
   objectCount?: Prisma.IntFilter<"BulkOperation"> | number
+  rootObjectCount?: Prisma.IntFilter<"BulkOperation"> | number
   fileSize?: Prisma.StringNullableFilter<"BulkOperation"> | string | null
   url?: Prisma.StringNullableFilter<"BulkOperation"> | string | null
   createdAt?: Prisma.DateTimeFilter<"BulkOperation"> | Date | string
@@ -256,6 +268,7 @@ export type BulkOperationOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   errorCode?: Prisma.SortOrderInput | Prisma.SortOrder
   objectCount?: Prisma.SortOrder
+  rootObjectCount?: Prisma.SortOrder
   fileSize?: Prisma.SortOrderInput | Prisma.SortOrder
   url?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -271,6 +284,7 @@ export type BulkOperationWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.StringFilter<"BulkOperation"> | string
   errorCode?: Prisma.StringNullableFilter<"BulkOperation"> | string | null
   objectCount?: Prisma.IntFilter<"BulkOperation"> | number
+  rootObjectCount?: Prisma.IntFilter<"BulkOperation"> | number
   fileSize?: Prisma.StringNullableFilter<"BulkOperation"> | string | null
   url?: Prisma.StringNullableFilter<"BulkOperation"> | string | null
   createdAt?: Prisma.DateTimeFilter<"BulkOperation"> | Date | string
@@ -283,6 +297,7 @@ export type BulkOperationOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   errorCode?: Prisma.SortOrderInput | Prisma.SortOrder
   objectCount?: Prisma.SortOrder
+  rootObjectCount?: Prisma.SortOrder
   fileSize?: Prisma.SortOrderInput | Prisma.SortOrder
   url?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -303,6 +318,7 @@ export type BulkOperationScalarWhereWithAggregatesInput = {
   status?: Prisma.StringWithAggregatesFilter<"BulkOperation"> | string
   errorCode?: Prisma.StringNullableWithAggregatesFilter<"BulkOperation"> | string | null
   objectCount?: Prisma.IntWithAggregatesFilter<"BulkOperation"> | number
+  rootObjectCount?: Prisma.IntWithAggregatesFilter<"BulkOperation"> | number
   fileSize?: Prisma.StringNullableWithAggregatesFilter<"BulkOperation"> | string | null
   url?: Prisma.StringNullableWithAggregatesFilter<"BulkOperation"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"BulkOperation"> | Date | string
@@ -315,6 +331,7 @@ export type BulkOperationCreateInput = {
   status: string
   errorCode?: string | null
   objectCount?: number
+  rootObjectCount?: number
   fileSize?: string | null
   url?: string | null
   createdAt?: Date | string
@@ -327,6 +344,7 @@ export type BulkOperationUncheckedCreateInput = {
   status: string
   errorCode?: string | null
   objectCount?: number
+  rootObjectCount?: number
   fileSize?: string | null
   url?: string | null
   createdAt?: Date | string
@@ -339,6 +357,7 @@ export type BulkOperationUpdateInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   errorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   objectCount?: Prisma.IntFieldUpdateOperationsInput | number
+  rootObjectCount?: Prisma.IntFieldUpdateOperationsInput | number
   fileSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -351,6 +370,7 @@ export type BulkOperationUncheckedUpdateInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   errorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   objectCount?: Prisma.IntFieldUpdateOperationsInput | number
+  rootObjectCount?: Prisma.IntFieldUpdateOperationsInput | number
   fileSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -363,6 +383,7 @@ export type BulkOperationCreateManyInput = {
   status: string
   errorCode?: string | null
   objectCount?: number
+  rootObjectCount?: number
   fileSize?: string | null
   url?: string | null
   createdAt?: Date | string
@@ -375,6 +396,7 @@ export type BulkOperationUpdateManyMutationInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   errorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   objectCount?: Prisma.IntFieldUpdateOperationsInput | number
+  rootObjectCount?: Prisma.IntFieldUpdateOperationsInput | number
   fileSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -387,6 +409,7 @@ export type BulkOperationUncheckedUpdateManyInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   errorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   objectCount?: Prisma.IntFieldUpdateOperationsInput | number
+  rootObjectCount?: Prisma.IntFieldUpdateOperationsInput | number
   fileSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -399,6 +422,7 @@ export type BulkOperationCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   errorCode?: Prisma.SortOrder
   objectCount?: Prisma.SortOrder
+  rootObjectCount?: Prisma.SortOrder
   fileSize?: Prisma.SortOrder
   url?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -407,6 +431,7 @@ export type BulkOperationCountOrderByAggregateInput = {
 
 export type BulkOperationAvgOrderByAggregateInput = {
   objectCount?: Prisma.SortOrder
+  rootObjectCount?: Prisma.SortOrder
 }
 
 export type BulkOperationMaxOrderByAggregateInput = {
@@ -415,6 +440,7 @@ export type BulkOperationMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   errorCode?: Prisma.SortOrder
   objectCount?: Prisma.SortOrder
+  rootObjectCount?: Prisma.SortOrder
   fileSize?: Prisma.SortOrder
   url?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -427,6 +453,7 @@ export type BulkOperationMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   errorCode?: Prisma.SortOrder
   objectCount?: Prisma.SortOrder
+  rootObjectCount?: Prisma.SortOrder
   fileSize?: Prisma.SortOrder
   url?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -435,6 +462,7 @@ export type BulkOperationMinOrderByAggregateInput = {
 
 export type BulkOperationSumOrderByAggregateInput = {
   objectCount?: Prisma.SortOrder
+  rootObjectCount?: Prisma.SortOrder
 }
 
 
@@ -445,6 +473,7 @@ export type BulkOperationSelect<ExtArgs extends runtime.Types.Extensions.Interna
   status?: boolean
   errorCode?: boolean
   objectCount?: boolean
+  rootObjectCount?: boolean
   fileSize?: boolean
   url?: boolean
   createdAt?: boolean
@@ -457,6 +486,7 @@ export type BulkOperationSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   status?: boolean
   errorCode?: boolean
   objectCount?: boolean
+  rootObjectCount?: boolean
   fileSize?: boolean
   url?: boolean
   createdAt?: boolean
@@ -469,6 +499,7 @@ export type BulkOperationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   status?: boolean
   errorCode?: boolean
   objectCount?: boolean
+  rootObjectCount?: boolean
   fileSize?: boolean
   url?: boolean
   createdAt?: boolean
@@ -481,13 +512,14 @@ export type BulkOperationSelectScalar = {
   status?: boolean
   errorCode?: boolean
   objectCount?: boolean
+  rootObjectCount?: boolean
   fileSize?: boolean
   url?: boolean
   createdAt?: boolean
   completedAt?: boolean
 }
 
-export type BulkOperationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "type" | "status" | "errorCode" | "objectCount" | "fileSize" | "url" | "createdAt" | "completedAt", ExtArgs["result"]["bulkOperation"]>
+export type BulkOperationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "type" | "status" | "errorCode" | "objectCount" | "rootObjectCount" | "fileSize" | "url" | "createdAt" | "completedAt", ExtArgs["result"]["bulkOperation"]>
 
 export type $BulkOperationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "BulkOperation"
@@ -498,6 +530,7 @@ export type $BulkOperationPayload<ExtArgs extends runtime.Types.Extensions.Inter
     status: string
     errorCode: string | null
     objectCount: number
+    rootObjectCount: number
     fileSize: string | null
     url: string | null
     createdAt: Date
@@ -930,6 +963,7 @@ export interface BulkOperationFieldRefs {
   readonly status: Prisma.FieldRef<"BulkOperation", 'String'>
   readonly errorCode: Prisma.FieldRef<"BulkOperation", 'String'>
   readonly objectCount: Prisma.FieldRef<"BulkOperation", 'Int'>
+  readonly rootObjectCount: Prisma.FieldRef<"BulkOperation", 'Int'>
   readonly fileSize: Prisma.FieldRef<"BulkOperation", 'String'>
   readonly url: Prisma.FieldRef<"BulkOperation", 'String'>
   readonly createdAt: Prisma.FieldRef<"BulkOperation", 'DateTime'>

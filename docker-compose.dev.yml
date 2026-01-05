@@ -4,6 +4,7 @@ services:
     image: postgres:16-alpine
     container_name: gamegalaxy-local-db
     environment:
+      - NODE_OPTIONS=--max-old-space-size=4096
       - TZ=Europe/Zurich
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password

@@ -33,11 +33,6 @@ export type LineItem = Prisma.LineItemModel
  */
 export type Product = Prisma.ProductModel
 /**
- * Model ProductVariant
- * 
- */
-export type ProductVariant = Prisma.ProductVariantModel
-/**
  * Model SyncLog
  * 
  */
@@ -47,3 +42,8 @@ export type SyncLog = Prisma.SyncLogModel
  * 
  */
 export type BulkOperation = Prisma.BulkOperationModel
+/**
+ * Model FilterPreset
+ * 
+ */
+export type FilterPreset = Prisma.FilterPresetModel

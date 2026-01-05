@@ -54,9 +54,9 @@ export const ModelName = {
   Order: 'Order',
   LineItem: 'LineItem',
   Product: 'Product',
-  ProductVariant: 'ProductVariant',
   SyncLog: 'SyncLog',
-  BulkOperation: 'BulkOperation'
+  BulkOperation: 'BulkOperation',
+  FilterPreset: 'FilterPreset'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -109,14 +109,22 @@ export type LineItemScalarFieldEnum = (typeof LineItemScalarFieldEnum)[keyof typ
 
 export const ProductScalarFieldEnum = {
   id: 'id',
+  productId: 'productId',
   title: 'title',
+  variantTitle: 'variantTitle',
   handle: 'handle',
   vendor: 'vendor',
   productType: 'productType',
   status: 'status',
-  totalInventory: 'totalInventory',
+  sku: 'sku',
+  barcode: 'barcode',
+  price: 'price',
+  compareAtPrice: 'compareAtPrice',
+  inventoryQuantity: 'inventoryQuantity',
+  cost: 'cost',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  lastSync: 'lastSync',
   images: 'images',
   briefeinheit: 'briefeinheit',
   mainCategory: 'mainCategory',
@@ -126,24 +134,6 @@ export const ProductScalarFieldEnum = {
   englishCardName: 'englishCardName',
   frenchCardName: 'frenchCardName',
   germanCardName: 'germanCardName',
-  lastSync: 'lastSync'
-} as const
-
-export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
-
-
-export const ProductVariantScalarFieldEnum = {
-  id: 'id',
-  productId: 'productId',
-  title: 'title',
-  sku: 'sku',
-  barcode: 'barcode',
-  price: 'price',
-  compareAtPrice: 'compareAtPrice',
-  inventoryQuantity: 'inventoryQuantity',
-  cost: 'cost',
-  condition: 'condition',
-  finish: 'finish',
   eurPrice: 'eurPrice',
   usdPrice: 'usdPrice',
   eurFoilPrice: 'eurFoilPrice',
@@ -178,6 +168,8 @@ export const ProductVariantScalarFieldEnum = {
   set: 'set',
   setCode: 'setCode',
   cardNumber: 'cardNumber',
+  condition: 'condition',
+  finish: 'finish',
   rarity: 'rarity',
   artist: 'artist',
   language: 'language',
@@ -188,15 +180,13 @@ export const ProductVariantScalarFieldEnum = {
   toughness: 'toughness',
   power: 'power',
   convertedManaCost: 'convertedManaCost',
-  mainTypeVariant: 'mainTypeVariant',
-  subType: 'subType',
+  subtype: 'subtype',
   cardFrame: 'cardFrame',
   relatedProducts: 'relatedProducts',
-  complementaryProducts: 'complementaryProducts',
-  updatedAt: 'updatedAt'
+  complementaryProducts: 'complementaryProducts'
 } as const
 
-export type ProductVariantScalarFieldEnum = (typeof ProductVariantScalarFieldEnum)[keyof typeof ProductVariantScalarFieldEnum]
+export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
 
 
 export const SyncLogScalarFieldEnum = {
@@ -216,6 +206,7 @@ export const BulkOperationScalarFieldEnum = {
   status: 'status',
   errorCode: 'errorCode',
   objectCount: 'objectCount',
+  rootObjectCount: 'rootObjectCount',
   fileSize: 'fileSize',
   url: 'url',
   createdAt: 'createdAt',
@@ -223,6 +214,17 @@ export const BulkOperationScalarFieldEnum = {
 } as const
 
 export type BulkOperationScalarFieldEnum = (typeof BulkOperationScalarFieldEnum)[keyof typeof BulkOperationScalarFieldEnum]
+
+
+export const FilterPresetScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  context: 'context',
+  settings: 'settings',
+  createdAt: 'createdAt'
+} as const
+
+export type FilterPresetScalarFieldEnum = (typeof FilterPresetScalarFieldEnum)[keyof typeof FilterPresetScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -239,6 +241,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: 'JsonNull'
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
