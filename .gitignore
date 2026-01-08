@@ -41,4 +41,4 @@ yarn-error.log*
 next-env.d.ts
 
 # Ignore generated Prisma Client
-/src/generated/client
+generated/
