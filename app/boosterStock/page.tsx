@@ -1,5 +1,7 @@
 'use client'
 
+export const dynamic = 'force-dynamic';
+
 import { useEffect, useState, useMemo } from 'react';
 import { getBoosterStockReport, BoosterStockReport } from '@/app/actions/get-booster-stock';
 import { getFilterPresets, saveFilterPreset, deleteFilterPreset } from '@/app/actions/filter-presets';
