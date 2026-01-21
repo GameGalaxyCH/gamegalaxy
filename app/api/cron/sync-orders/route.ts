@@ -10,7 +10,6 @@ import { runFullOrderSync, SyncMode } from '@/lib/shopify-bulk-orders';
  * -d '{"mode": "NIGHTLY_SYNC"}'
  * * Default Mode: 'NIGHTLY_SYNC' (last 48h) if no body is provided.
  */
-// ⚠️ VITAL: Allow this route to run for up to 5 minutes (or more on VPS)
 export const maxDuration = 300; 
 export const dynamic = 'force-dynamic';
 
@@ -24,10 +23,19 @@ export async function POST(request: Request) {
         const body = await request.json().catch(() => ({}));
         const mode: SyncMode = body.mode || 'NIGHTLY_SYNC';
 
-        // CALL THE MASTER FUNCTION
-        const result = await runFullOrderSync(mode);
+        console.log(`[Cron-Orders] Received Request. Mode: ${mode}`);
 
-        return NextResponse.json(result);
+        // ⚡ FIRE AND FORGET ⚡
+        runFullOrderSync(mode)
+            .then((res) => console.log(`[Cron-Orders] Finished successfully:`, res))
+            .catch((err) => console.error(`[Cron-Orders] Crashed in background:`, err));
+
+        return NextResponse.json({ 
+            success: true, 
+            message: "Sync started in background. Check server logs for progress.",
+            mode 
+        });
+
     } catch (error: any) {
         return NextResponse.json({ success: false, error: error.message }, { status: 500 });
     }

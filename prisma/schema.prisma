@@ -135,8 +135,8 @@ model Product {
   tcgid            String?
   cardmarketId     String?
 
-  set              String?
-  setCode          String?
+  edition          String?
+  editionSetCode   String?
   cardNumber       String?
   
   // Condition/Finish (From SKU or Variant)
@@ -168,6 +168,8 @@ model Product {
   @@index([updatedAt])
   @@index([scryfallId])
   @@index([mkmid])
+
+  scrapeDataSealed      ScrapeDataSealed?
 }
 
 model SyncLog {
@@ -197,4 +199,47 @@ model FilterPreset {
   context   String   // To distinguish pages, e.g. "BOOSTER_STOCK"
   settings  Json     // Stores { maxBooster: 5, displayCheck: true }
   createdAt DateTime @default(now())
+}
+
+// --- MARKET DATA MODELS (SEALED) ---
+model ScrapeDataSealed {
+  id             String    @id @default(uuid())
+  
+  // Link to Product
+  productId      String    @unique 
+  product        Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  // Scraped Info
+  cardmarketUrl  String?
+  
+  // Current "Head" Data (Most recent scrape)
+  lowestPrice    Decimal?
+  stockCount     Int?
+  topListings    Json?     
+
+  lastScrapedAt  DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  // Relation to History
+  history        ScrapeDataSealedHistory[]
+}
+
+// Stores the price history (one entry per day)
+model ScrapeDataSealedHistory {
+  id           String      @id @default(uuid())
+  
+  scrapeDataId String
+  scrapeData   ScrapeDataSealed  @relation(fields: [scrapeDataId], references: [id], onDelete: Cascade)
+  
+  // The date of the snapshot (Normalized to midnight)
+  date         DateTime    
+  
+  price        Decimal
+  stockCount   Int?
+  
+  createdAt    DateTime    @default(now())
+
+  // Ensure we only have one history entry per product per day
+  @@unique([scrapeDataId, date])
+  @@index([date])
 }

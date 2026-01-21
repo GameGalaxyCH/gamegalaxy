@@ -14,14 +14,19 @@ export async function POST(request: Request) {
         const body = await request.json().catch(() => ({}));
         const mode: SyncMode = body.mode || 'NIGHTLY_SYNC';
 
-        console.log(`[Cron] Received Product Sync Request: ${mode}`);
+        console.log(`[Cron-Products] Received Request. Mode: ${mode}`);
 
-        // Call the new Master Function (Awaits completion)
-        const result = await runFullProductSync(mode);
+        // ⚡ FIRE AND FORGET ⚡
+        runFullProductSync(mode)
+            .then((res) => console.log(`[Cron-Products] Finished successfully:`, res))
+            .catch((err) => console.error(`[Cron-Products] Crashed in background:`, err));
 
-        return NextResponse.json(result);
+        return NextResponse.json({ 
+            success: true, 
+            message: "Sync started in background. Check server logs for progress.",
+            mode 
+        });
     } catch (error: any) {
-        console.error("[Cron] Product Sync Error:", error);
         return NextResponse.json({ success: false, error: error.message }, { status: 500 });
     }
 }

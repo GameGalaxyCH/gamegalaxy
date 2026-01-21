@@ -13,6 +13,13 @@ const nextConfig: NextConfig = {
   // Catches unsafe lifecycles and deprecated API usage during development.
   reactStrictMode: true,
 
+  serverExternalPackages: [
+    'puppeteer-core',
+    'puppeteer',
+    'puppeteer-extra', 
+    'puppeteer-extra-plugin-stealth'
+  ],
+  
   async headers() {
     return [
       {

@@ -3,18 +3,19 @@
 export const dynamic = 'force-dynamic';
 
 import { useEffect, useState, useMemo } from 'react';
-import { getBoosterStockReport, BoosterStockReport } from '@/app/actions/get-booster-stock';
+import { getBoosterStockReport, BoosterStockReport } from './actions';
 import { getFilterPresets, saveFilterPreset, deleteFilterPreset } from '@/app/actions/filter-presets';
+import MkmPriceCell from '@/components/MkmPriceCell';
+
 import { 
   Loader2, 
   ExternalLink, 
-  RefreshCw, 
   AlertTriangle, 
   Box, 
   Save, 
   Trash2, 
   Tag, 
-  Plus 
+  Plus,
 } from "lucide-react";
 
 interface Preset {
@@ -23,6 +24,7 @@ interface Preset {
   settings: {
     maxBooster: number;
     displayCheck: boolean;
+    tcgFilter?: string;
   };
 }
 
@@ -35,6 +37,7 @@ export default function BoosterBestandPage() {
   // --- Filter State (Manual Control) ---
   const [maxBoosterFilter, setMaxBoosterFilter] = useState<number>(0); 
   const [displayCheckFilter, setDisplayCheckFilter] = useState<boolean>(true);
+  const [tcgFilter, setTcgFilter] = useState<string>("Alle");
 
   // --- Preset State ---
   const [presets, setPresets] = useState<Preset[]>([]);
@@ -62,11 +65,10 @@ export default function BoosterBestandPage() {
 
     // Handle Presets
     if (presetRes.success && presetRes.data) {
-      // Need to cast JSON back to typed object safely
       const mappedPresets = presetRes.data.map((p: any) => ({
         id: p.id,
         name: p.name,
-        settings: p.settings as { maxBooster: number; displayCheck: boolean }
+        settings: p.settings as { maxBooster: number; displayCheck: boolean; tcgFilter?: string }
       }));
       setPresets(mappedPresets);
     }
@@ -83,11 +85,15 @@ export default function BoosterBestandPage() {
     if (!newPresetName.trim()) return;
     setIsSaving(true);
 
-    const settings = { maxBooster: maxBoosterFilter, displayCheck: displayCheckFilter };
+    const settings = { 
+      maxBooster: maxBoosterFilter, 
+      displayCheck: displayCheckFilter,
+      tcgFilter: tcgFilter 
+    };
+    
     const res = await saveFilterPreset(newPresetName, "BOOSTER_STOCK", settings);
 
     if (res.success && res.data) {
-      // Add to local list immediately
       setPresets([{ 
         id: res.data.id, 
         name: res.data.name, 
@@ -102,35 +108,52 @@ export default function BoosterBestandPage() {
   const handleApplyPreset = (preset: Preset) => {
     setMaxBoosterFilter(preset.settings.maxBooster);
     setDisplayCheckFilter(preset.settings.displayCheck);
+    setTcgFilter(preset.settings.tcgFilter || "Alle");
   };
 
   const handleDeletePreset = async (id: string, e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent triggering "Apply" when clicking delete
+    e.stopPropagation(); 
     const res = await deleteFilterPreset(id);
     if (res.success) {
       setPresets(presets.filter(p => p.id !== id));
     }
   };
 
-  // --- 3. FILTERING LOGIC (Legacy) ---
+  // --- 3. FILTERING LOGIC ---
   const filteredData = useMemo(() => {
     return data.filter(item => {
+      // 1. Booster Stock Check
       const boosterCondition = item.boosterStock <= maxBoosterFilter;
+      
+      // 2. Display Availability Check
       const displayCondition = !displayCheckFilter || (displayCheckFilter && item.displayStock >= 1);
-      return boosterCondition && displayCondition;
+      
+      // 3. TCG / Vendor Check
+      let tcgCondition = true;
+      if (tcgFilter !== "Alle") {
+        // Accessing vendor safely (casting to any if definition is missing in local types)
+        const v = (item as any).vendor;
+        let game = 'Other';
+
+        if (v === 'Magic: The Gathering') game = 'Magic';
+        else if (v === 'Pokémon' || v === 'Pokemon') game = 'Pokemon';
+        else if (v === 'Yu-Gi-Oh!') game = 'YuGiOh';
+        else if (v === 'Disney Lorcana') game = 'Lorcana';
+        else if (v === 'Flesh and Blood') game = 'FleshAndBlood';
+        
+        tcgCondition = game === tcgFilter;
+      }
+
+      return boosterCondition && displayCondition && tcgCondition;
     });
-  }, [data, maxBoosterFilter, displayCheckFilter]);
+  }, [data, maxBoosterFilter, displayCheckFilter, tcgFilter]);
 
   const getCleanId = (gid: string) => gid.replace('gid://shopify/Product/', '');
 
   // --- RENDER ---
   return (
     <div className="bg-gray-50 min-h-screen text-gray-900">
-      {/* CENTERED LAYOUT CONTAINER 
-        max-w-7xl limits width on huge screens.
-        mx-auto centers it within the available space.
-      */}
-      <div className="max-w-7xl mx-auto p-8">
+      <div className="max-w-[1400px] mx-auto p-8"> {/* Increased max-width for new columns */}
       
         {/* HEADER */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
@@ -140,24 +163,17 @@ export default function BoosterBestandPage() {
               Booster Bestand
             </h1>
             <p className="text-gray-500 mt-1">
-              Übersicht der Einzel-Booster verknüpft mit Displays.
+              Übersicht der Einzel-Booster verknüpft mit Displays und Marktpreisen.
             </p>
           </div>
           
-          <button 
-            onClick={fetchData}
-            disabled={loading}
-            className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 transition-colors disabled:opacity-50 font-medium text-sm text-gray-700"
-          >
-            <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
-            Daten aktualisieren
-          </button>
+          {/* Refresh Button Removed as requested */}
         </div>
 
         {/* CONTROLS CARD */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-8 overflow-hidden">
           
-          {/* SECTION A: PRESETS (Quick Filters) */}
+          {/* SECTION A: PRESETS */}
           <div className="p-5 border-b border-gray-100 bg-gray-50/50">
             <div className="flex flex-wrap items-center gap-3">
               <span className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1">
@@ -165,7 +181,6 @@ export default function BoosterBestandPage() {
                 Schnellfilter
               </span>
 
-              {/* Preset Chips */}
               {presets.map(preset => (
                 <div 
                   key={preset.id}
@@ -183,7 +198,6 @@ export default function BoosterBestandPage() {
                 </div>
               ))}
 
-              {/* Add New Preset Button */}
               {!showSaveInput ? (
                 <button 
                   onClick={() => setShowSaveInput(true)}
@@ -224,7 +238,7 @@ export default function BoosterBestandPage() {
           {/* SECTION B: MANUAL CONTROLS */}
           <div className="p-6 flex flex-wrap gap-8 items-end">
             
-            {/* Input 1: Max Booster */}
+            {/* Filter 1: Max Booster */}
             <div className="flex flex-col gap-2">
               <label htmlFor="maxBooster" className="text-sm font-semibold text-gray-700">
                 Max. Booster Bestand
@@ -236,18 +250,40 @@ export default function BoosterBestandPage() {
                   min="0"
                   value={maxBoosterFilter}
                   onChange={(e) => setMaxBoosterFilter(parseInt(e.target.value) || 0)}
-                  className="pl-4 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 w-40 outline-none text-lg font-medium text-gray-800"
+                  className="pl-4 pr-4 h-[46px] border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 w-48 outline-none text-base font-medium text-gray-800 bg-white"
                 />
               </div>
               <span className="text-xs text-gray-400">Zeigt Booster ≤ diesem Wert</span>
             </div>
 
-            {/* Input 2: Display Check */}
-            <div className="flex flex-col gap-2 pb-1">
+            {/* Filter 2: TCG / Vendor */}
+            <div className="flex flex-col gap-2 pb-[24px]"> {/* Added padding-bottom to align with input height + hint text space */}
+               <label htmlFor="tcgFilter" className="text-sm font-semibold text-gray-700 flex items-center gap-1">
+                TCG
+              </label>
+              <div className="relative">
+                <select
+                  id="tcgFilter"
+                  value={tcgFilter}
+                  onChange={(e) => setTcgFilter(e.target.value)}
+                  className="pl-3 pr-8 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 w-48 outline-none text-base font-medium text-gray-800 bg-white"
+                >
+                  <option value="Alle">Alle</option>
+                  <option value="Pokemon">Pokémon</option>
+                  <option value="Magic">Magic: The Gathering</option>
+                  <option value="YuGiOh">Yu-Gi-Oh!</option>
+                  <option value="Lorcana">Disney Lorcana</option>
+                  <option value="FleshAndBlood">Flesh and Blood</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Filter 3: Display Check */}
+            <div className="flex flex-col gap-2 pb-[24px]"> {/* Added padding-bottom to align with input height + hint text space */}
               <label className="text-sm font-semibold text-gray-700">
                 Display Filter
               </label>
-              <label className="flex items-center gap-3 cursor-pointer p-2.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors bg-white">
+              <label className="flex items-center gap-3 cursor-pointer p-2.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors bg-white h-[46px]">
                 <div className={`w-5 h-5 rounded flex items-center justify-center border transition-colors ${displayCheckFilter ? 'bg-indigo-600 border-indigo-600' : 'border-gray-300 bg-white'}`}>
                   {displayCheckFilter && <Box size={12} className="text-white" />}
                 </div>
@@ -255,16 +291,15 @@ export default function BoosterBestandPage() {
                   type="checkbox"
                   checked={displayCheckFilter}
                   onChange={(e) => setDisplayCheckFilter(e.target.checked)}
-                  className="hidden" // Hiding default checkbox for custom style
+                  className="hidden" 
                 />
-                <span className="text-sm font-medium text-gray-700 select-none">
+                <span className="text-sm font-medium text-gray-700 select-none whitespace-nowrap">
                   Nur verfügbare Displays
                 </span>
               </label>
             </div>
 
-            {/* Result Counter */}
-            <div className="ml-auto flex flex-col items-end pb-1">
+            <div className="ml-auto flex flex-col items-end pb-8">
               <span className="text-3xl font-bold text-gray-900 tracking-tight">
                 {filteredData.length}
               </span>
@@ -304,7 +339,9 @@ export default function BoosterBestandPage() {
                     <th className="p-4 border-b border-gray-800 text-center">Booster Bestand</th>
                     <th className="p-4 border-b border-gray-800">Display Name</th>
                     <th className="p-4 border-b border-gray-800 text-center">Display Bestand</th>
+                    <th className="p-4 border-b border-gray-800 text-right">Verkaufspreis</th>
                     <th className="p-4 border-b border-gray-800 text-right">Aktionen</th>
+                    <th className="p-4 border-b border-gray-800 w-[280px]">MKM Preise</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
@@ -312,12 +349,12 @@ export default function BoosterBestandPage() {
                     <tr key={row.boosterId} className="hover:bg-indigo-50/30 transition-colors group">
                       
                       {/* Booster Title */}
-                      <td className="p-4 text-sm font-medium text-gray-900">
+                      <td className="p-4 text-sm font-medium text-gray-900 align-top">
                         {row.boosterTitle}
                       </td>
 
                       {/* Booster Stock */}
-                      <td className="p-4 text-center">
+                      <td className="p-4 text-center align-top">
                         <span className={`inline-flex items-center justify-center px-3 py-1 rounded-full text-xs font-bold ${
                           row.boosterStock <= 5 
                             ? 'bg-red-100 text-red-700 border border-red-200' 
@@ -328,19 +365,24 @@ export default function BoosterBestandPage() {
                       </td>
 
                       {/* Display Title */}
-                      <td className="p-4 text-sm text-gray-500">
+                      <td className="p-4 text-sm text-gray-500 align-top">
                         {row.displayTitle}
                       </td>
 
                       {/* Display Stock */}
-                      <td className="p-4 text-center">
+                      <td className="p-4 text-center align-top">
                         <span className="text-sm font-semibold text-gray-700 bg-gray-100 px-2 py-1 rounded">
                           {row.displayStock}
                         </span>
                       </td>
 
+                      {/* OUR PRICE */}
+                      <td className="p-4 text-right font-mono text-gray-700 align-top">
+                        CHF                                                              {row.boosterPrice?.toFixed(2)}
+                      </td>
+
                       {/* Actions */}
-                      <td className="p-4 text-right">
+                      <td className="p-4 text-right align-top">
                         <div className="flex justify-end gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
                           <a 
                             href={`https://admin.shopify.com/store/metamonk/products/${getCleanId(row.boosterParentId)}/variants/${getCleanId(row.boosterId)}`}
@@ -362,6 +404,14 @@ export default function BoosterBestandPage() {
                             <Box size={16} />
                           </a>
                         </div>
+                      </td>
+
+                      {/* MKM MARKET DATA */}
+                      <td className="p-2 bg-gray-50/50 align-top border-l border-r border-gray-100">
+                          <MkmPriceCell 
+                            productId={row.boosterId}
+                            productTitle={row.boosterTitle}
+                          />
                       </td>
                     </tr>
                   ))}

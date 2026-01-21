@@ -66,8 +66,8 @@ const METAFIELD_MAP: Record<string, string> = {
     "tcg_id": "tcgid",
     "scryfall_variant_id": "scryfallId",
 
-    "edition_set_code": "setCode",
-    "edition": "set",
+    "edition_set_code": "editionSetCode",
+    "edition": "edition",
     "cardnumber": "cardNumber",
     "rarity": "rarity",
     "artist": "artist",
@@ -318,6 +318,10 @@ export async function processProductFile(url: string, operationId: string) {
             // Clear buffers
             activeParent = null;
             activeVariants.clear();
+
+            if (global.gc) {
+                 global.gc();
+            }
         };
 
         // --- STREAM LOOP ---

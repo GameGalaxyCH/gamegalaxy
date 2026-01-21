@@ -7,17 +7,20 @@ export interface BoosterStockReport {
   boosterStock: number;
   boosterId: string; // Variant ID
   boosterParentId: string; // Product ID (for Admin Link)
+  boosterPrice: number; // Our Shop Price
+  vendor?: string | null;
+
   displayTitle: string;
   displayStock: number;
   displayId: string; // Variant ID
   displayParentId: string; // Product ID (for Admin Link)
+  displayPrice: number; // Our Shop Price
 }
 
 export async function getBoosterStockReport(): Promise<{ success: boolean; data?: BoosterStockReport[]; error?: string }> {
   try {
     // 1. Fetch all products from local DB that match the legacy "sku:*-booster-*" logic
-    // We use 'contains' to simulate the wildcard search. 
-    // We fetch ID, Title, Inventory, and ProductID (Parent) for the links.
+    // We fetch ID, Title, Inventory, Price, AND VENDOR.
     const products = await prisma.product.findMany({
       where: {
         sku: {
@@ -30,6 +33,8 @@ export async function getBoosterStockReport(): Promise<{ success: boolean; data?
         productId: true, // Needed for the Shopify Admin Link
         title: true,
         inventoryQuantity: true,
+        price: true,
+        vendor: true, // Get the game system (Magic, Pokemon, etc.)
       }
     });
 
@@ -51,11 +56,14 @@ export async function getBoosterStockReport(): Promise<{ success: boolean; data?
           boosterStock: product.inventoryQuantity,
           boosterId: product.id,
           boosterParentId: product.productId,
+          boosterPrice: Number(product.price), // Convert Decimal to Number for UI
+          vendor: product.vendor,
           
           displayTitle: displayProduct.title,
           displayStock: displayProduct.inventoryQuantity,
           displayId: displayProduct.id,
-          displayParentId: displayProduct.productId
+          displayParentId: displayProduct.productId,
+          displayPrice: Number(displayProduct.price) // Convert Decimal to Number for UI
         });
       }
     }
