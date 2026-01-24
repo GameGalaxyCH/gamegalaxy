@@ -3,7 +3,7 @@ import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from '../generated/prisma/client'
 import { Pool } from 'pg';
 
-// This is the correct approach for Prisma 7
+// This is the correct approach for Prisma 7 in 2026
 
 const connectionString = `${process.env.DATABASE_URL}`;
 

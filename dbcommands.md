@@ -9,7 +9,7 @@ npx prisma generate
 
 PROD:
 Stop the container:
-docker rm gamegalaxy-db
+docker rm -f gamegalaxy-db
 
 Delete the Volume:
 docker volume rm gamegalaxy_db_data
