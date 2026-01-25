@@ -65,6 +65,7 @@ export async function startBulkOrderSync(mode: SyncMode, token: string) {
                   id
                   name
                   email
+                  processedAt
                   createdAt
                   updatedAt
                   displayFinancialStatus
@@ -238,12 +239,13 @@ export async function processOrderFile(url: string, operationId: string) {
                     orderNumber: parseInt(obj.name.replace('#', '')) || 0,
                     name: obj.name,
                     email: obj.email,
+                    processedAt: obj.processedAt ? new Date(obj.processedAt) : null,
                     createdAt: new Date(obj.createdAt),
                     updatedAt: new Date(obj.updatedAt),
                     currencyCode: obj.totalPriceSet?.shopMoney?.currencyCode || "USD",
-                    totalPrice: parseFloat(obj.totalPriceSet?.shopMoney?.amount || "0"),
-                    subtotalPrice: parseFloat(obj.subtotalPriceSet?.shopMoney?.amount || "0"),
-                    totalTax: parseFloat(obj.totalTaxSet?.shopMoney?.amount || "0"),
+                    totalPrice: obj.totalPriceSet?.shopMoney?.amount || "0",
+                    subtotalPrice: obj.subtotalPriceSet?.shopMoney?.amount || "0",
+                    totalTax: obj.totalTaxSet?.shopMoney?.amount || "0",
                     financialStatus: obj.displayFinancialStatus,
                     fulfillmentStatus: obj.displayFulfillmentStatus,
                 });
@@ -256,7 +258,7 @@ export async function processOrderFile(url: string, operationId: string) {
                     title: obj.title,
                     sku: obj.sku,
                     quantity: obj.quantity,
-                    price: parseFloat(obj.originalUnitPriceSet?.shopMoney?.amount || "0")
+                    price: obj.originalUnitPriceSet?.shopMoney?.amount || "0"
                 });
             }
 

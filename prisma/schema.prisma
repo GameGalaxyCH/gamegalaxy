@@ -16,9 +16,9 @@ model Order {
   
   // Financials
   currencyCode      String
-  totalPrice        Float
-  subtotalPrice     Float
-  totalTax          Float
+  totalPrice        Decimal  @db.Decimal(10, 2) // 10 digits total, 2 decimal places
+  subtotalPrice     Decimal  @db.Decimal(10, 2)
+  totalTax          Decimal  @db.Decimal(10, 2)
   
   // Statuses
   financialStatus   String?  // PAID, PENDING, etc.
@@ -41,7 +41,7 @@ model LineItem {
   title       String
   sku         String?
   quantity    Int
-  price       Float
+  price       Decimal  @db.Decimal(10, 2)
   
   order       Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }

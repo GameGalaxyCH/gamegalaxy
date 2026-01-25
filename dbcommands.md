@@ -1,14 +1,7 @@
 DEV:
 Update Migration File, IMPORTANT FIRST STEP!
+npx prisma migrate reset --force
 npx prisma migrate dev --name ADD CHANGES HERE
-
-Nuke Database:
-npx prisma migrate reset
-
-Then rebuild:
-npx prisma db push
-npx prisma generate
-
 
 PROD:
 Stop the container:
