@@ -18,15 +18,15 @@ const METAFIELD_MAP: Record<string, string> = {
     // Basic Info
     "briefeinheit": "briefeinheit",
     "main_category": "mainCategory",
-    "main_type": "mainType",
+    "maintype": "mainType",
     "lieferanten_sku": "supplierSku",
     "released_at": "releasedAt",
     "produkt_typ": "productType",
     
     // Names
     "englischer_kartenname": "englishCardName",
-    "franzoesischer_kartenname": "frenchCardName",
-    "deutscher_kartenname": "germanCardName",
+    "french_name": "frenchCardName",
+    "german_name": "germanCardName",
     
     // Prices
     "eur_price": "eurPrice",
@@ -61,7 +61,7 @@ const METAFIELD_MAP: Record<string, string> = {
 
     // Magic ID & Data
     "scryfall_id": "scryfallId",
-    "scryfall_oracle_id": "scryfallOracleId",
+    "scryfall_oracleId": "scryfallOracleId",
     "mkm_id": "mkmid",
     "tcg_id": "tcgid",
     "scryfall_variant_id": "scryfallId",
@@ -89,19 +89,45 @@ export type SyncMode = 'ALL_TIME' | 'NIGHTLY_SYNC';
 
 /**
  * HELPER: Updates a target object with Metafield data.
- * Since we now have one flat table, we just apply directly to the target object.
+ * Handles clean strings AND JSON-array strings (e.g. "[\"White\"]" or "[\"1.05\"]")
  */
-function applyMetafield(target: any, key: string, value: string) {
+function applyMetafield(target: any, key: string, rawValue: string) {
     const prismaColumn = METAFIELD_MAP[key];
-    if (prismaColumn) {
-        // Handle Type Conversion based on column name expectation
-        if (['eurPrice', 'usdPrice', 'eurFoilPrice', 'usdFoilPrice', 'usdEtchedPrice'].includes(prismaColumn)) {
-            target[prismaColumn] = parseFloat(value);
-        } else if (['sleeveCount', 'compartmentsPerPage', 'capacityDoubleSleeved', 'capacitySingleSleeved'].includes(prismaColumn)) {
-            target[prismaColumn] = parseInt(value);
-        } else {
-            target[prismaColumn] = value;
+    if (!prismaColumn) return;
+
+    let cleanValue = rawValue;
+
+    // 1. CLEAN UP JSON ARRAYS
+    // Shopify often returns metafields as "[\"Value\"]" or "[]"
+    if (typeof rawValue === 'string' && rawValue.startsWith('[') && rawValue.endsWith(']')) {
+        try {
+            const parsed = JSON.parse(rawValue);
+            if (Array.isArray(parsed)) {
+                // If array is empty, value is null. Otherwise take first item.
+                cleanValue = parsed.length > 0 ? parsed[0] : null; 
+            }
+        } catch (e) {
+            // If parse fails, assume it was just a string starting with [
+            console.warn(`Failed to parse array metafield for ${key}: ${rawValue}`);
         }
+    }
+
+    if (cleanValue === null || cleanValue === undefined) return;
+
+    // 2. TYPE CONVERSION
+    if (['eurPrice', 'usdPrice', 'eurFoilPrice', 'usdFoilPrice', 'usdEtchedPrice'].includes(prismaColumn)) {
+        // Convert string number to float
+        const num = parseFloat(cleanValue);
+        target[prismaColumn] = isNaN(num) ? null : num;
+    } 
+    else if (['sleeveCount', 'compartmentsPerPage', 'capacityDoubleSleeved', 'capacitySingleSleeved'].includes(prismaColumn)) {
+        // Convert to Int
+        const intVal = parseInt(cleanValue);
+        target[prismaColumn] = isNaN(intVal) ? null : intVal;
+    } 
+    else {
+        // Default String
+        target[prismaColumn] = String(cleanValue);
     }
 }
 

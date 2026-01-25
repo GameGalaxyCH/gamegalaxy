@@ -24,6 +24,7 @@
     "puppeteer-real-browser": "^1.4.4",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "react-world-flags": "^1.6.0",
     "recharts": "^3.5.1"
   },
   "devDependencies": {

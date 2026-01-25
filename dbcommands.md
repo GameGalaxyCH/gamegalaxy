@@ -1,4 +1,7 @@
 DEV:
+Update Migration File, IMPORTANT FIRST STEP!
+npx prisma migrate dev --name ADD CHANGES HERE
+
 Nuke Database:
 npx prisma migrate reset
 

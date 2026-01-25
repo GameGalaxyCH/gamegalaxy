@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 import { useEffect, useState, useMemo } from 'react';
 import { getBoosterStockReport, BoosterStockReport } from './actions';
 import { getFilterPresets, saveFilterPreset, deleteFilterPreset } from '@/app/actions/filter-presets';
-import MkmPriceCell from '@/components/MkmPriceCell';
+import MkmPriceCell from '@/components/mkmBoosterPriceCell';
 
 import { 
   Loader2, 
@@ -37,7 +37,7 @@ export default function BoosterBestandPage() {
   // --- Filter State (Manual Control) ---
   const [maxBoosterFilter, setMaxBoosterFilter] = useState<number>(0); 
   const [displayCheckFilter, setDisplayCheckFilter] = useState<boolean>(true);
-  const [tcgFilter, setTcgFilter] = useState<string>("Alle");
+  const [tcgFilter, setTcgFilter] = useState<string>("Magic");
 
   // --- Preset State ---
   const [presets, setPresets] = useState<Preset[]>([]);
@@ -250,36 +250,14 @@ export default function BoosterBestandPage() {
                   min="0"
                   value={maxBoosterFilter}
                   onChange={(e) => setMaxBoosterFilter(parseInt(e.target.value) || 0)}
-                  className="pl-4 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 w-48 outline-none text-base font-medium text-gray-800 bg-white"
+                  className="pl-4 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 w-48 outline-none text-base font-medium text-gray-800 bg-white h-[46px]"
                 />
               </div>
               <span className="text-xs text-gray-400">Zeigt Booster ≤ diesem Wert</span>
             </div>
 
-            {/* Filter 2: TCG / Vendor */}
-            <div className="flex flex-col gap-2 pb-[24px]"> {/* Added padding-bottom to align with input height + hint text space */}
-               <label htmlFor="tcgFilter" className="text-sm font-semibold text-gray-700 flex items-center gap-1">
-                TCG
-              </label>
-              <div className="relative">
-                <select
-                  id="tcgFilter"
-                  value={tcgFilter}
-                  onChange={(e) => setTcgFilter(e.target.value)}
-                  className="pl-3 pr-8 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 w-48 outline-none text-base font-medium text-gray-800 bg-white"
-                >
-                  <option value="Alle">Alle</option>
-                  <option value="Pokemon">Pokémon</option>
-                  <option value="Magic">Magic: The Gathering</option>
-                  <option value="YuGiOh">Yu-Gi-Oh!</option>
-                  <option value="Lorcana">Disney Lorcana</option>
-                  <option value="FleshAndBlood">Flesh and Blood</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Filter 3: Display Check */}
-            <div className="flex flex-col gap-2 pb-[24px]"> {/* Added padding-bottom to align with input height + hint text space */}
+            {/* Filter 2: Display Check */}
+            <div className="flex flex-col gap-2">
               <label className="text-sm font-semibold text-gray-700">
                 Display Filter
               </label>
@@ -297,6 +275,30 @@ export default function BoosterBestandPage() {
                   Nur verfügbare Displays
                 </span>
               </label>
+              <span className="text-xs text-gray-400">Nur wenn Displays an Lager</span>
+            </div>
+
+            {/* Filter 3: TCG / Vendor */}
+            <div className="flex flex-col gap-2">
+               <label htmlFor="tcgFilter" className="text-sm font-semibold text-gray-700 flex items-center gap-1">
+                TCG
+              </label>
+              <div className="relative">
+                <select
+                  id="tcgFilter"
+                  value={tcgFilter}
+                  onChange={(e) => setTcgFilter(e.target.value)}
+                  className="pl-3 pr-8 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 w-60 outline-none text-base font-medium text-gray-800 bg-white h-[46px]"
+                >
+                  <option disabled value="Alle">Alle</option>
+                  <option disabled value="Pokemon">Pokémon</option>
+                  <option value="Magic">Magic: The Gathering</option>
+                  <option disabled value="YuGiOh">Yu-Gi-Oh!</option>
+                  <option disabled value="Lorcana">Disney Lorcana</option>
+                  <option disabled value="FleshAndBlood">Flesh and Blood</option>
+                </select>
+              </div>
+              <span className="text-xs text-gray-400">Zurzeit nur MTG unterstützt</span>
             </div>
 
             <div className="ml-auto flex flex-col items-end pb-8">
@@ -339,9 +341,10 @@ export default function BoosterBestandPage() {
                     <th className="p-4 border-b border-gray-800 text-center">Booster Bestand</th>
                     <th className="p-4 border-b border-gray-800">Display Name</th>
                     <th className="p-4 border-b border-gray-800 text-center">Display Bestand</th>
-                    <th className="p-4 border-b border-gray-800 text-right">Verkaufspreis</th>
-                    <th className="p-4 border-b border-gray-800 text-right">Aktionen</th>
-                    <th className="p-4 border-b border-gray-800 w-[280px]">MKM Preise</th>
+                    <th className="p-4 border-b border-gray-800 text-center">Verkaufspreis</th>
+                    <th className="p-4 border-b border-gray-800">Aktionen</th>
+                    <th className="p-4 border-b border-gray-800 w-[230px]">MKM Preis</th>
+                    <th className="p-4 border-b border-gray-800 w-[280px]">Verkäufer</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
@@ -378,7 +381,7 @@ export default function BoosterBestandPage() {
 
                       {/* OUR PRICE */}
                       <td className="p-4 text-right font-mono text-gray-700 align-top">
-                        CHF                                                              {row.boosterPrice?.toFixed(2)}
+                        CHF                                              {row.boosterPrice?.toFixed(2)}
                       </td>
 
                       {/* Actions */}
@@ -406,13 +409,11 @@ export default function BoosterBestandPage() {
                         </div>
                       </td>
 
-                      {/* MKM MARKET DATA */}
-                      <td className="p-2 bg-gray-50/50 align-top border-l border-r border-gray-100">
-                          <MkmPriceCell 
-                            productId={row.boosterId}
-                            productTitle={row.boosterTitle}
-                          />
-                      </td>
+                      {/* MKM MARKET DATA & VENDORS (Rendered via Component returning Fragments) */}
+                      <MkmPriceCell 
+                        productId={row.boosterId}
+                        productTitle={row.boosterTitle}
+                      />
                     </tr>
                   ))}
                 </tbody>

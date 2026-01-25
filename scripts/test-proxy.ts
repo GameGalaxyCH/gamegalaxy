@@ -51,7 +51,7 @@ async function testProxy() {
 
         // 5. Try Cardmarket
         console.log("🃏 Navigating to Cardmarket...");
-        await page.goto('https://www.cardmarket.com/en/Magic', { waitUntil: 'domcontentloaded', timeout: 60000 });
+        await page.goto('https://www.cardmarket.com/de/Magic', { waitUntil: 'domcontentloaded', timeout: 60000 });
 
         const title = await page.title();
         console.log(`✅ Page Title: "${title}"`);
