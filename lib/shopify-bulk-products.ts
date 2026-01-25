@@ -18,7 +18,7 @@ const METAFIELD_MAP: Record<string, string> = {
     // Basic Info
     "briefeinheit": "briefeinheit",
     "main_category": "mainCategory",
-    "maintype": "mainType",
+    "main_type": "mainType",
     "lieferanten_sku": "supplierSku",
     "released_at": "releasedAt",
     "produkt_typ": "productType",
