@@ -16,9 +16,9 @@ const MAX_RETRIES = 5;
 
 // PROXY CONFIGURATION
 // Residential Proxies
-const PROXY_SERVER = process.env.PROXY_SERVER;
-const PROXY_USER = process.env.PROXY_USER;
-const PROXY_PASS = process.env.PROXY_PASS;
+const PROXY_SERVER = process.env.MKM_PROXY_SERVER;
+const PROXY_USER = process.env.MKM_PROXY_USER;
+const PROXY_PASS = process.env.MKM_PROXY_PASS;
 
 if (!PROXY_USER || !PROXY_PASS) {
     throw new Error("Missing Proxy Credentials");
