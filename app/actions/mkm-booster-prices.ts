@@ -5,10 +5,10 @@ import { connect } from 'puppeteer-real-browser';
 import * as cheerio from 'cheerio';
 
 export type ScrapeResult = {
-	success: boolean;
-	data?: any;
-	error?: string;
-	source?: 'cache' | 'live';
+    success: boolean;
+    data?: any;
+    error?: string;
+    source?: 'cache' | 'live';
 };
 
 // --- CONFIGURATION ---
@@ -16,47 +16,51 @@ const MAX_RETRIES = 5;
 
 // PROXY CONFIGURATION
 // Residential Proxies
-const PROXY_SERVER = 'gate.decodo.com:7000';
-const PROXY_USER = 'spar0li9gx';        	// Residential User
-const PROXY_PASS = 'fyx8n6eq6IkVu=N5oT'; 	// Residential Pass
+const PROXY_SERVER = process.env.PROXY_SERVER;
+const PROXY_USER = process.env.PROXY_USER;
+const PROXY_PASS = process.env.PROXY_PASS;
+
+if (!PROXY_USER || !PROXY_PASS) {
+    throw new Error("Missing Proxy Credentials");
+}
 
 // --- HELPER: CLOUDFLARE DETECTOR ---
 async function getPageState(page: any): Promise<'CLEAR' | 'BLOCK' | 'WAITING'> {
-	try {
-		return await page.evaluate(() => {
-			const bodyText = document.body.innerText;
-			const title = document.title;
+    try {
+        return await page.evaluate(() => {
+            const bodyText = document.body.innerText;
+            const title = document.title;
 
-			// 1. Critical Blocks (Captcha/Access Denied)
-			if (
-				document.getElementById('cf-error-details') ||
-				title.includes('Attention Required') ||
-				bodyText.includes('Access denied') ||
-				bodyText.includes('security check')
-			) {
-				return 'BLOCK';
-			}
+            // 1. Critical Blocks (Captcha/Access Denied)
+            if (
+                document.getElementById('cf-error-details') ||
+                title.includes('Attention Required') ||
+                bodyText.includes('Access denied') ||
+                bodyText.includes('security check')
+            ) {
+                return 'BLOCK';
+            }
 
-			// 2. Queue / Waiting Room
-			if (
-				title.includes('Just a moment') ||
-				title.includes('Waiting Room') ||
-				title.includes('Queue-it') ||
-				bodyText.includes('You are now in line') ||
-				bodyText.includes('Estimated wait time') ||
-				document.getElementById('lbHeader-h') !== null ||
-				document.getElementById('main-panel') !== null ||
-				document.getElementById('waitTime') !== null
-			) {
-				return 'WAITING';
-			}
+            // 2. Queue / Waiting Room
+            if (
+                title.includes('Just a moment') ||
+                title.includes('Waiting Room') ||
+                title.includes('Queue-it') ||
+                bodyText.includes('You are now in line') ||
+                bodyText.includes('Estimated wait time') ||
+                document.getElementById('lbHeader-h') !== null ||
+                document.getElementById('main-panel') !== null ||
+                document.getElementById('waitTime') !== null
+            ) {
+                return 'WAITING';
+            }
 
-			// 3. Page appears clear
-			return 'CLEAR';
-		});
-	} catch (error) {
-		return 'BLOCK'; // Assume worst case on evaluation error
-	}
+            // 3. Page appears clear
+            return 'CLEAR';
+        });
+    } catch (error) {
+        return 'BLOCK'; // Assume worst case on evaluation error
+    }
 }
 
 function generateCandidateUrls(vendor: string | null, edition: string | null, mainType: string | null, langId: number | null = null): string[] {
@@ -108,48 +112,48 @@ function generateCandidateUrls(vendor: string | null, edition: string | null, ma
 }
 
 export async function deleteProductUrl(productId: string) {
-	try {
-		if (!productId) return { success: false, error: "No ID provided" };
+    try {
+        if (!productId) return { success: false, error: "No ID provided" };
 
-		await prisma.scrapeDataSealed.update({
-			where: { productId },
-			data: {
-				cardmarketUrl: "", // Clear the URL
-				lowestPrice: 0,    // Reset price
-				stockCount: 0,     // Reset stock
-				lastScrapedAt: new Date(0) // Force immediate re-scrape next time
-			}
-		});
+        await prisma.scrapeDataSealed.update({
+            where: { productId },
+            data: {
+                cardmarketUrl: "", // Clear the URL
+                lowestPrice: 0,    // Reset price
+                stockCount: 0,     // Reset stock
+                lastScrapedAt: new Date(0) // Force immediate re-scrape next time
+            }
+        });
 
-		return { success: true };
-	} catch (error: any) {
-		return { success: false, error: error.message };
-	}
+        return { success: true };
+    } catch (error: any) {
+        return { success: false, error: error.message };
+    }
 }
 // --- Update URL Manually ---
 export async function updateProductUrl(productId: string, newUrl: string) {
-	try {
-		if (!productId) return { success: false, error: "No ID provided" };
+    try {
+        if (!productId) return { success: false, error: "No ID provided" };
 
-		await prisma.scrapeDataSealed.upsert({
-			where: { productId },
-			create: {
-				productId,
-				cardmarketUrl: newUrl,
-				lowestPrice: 0,
-				stockCount: 0,
-				lastScrapedAt: new Date(0)
-			},
-			update: {
-				cardmarketUrl: newUrl,
-				lastScrapedAt: new Date(0)
-			}
-		});
+        await prisma.scrapeDataSealed.upsert({
+            where: { productId },
+            create: {
+                productId,
+                cardmarketUrl: newUrl,
+                lowestPrice: 0,
+                stockCount: 0,
+                lastScrapedAt: new Date(0)
+            },
+            update: {
+                cardmarketUrl: newUrl,
+                lastScrapedAt: new Date(0)
+            }
+        });
 
-		return { success: true };
-	} catch (error: any) {
-		return { success: false, error: error.message };
-	}
+        return { success: true };
+    } catch (error: any) {
+        return { success: false, error: error.message };
+    }
 }
 
 export async function fetchMarketData(productId: string, forceRefresh = false): Promise<ScrapeResult> {
@@ -237,6 +241,7 @@ export async function fetchMarketData(productId: string, forceRefresh = false): 
 
             console.log(`🔎 Testing URL: ${targetUrl}`);
             let attempts = 0;
+            const executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || undefined;
 
             // --- INNER LOOP: PROXY ROTATION ---
             while (!success && attempts < MAX_RETRIES) {
@@ -246,14 +251,26 @@ export async function fetchMarketData(productId: string, forceRefresh = false): 
 
                     // CONNECT WITH REAL BROWSER
                     const connection = await connect({
-                        headless: false, // Keep false for better evasion
-                        turnstile: true, // Auto-click cloudflare
-                        disableXvfb: false,
+                        headless: false,
+                        disableXvfb: true,
+                        // @ts-ignore: Library types are missing executablePath definition
+                        executablePath: executablePath,
+                        turnstile: true,
                         args: [
                             `--proxy-server=${PROXY_SERVER}`,
                             '--ignore-certificate-errors',
-                            '--window-size=1920,1080'
-                        ]
+                            '--window-size=1920,1080', // Matches Dockerfile CMD
+
+                            // DOCKER STABILITY FLAGS
+                            '--no-sandbox',
+                            '--disable-setuid-sandbox',
+                            '--disable-dev-shm-usage', // Prevents crashing on shared memory
+                            '--disable-accelerated-2d-canvas',
+                            '--disable-gpu', // VPS usually doesn't have a GPU, this prevents WebGL errors
+                        ],
+
+                        // 3. Custom Config to ensure plugins work
+                        customConfig: {},
                     });
 
                     browser = connection.browser;
@@ -261,7 +278,10 @@ export async function fetchMarketData(productId: string, forceRefresh = false): 
                     await page.setViewport({ width: 1920, height: 1080 });
 
                     // Manual Authentication
-                    await page.authenticate({ username: PROXY_USER, password: PROXY_PASS });
+                    await page.authenticate({
+                        username: PROXY_USER as string,
+                        password: PROXY_PASS as string
+                    });
 
                     // Navigate
                     const response = await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 45000 });

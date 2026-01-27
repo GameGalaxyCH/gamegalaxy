@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import readline from 'readline';
 import { Readable } from 'stream';
 import { getAccessToken, checkBulkStatus, resumeSyncProcess } from "@/lib/shopify-bulk-utils";
+import https from 'https';
 
 // --- CONFIGURATION ---
 const VERBOSE_LOGGING = true;
@@ -292,10 +293,20 @@ export async function processProductFile(url: string, operationId: string) {
         console.log("[BulkProducts] Downloading file stream...");
         logVerbose(`Download URL: ${url}`);
 
-        const response = await fetch(url);
-        if (!response.body) throw new Error("Failed to download file stream.");
+        // We use Node's native https.get instead of fetch() to bypass Next.js's
+        // caching layer, which crashes on files > 512MB (ERR_STRING_TOO_LONG).
+        const fileStream = await new Promise<Readable>((resolve, reject) => {
+            const req = https.get(url, (res) => {
+                if (res.statusCode !== 200) {
+                    reject(new Error(`Failed to download file stream. Status: ${res.statusCode}`));
+                    return;
+                }
+                resolve(res);
+            });
+            req.on('error', (e) => reject(new Error(`Network Error: ${e.message}`)));
+        });
 
-        const fileStream = Readable.fromWeb(response.body as import('stream/web').ReadableStream);
+        // Native Node stream is directly compatible with readline
         const rl = readline.createInterface({ input: fileStream, crlfDelay: Infinity });
 
         let totalProcessed = 0;
@@ -335,6 +346,12 @@ export async function processProductFile(url: string, operationId: string) {
                 });
 
                 totalProcessed += variantsToSave.length;
+                
+                // --- Log every ~1000 products ---
+                if (totalProcessed % 1000 < variantsToSave.length) {
+                    console.log(`[BulkProducts] Progress: ${totalProcessed} variants saved...`);
+                }
+
                 // logVerbose(`Saved ${variantsToSave.length} variants for ${activeParent.title}`);
 
             } catch (err: any) {
@@ -464,18 +481,18 @@ export async function processProductFile(url: string, operationId: string) {
 
                 // C. CHECK IF IT IS AN IMAGE
                 else if (obj.originalSrc) {
-                     // Add to Parent Template
-                     const img = {
-                         id: obj.id,
-                         src: obj.originalSrc,
-                         alt: obj.altText
-                     };
-                     activeParent.images.push(img);
-                     
-                     // Since variants share the images array reference (shallow copy), 
-                     // this push MIGHT reflect in variants if they were created already.
-                     // To be safe/explicit, we don't need to loop because of JS reference.
-                     // (activeParent.images IS the same array instance as flatProduct.images)
+                      // Add to Parent Template
+                      const img = {
+                          id: obj.id,
+                          src: obj.originalSrc,
+                          alt: obj.altText
+                      };
+                      activeParent.images.push(img);
+                      
+                      // Since variants share the images array reference (shallow copy), 
+                      // this push MIGHT reflect in variants if they were created already.
+                      // To be safe/explicit, we don't need to loop because of JS reference.
+                      // (activeParent.images IS the same array instance as flatProduct.images)
                 }
             }
         }

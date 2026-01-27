@@ -2,6 +2,7 @@ import Sidebar from "@/components/Sidebar";
 import BulkFetchOrders from "@/components/BulkFetchOrders";
 import BulkFetchProducts from "@/components/BulkFetchProducts";
 import SystemStatusPanel from "@/components/SystemStatusPanel";
+import ManualImportDebugger from "@/components/BulkManualImportDebugger";
 import Link from "next/link";
 import { Database, ShoppingBag, FileText } from "lucide-react";
 
@@ -46,8 +47,8 @@ export default function DebuggerPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
             {/* PANEL 1: ORDERS */}
-            <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 shadow-lg">
-                <h2 className="text-xl font-semibold mb-6 text-blue-400 flex items-center gap-2">
+            <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 shadow-lg flex flex-col gap-6">
+                <h2 className="text-xl font-semibold text-blue-400 flex items-center gap-2">
                   Order Management
                 </h2>
                 
@@ -68,11 +69,16 @@ export default function DebuggerPage() {
                         <BulkFetchOrders mode="ALL_TIME" label="Fetch ALL Orders" />
                     </div>
                 </div>
+
+                {/* --- MANUAL ORDER DEBUGGER --- */}
+                <div className="pt-6 border-t border-gray-800">
+                    <ManualImportDebugger type="ORDERS" title="DEBUG ORDER JSONL" />
+                </div>
             </div>
 
             {/* PANEL 2: PRODUCTS */}
-            <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 shadow-lg">
-                <h2 className="text-xl font-semibold mb-6 text-purple-400 flex items-center gap-2">
+            <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 shadow-lg flex flex-col gap-6">
+                <h2 className="text-xl font-semibold text-purple-400 flex items-center gap-2">
                   Product Management
                 </h2>
                 
@@ -93,6 +99,11 @@ export default function DebuggerPage() {
                         </p>
                         <BulkFetchProducts mode="ALL_TIME" label="Fetch ALL Products" />
                     </div>
+                </div>
+
+                {/* --- MANUAL PRODUCT DEBUGGER --- */}
+                <div className="pt-6 border-t border-gray-800">
+                    <ManualImportDebugger type="PRODUCTS" title="DEBUG PRODUCT JSONL" />
                 </div>
             </div>
 

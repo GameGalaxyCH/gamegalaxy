@@ -3,6 +3,9 @@ services:
     container_name: gamegalaxy-app 
     image: gamegalaxy/gamegalaxy:latest
     restart: always
+    shm_size: '4gb'
+    cap_add:
+      - SYS_ADMIN
     ports:
       - "127.0.0.1:3000:3000"
     environment:
@@ -14,6 +17,11 @@ services:
       - SHOPIFY_STORE_DOMAIN=${SHOPIFY_STORE_DOMAIN}
       - SHOPIFY_CLIENT_ID=${SHOPIFY_CLIENT_ID}
       - SHOPIFY_CLIENT_SECRET=${SHOPIFY_CLIENT_SECRET}
+      - MKM_PROXY_SERVER=${MKM_PROXY_SERVER}
+      - MKM_PROXY_USER=${MKM_PROXY_USER}
+      - MKM_PROXY_PASS=${MKM_PROXY_PASS}
+      - MKM_USER=${MKM_USER}
+      - MKM_PW=${MKM_PW}
     depends_on:
       - db
     networks:

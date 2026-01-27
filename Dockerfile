@@ -1,11 +1,17 @@
-# 1. Base image
-FROM node:22-alpine AS base
+# -----------------------------------------------------------------------------
+# 1. Base Image: Use Debian 12 (Bookworm) for maximum stability & Chrome support
+# -----------------------------------------------------------------------------
+FROM node:22-bookworm-slim AS base
 
-# 2. Dependencies
+# -----------------------------------------------------------------------------
+# 2. Dependencies Stage
+# -----------------------------------------------------------------------------
 FROM base AS deps
-RUN apk add --no-cache libc6-compat
 WORKDIR /app
+
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+
+# Install dependencies based on lockfile
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
   elif [ -f package-lock.json ]; then npm ci; \
@@ -13,18 +19,19 @@ RUN \
   else echo "Lockfile not found." && exit 1; \
   fi
 
-# 3. Builder
+# -----------------------------------------------------------------------------
+# 3. Builder Stage
+# -----------------------------------------------------------------------------
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Prisma config needs a URL to load, even if it's fake.
+# Fake DB URL just to allow Prisma to generate the client files
 ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
-
-# This generates the Prisma Client inside Docker before building
 RUN npx prisma generate
 
+# Build the Next.js application
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \
   elif [ -f package-lock.json ]; then npm run build; \
@@ -32,33 +39,76 @@ RUN \
   else echo "Lockfile not found." && exit 1; \
   fi
 
-# 4. Runner
+# -----------------------------------------------------------------------------
+# 4. Production Runner (The Critical Part)
+# -----------------------------------------------------------------------------
 FROM base AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 
-RUN npm install prisma@7.1.0
+# Install "Real" Browser Dependencies & Google Chrome Stable
+RUN apt-get update && apt-get install -y \
+    wget \
+    gnupg \
+    xvfb \
+    dumb-init \
+    fonts-liberation \
+    libasound2 \
+    libnspr4 \
+    libnss3 \
+    libx11-xcb1 \
+    libxcomposite1 \
+    libxcursor1 \
+    libxdamage1 \
+    libxfixes3 \
+    libxi6 \
+    libxrandr2 \
+    libxrender1 \
+    libxss1 \
+    libxtst6 \
+    # Add Google's official signing key
+    && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/googlechrome-linux-keyring.gpg \
+    # Add Google's official repository
+    && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/googlechrome-linux-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list \
+    # Install Chrome
+    && apt-get update \
+    && apt-get install -y google-chrome-stable \
+    # Clean up to keep image size down
+    && rm -rf /var/lib/apt/lists/*
 
+# Set up user permissions
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY --from=builder /app/public ./public
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
-# 1. Copy the standalone build
+# Copy standalone build from builder
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# 2. Copy necessary files for Prisma
+# Copy Prisma and Public assets
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/generated ./generated
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
-COPY --from=builder --chown=nextjs:nodejs /app/prisma.config.ts ./prisma.config.ts
+
+# Environment variables for Puppeteer
+# 1. Skip downloading Chromium (we installed Chrome manually)
+# 2. Point Puppeteer to the Google Chrome binary
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
 
 USER nextjs
 EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-# 4. UPDATE COMMAND: Run migrations automatically before starting server
-CMD ["sh", "-c", "npx prisma migrate deploy && node server.js"]
+# ENTRYPOINT allows dumb-init to handle shutdown signals correctly
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+
+# 1. Remove any leftover X11 lock files (prevents "Server is already active" errors on restart)
+# 2. Run migrations
+# 3. Start Xvfb on display :99
+# 4. Export DISPLAY env var explicitly
+# 5. Start the Node server
+CMD ["sh", "-c", "rm -f /tmp/.X99-lock && npx prisma migrate deploy && xvfb-run --server-num=99 --server-args='-screen 0 1920x1080x24' node server.js"]

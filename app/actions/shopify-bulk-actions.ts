@@ -88,6 +88,56 @@ export async function triggerManualProductSync(mode: SyncMode) {
     return { success: true, message: "Started", operationId: startRes.operationId };
 }
 
+/**
+ * DEBUG TRIGGER: MANUAL URL
+ * Bypasses Shopify Export and directly processes a provided JSONL URL.
+ */
+export async function triggerDebugUrlImport(type: 'ORDERS' | 'PRODUCTS', url: string) {
+    console.log(`👆 [DebugInput] Triggering Manual URL Import for ${type}`);
+    
+    // 1. Generate a Fake ID (formatted like Shopify's to fit Schema)
+    const opId = `gid://shopify/BulkOperation/MANUAL_${type}_${Date.now()}`;
+
+    try {
+        // 2. Create DB Record so processFunction has a valid ID to update status on
+        // We use type "QUERY" so it appears in the existing History Table in SystemStatusPanel
+        await prisma.bulkOperation.create({
+            data: {
+                id: opId,
+                type: "QUERY", 
+                status: "IMPORTING",
+                url: url,
+                objectCount: 0,
+                rootObjectCount: 0,
+                createdAt: new Date()
+            }
+        });
+
+        // 3. Run in background (Fire & Forget)
+        (async () => {
+            try {
+                if (type === 'ORDERS') {
+                    await processOrderFile(url, opId);
+                } else {
+                    await processProductFile(url, opId);
+                }
+            } catch (error: any) {
+                console.error(`💥 [Manual Import Fail] ID: ${opId}`, error);
+                await prisma.bulkOperation.update({
+                    where: { id: opId },
+                    data: { status: "FAILED", errorCode: "MANUAL_IMPORT_CRASH" }
+                }).catch(e => console.error("DB Save Fail", e));
+            }
+        })();
+
+        return { success: true, message: "Manual Import Started", operationId: opId };
+
+    } catch (e: any) {
+        console.error("Failed to init manual import", e);
+        return { success: false, message: e.message };
+    }
+}
+
 export async function getGlobalSystemStatus(clientTimestamp?: number) {
     noStore();
     return await fetchGlobalSystemStatus();

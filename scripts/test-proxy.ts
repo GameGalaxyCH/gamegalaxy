@@ -2,10 +2,9 @@ import { connect } from 'puppeteer-real-browser';
 import * as ProxyChain from 'proxy-chain';
 
 async function testProxy() {
-    const PROXY_SERVER = 'gate.decodo.com:7000';
-    // Residential proxies
-    const PROXY_USER = 'spar0li9gx';
-    const PROXY_PASS = 'fyx8n6eq6IkVu=N5oT';
+    const PROXY_SERVER = process.env.PROXY_SERVER;
+    const PROXY_USER = process.env.PROXY_USER;
+    const PROXY_PASS = process.env.PROXY_PASS;
 
     // Mobile Proxies
     /*
