@@ -76,10 +76,15 @@ RUN apt-get update && apt-get install -y \
     # Clean up to keep image size down
     && rm -rf /var/lib/apt/lists/*
 
-# Set up user permissions
+# We explicitly create a home directory so 'npx' has a place to write its cache
 RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+RUN adduser --system --uid 1001 nextjs --home /home/nextjs --create-home
 
+# Tell Node/NPM where the home is
+ENV HOME=/home/nextjs
+
+# Ensure permissions
+RUN chown -R nextjs:nodejs /home/nextjs
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
