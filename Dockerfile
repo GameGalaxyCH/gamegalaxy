@@ -97,6 +97,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/generated ./generated
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 
+# Install the Prisma CLI so the config file can import 'prisma/config'
+RUN npm install prisma
+
 # Environment variables for Puppeteer
 # 1. Skip downloading Chromium (we installed Chrome manually)
 # 2. Point Puppeteer to the Google Chrome binary

@@ -98,14 +98,12 @@ function generateCandidateUrls(vendor: string | null, edition: string | null, ma
     // Create Query String for Language
     const query = langId ? `?language=${langId}` : '';
 
-    // --- CANDIDATE 1: Standard Format ---
-    // e.g. https://www.cardmarket.com/de/Magic/Products/Boosters/Dominaria-Collector-Booster?language=1
-    candidates.push(`https://www.cardmarket.com/de/${gamePath}/Products/Boosters/${combinedSlug}${query}`);
-
-    // --- CANDIDATE 2: Magic Fallback (Only if Magic) ---
+    // --- Magic: The Gathering ---
     // e.g. https://www.cardmarket.com/de/Magic/Products/Boosters/Magic-The-Gathering-Dominaria-Collector-Booster?language=1
     if (gamePath === 'Magic') {
+        candidates.push(`https://www.cardmarket.com/de/${gamePath}/Products/Boosters/${combinedSlug}${query}`);
         candidates.push(`https://www.cardmarket.com/de/${gamePath}/Products/Boosters/Magic-The-Gathering-${combinedSlug}${query}`);
+        candidates.push(`https://www.cardmarket.com/de/${gamePath}/Products/Boosters/Universe-Beyond-${combinedSlug}${query}`);
     }
 
     return candidates;
