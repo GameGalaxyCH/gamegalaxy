@@ -9,14 +9,14 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@prisma/adapter-pg": "^7.1.0",
-    "@prisma/client": "^7.1.0",
+    "@prisma/adapter-pg": "^7.3.0",
+    "@prisma/client": "^7.3.0",
     "cheerio": "^1.1.2",
     "dotenv": "^17.2.3",
     "lucide-react": "^0.555.0",
     "next": "16.0.6",
     "p-limit": "^7.2.0",
-    "pg": "^8.16.3",
+    "pg": "^8.17.2",
     "proxy-chain": "^2.7.1",
     "puppeteer": "^24.35.0",
     "puppeteer-extra": "^3.3.6",
@@ -30,7 +30,7 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20.19.26",
-    "@types/pg": "^8.15.6",
+    "@types/pg": "^8.16.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",

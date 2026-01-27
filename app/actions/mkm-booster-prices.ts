@@ -363,7 +363,8 @@ export async function fetchMarketData(productId: string, forceRefresh = false): 
                         const isZeroResults = $('body').text().includes('Es wurden keine Artikel gefunden');
 
                         if (!isZeroResults) {
-                            throw new Error("Page loaded but lacks valid product structure.");
+                            console.warn(`❌ Page loaded but invalid structure. Skipping URL: ${targetUrl}`);
+                            break; // Stop retrying this URL, moves to next candidate in outer loop
                         }
                     }
 
