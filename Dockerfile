@@ -77,8 +77,8 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # We explicitly create a home directory so 'npx' has a place to write its cache
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs --home /home/nextjs --create-home
+RUN groupadd -g 1001 nodejs
+RUN useradd -u 1001 -g nodejs -m nextjs
 
 # Tell Node/NPM where the home is
 ENV HOME=/home/nextjs
