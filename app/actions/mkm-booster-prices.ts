@@ -322,7 +322,9 @@ export async function fetchMarketData(productId: string, forceRefresh = false): 
 
                     // 2. Check Soft Redirects (Category Pages)
                     const currentUrl = page.url();
-                    if (currentUrl.endsWith('/Products/Boosters') || currentUrl.endsWith('/Products/Singles')) {
+                    const cleanUrl = currentUrl.split('?')[0];
+
+                    if (cleanUrl.endsWith('/Products/Boosters') || cleanUrl.endsWith('/Products/Singles')) {
                         console.log(`⚠️ Soft 404 Detected (Redirected to Category): ${currentUrl}`);
                         break; // Invalid URL, move to next candidate
                     }
