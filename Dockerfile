@@ -99,7 +99,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 COPY --from=builder --chown=nextjs:nodejs /app/prisma.config.ts ./prisma.config.ts
 
 # Install the Prisma CLI so the config file can import 'prisma/config'
-RUN npm install prisma@7.3.0
+RUN npm install prisma@7.3.0 --save-prod && npx prisma --version
 
 # Environment variables for Puppeteer
 # 1. Skip downloading Chromium (we installed Chrome manually)

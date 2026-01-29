@@ -1,6 +1,7 @@
 services:
   web:
     container_name: gamegalaxy-app 
+    build: .
     image: gamegalaxy/gamegalaxy:latest
     restart: always
     shm_size: '4gb'
@@ -25,7 +26,7 @@ services:
     depends_on:
       - db
     networks:
-      - internal_network # To talk to Nginx/Internet
+      - gamegalaxy_net # To talk to Nginx/Internet
       - default # To talk to the Database
 
   db:
@@ -46,5 +47,5 @@ volumes:
   db_data:
 
 networks:
-  internal_network:
+  gamegalaxy_net:
     external: true
