@@ -1,6 +1,6 @@
 services:
   web:
-    container_name: gamegalaxy-app 
+    container_name: gamegalaxy-app
     build: .
     image: gamegalaxy/gamegalaxy:latest
     restart: always
