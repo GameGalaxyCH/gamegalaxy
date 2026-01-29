@@ -13,7 +13,7 @@ services:
       - NODE_ENV=production
       - NODE_OPTIONS=--max-old-space-size=4096
       - TZ=Europe/Zurich
-      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
       - CRON_SECRET=${CRON_SECRET}
       - SHOPIFY_STORE_DOMAIN=${SHOPIFY_STORE_DOMAIN}
       - SHOPIFY_CLIENT_ID=${SHOPIFY_CLIENT_ID}
