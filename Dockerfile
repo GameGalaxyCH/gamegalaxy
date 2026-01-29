@@ -29,7 +29,7 @@ COPY . .
 
 # Fake DB URL just to allow Prisma to generate the client files
 ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
-RUN npx prisma generate
+RUN npx prisma generate --schema=./prisma/schema.prisma --no-config
 
 # Build the Next.js application
 RUN \
