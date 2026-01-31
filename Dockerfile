@@ -83,11 +83,6 @@ RUN useradd -u 1001 -g nodejs -m nextjs
 # Tell Node/NPM where the home is
 ENV HOME=/home/nextjs
 
-# Ensure permissions
-RUN chown -R nextjs:nodejs /home/nextjs
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
-
 # Copy standalone build from builder
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
@@ -98,8 +93,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/generated ./generated
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 COPY --from=builder --chown=nextjs:nodejs /app/prisma.config.ts ./prisma.config.ts
 
-# Install the Prisma CLI so the config file can import 'prisma/config'
-RUN npm install prisma@7.3.0 --save-prod && npx prisma --version
+# Ensure the nextjs user owns everything in /app (including the new node_modules)
+RUN chown -R nextjs:nodejs /app
 
 # Environment variables for Puppeteer
 # 1. Skip downloading Chromium (we installed Chrome manually)
@@ -107,7 +102,12 @@ RUN npm install prisma@7.3.0 --save-prod && npx prisma --version
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
 
+# Switch to the user
 USER nextjs
+
+# Verify Prisma works AS THE USER (Great sanity check)
+RUN npx prisma --version
+
 EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
