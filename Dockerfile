@@ -27,10 +27,6 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Fake DB URL just to allow Prisma to generate the client files
-ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
-RUN npx prisma generate
-
 # Build the Next.js application
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \
@@ -45,6 +41,10 @@ RUN \
 FROM base AS runner
 WORKDIR /app
 ENV NODE_ENV=production
+
+# Fake DB URL just to allow Prisma to generate the client files
+ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
+RUN npx prisma generate
 
 # Install "Real" Browser Dependencies & Google Chrome Stable
 RUN apt-get update && apt-get install -y \
@@ -93,15 +93,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/generated ./generated
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 COPY --from=builder --chown=nextjs:nodejs /app/prisma.config.ts ./prisma.config.ts
 
-# --- THE FIX ---
-# 1. Install Prisma GLOBALLY (-g). This bypasses package.json conflicts.
-# 2. We do this as ROOT (default) before switching users.
 RUN npm install -g prisma@7.3.0
-
-# 3. Verify it works immediately
 RUN prisma --version
-# ----------------
-  
+
 # Ensure the nextjs user owns everything in /app (including the new node_modules)
 RUN chown -R nextjs:nodejs /app
 
