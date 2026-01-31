@@ -93,7 +93,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/generated ./generated
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 COPY --from=builder --chown=nextjs:nodejs /app/prisma.config.ts ./prisma.config.ts
 
-RUN npm install -g prisma@7.3.0
+# We need it in 'node_modules/prisma' so 'prisma.config.ts' can find 'prisma/config'
+RUN npm install prisma@7.3.0
 
 # Ensure the nextjs user owns everything in /app (including the new node_modules)
 RUN chown -R nextjs:nodejs /app
@@ -118,4 +119,4 @@ ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 # 3. Start Xvfb on display :99
 # 4. Export DISPLAY env var explicitly
 # 5. Start the Node server
-CMD ["sh", "-c", "rm -f /tmp/.X99-lock && prisma migrate deploy && xvfb-run -a --server-args=\"-screen 0 1920x1080x24\" node server.js"]
+CMD ["sh", "-c", "rm -f /tmp/.X99-lock && npx prisma migrate deploy && xvfb-run -a --server-args=\"-screen 0 1920x1080x24\" node server.js"]
