@@ -118,4 +118,4 @@ ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 # 3. Start Xvfb on display :99
 # 4. Export DISPLAY env var explicitly
 # 5. Start the Node server
-CMD ["sh", "-c", "rm -f /tmp/.X99-lock && pwd && ls -la && ls -la prisma/ && cat prisma.config.ts && npx prisma --version && npx prisma migrate deploy 2>&1 | head -50 && xvfb-run --server-num=99 --server-args='-screen 0 1920x1080x24' node server.js"]
+CMD ["sh", "-c", "rm -f /tmp/.X99-lock && prisma migrate deploy && xvfb-run -a --server-args=\"-screen 0 1920x1080x24\" node server.js"]
