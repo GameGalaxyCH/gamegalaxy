@@ -27,6 +27,10 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# 1. Set a dummy DB URL so Prisma can generate the client without crashing
+ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
+RUN npx prisma generate
+
 # Build the Next.js application
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \
@@ -41,10 +45,6 @@ RUN \
 FROM base AS runner
 WORKDIR /app
 ENV NODE_ENV=production
-
-# Fake DB URL just to allow Prisma to generate the client files
-ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
-RUN npx prisma generate
 
 # Install "Real" Browser Dependencies & Google Chrome Stable
 RUN apt-get update && apt-get install -y \
