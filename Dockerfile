@@ -94,7 +94,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 COPY --from=builder --chown=nextjs:nodejs /app/prisma.config.ts ./prisma.config.ts
 
 # We need it in 'node_modules/prisma' so 'prisma.config.ts' can find 'prisma/config'
-RUN npm install prisma@7.3.0
+RUN npm install prisma@7.3.0 tsx
 
 # Ensure the nextjs user owns everything in /app (including the new node_modules)
 RUN chown -R nextjs:nodejs /app
