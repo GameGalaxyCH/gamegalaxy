@@ -1,4 +1,3 @@
-import "dotenv/config";
 import { defineConfig } from 'prisma/config'
 
 // Safety check: Verify the variable exists
