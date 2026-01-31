@@ -2,13 +2,13 @@
 # 1. Base Image: Use Debian 12 (Bookworm) for maximum stability & Chrome support
 # -----------------------------------------------------------------------------
 FROM node:22-bookworm-slim AS base
+RUN apt-get update && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 
 # -----------------------------------------------------------------------------
 # 2. Dependencies Stage
 # -----------------------------------------------------------------------------
 FROM base AS deps
 WORKDIR /app
-
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 
 # Install dependencies based on lockfile
