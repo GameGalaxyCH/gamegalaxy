@@ -93,6 +93,15 @@ COPY --from=builder --chown=nextjs:nodejs /app/generated ./generated
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 COPY --from=builder --chown=nextjs:nodejs /app/prisma.config.ts ./prisma.config.ts
 
+# --- THE FIX ---
+# 1. Install Prisma GLOBALLY (-g). This bypasses package.json conflicts.
+# 2. We do this as ROOT (default) before switching users.
+RUN npm install -g prisma@7.3.0
+
+# 3. Verify it works immediately
+RUN prisma --version
+# ----------------
+  
 # Ensure the nextjs user owns everything in /app (including the new node_modules)
 RUN chown -R nextjs:nodejs /app
 
@@ -104,10 +113,6 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
 
 # Switch to the user
 USER nextjs
-
-# Verify Prisma works AS THE USER (Great sanity check)
-RUN npx prisma --version
-
 EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
