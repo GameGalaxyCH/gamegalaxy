@@ -1,6 +1,8 @@
-import { LayoutDashboard, Settings, Package } from "lucide-react";
+// f:\Fabian AI Stuff\gamegalaxy-app\components\Sidebar.tsx
+
+import { LayoutDashboard, Settings, Package, Home } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image"; // <--- 1. Import the Image component
+import Image from "next/image";
 
 export default function Sidebar() {
   return (
@@ -9,7 +11,7 @@ export default function Sidebar() {
       {/* Header with Logo */}
       <div className="p-6">
         {/* Flex container to align Logo + Text */}
-        <div className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
           
           {/* The Logo */}
           <div className="relative w-8 h-8"> {/* Container to control size */}
@@ -25,11 +27,17 @@ export default function Sidebar() {
           <h1 className="text-xl font-bold tracking-wider text-gray-100">
             GG OMNICORE
           </h1>
-        </div>
+        </Link>
       </div>
       
       {/* Main Navigation */}
       <nav className="flex-1 px-4 space-y-1 mt-4">
+        {/* Entry 0: Dashboard */}
+        <Link href="/" className="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg group transition-all">
+          <Home size={20} />
+          <span className="font-medium">Dashboard</span>
+        </Link>
+
         {/* Entry 1: Booster Bestand */}
         <Link href="/boosterStock" className="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg group transition-all">
           <LayoutDashboard size={20} />

@@ -6,6 +6,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { getBoosterStockReport, BoosterStockReport } from './actions';
 import { getFilterPresets, saveFilterPreset, deleteFilterPreset } from '@/app/actions/filter-presets';
 import MkmPriceCell from '@/components/mkmBoosterPriceCell';
+import FeedbackSection from '@/components/FeedbackSection';
 
 import { 
   Loader2, 
@@ -150,11 +151,11 @@ export default function BoosterBestandPage() {
 
   const getCleanId = (gid: string) => gid.replace('gid://shopify/Product/', '');
 
-  // --- RENDER ---
+// --- RENDER ---
   return (
     <div className="bg-gray-50 min-h-screen text-gray-900">
-      <div className="max-w-[1400px] mx-auto p-8"> {/* Increased max-width for new columns */}
-      
+      <div className="max-w-[1400px] mx-auto p-8">
+       
         {/* HEADER */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div>
@@ -166,13 +167,14 @@ export default function BoosterBestandPage() {
               Übersicht der Einzel-Booster verknüpft mit Displays und Marktpreisen.
             </p>
           </div>
-          
-          {/* Refresh Button Removed as requested */}
         </div>
+
+        {/* --- NEW FEEDBACK CARD (Yellow) --- */}
+        <FeedbackSection />
 
         {/* CONTROLS CARD */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-8 overflow-hidden">
-          
+
           {/* SECTION A: PRESETS */}
           <div className="p-5 border-b border-gray-100 bg-gray-50/50">
             <div className="flex flex-wrap items-center gap-3">

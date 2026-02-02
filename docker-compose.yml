@@ -22,7 +22,7 @@ services:
       - MKM_PROXY_USER=${MKM_PROXY_USER}
       - MKM_PROXY_PASS=${MKM_PROXY_PASS}
       - MKM_USER=${MKM_USER}
-      - MKM_PW=${MKM_PW}
+      - MKM_PW=${MKM_PW}oka
     depends_on:
       - db
     networks:

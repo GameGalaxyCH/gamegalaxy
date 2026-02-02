@@ -202,6 +202,20 @@ model FilterPreset {
   createdAt DateTime @default(now())
 }
 
+model Feedback {
+  id        String   @id @default(uuid())
+  content   String
+  createdAt DateTime @default(now())
+  status    String   @default("OPEN") // OPEN, DONE
+}
+
+model Changelog {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  date        DateTime @default(now())
+}
+
 // --- MARKET DATA MODELS (SEALED) ---
 model ScrapeDataSealed {
   id             String    @id @default(uuid())
